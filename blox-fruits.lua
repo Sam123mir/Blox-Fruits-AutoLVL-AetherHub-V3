@@ -1637,12 +1637,19 @@ function InfAb()
 end
 
 local LocalPlayer = game:GetService'Players'.LocalPlayer
-local originalstam = LocalPlayer.Character.Energy.Value
+local originalstam = 0
+pcall(function()
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Energy") then
+        originalstam = LocalPlayer.Character.Energy.Value
+    end
+end)
 function infinitestam()
-    LocalPlayer.Character.Energy.Changed:connect(function()
-        if InfiniteEnergy then
-            LocalPlayer.Character.Energy.Value = originalstam
-        end 
+    pcall(function()
+        LocalPlayer.Character.Energy.Changed:connect(function()
+            if InfiniteEnergy then
+                LocalPlayer.Character.Energy.Value = originalstam
+            end 
+        end)
     end)
 end
 
