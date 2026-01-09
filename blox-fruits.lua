@@ -2650,8 +2650,36 @@ end)
         return "Remaining " .. 10 - v228 .. " training sessions."
     end
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "AETHER HUB", HidePremium = false, IntroText = "", SaveConfig = true, ConfigFolder = "AETHER HUB"})
+local OrionLib = nil
+local Window = nil
+
+-- Try to load OrionLib with error handling
+local orionSuccess, orionResult = pcall(function()
+    return loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+end)
+
+if orionSuccess and orionResult then
+    OrionLib = orionResult
+    Window = OrionLib:MakeWindow({Name = "AETHER HUB", HidePremium = false, IntroText = "", SaveConfig = true, ConfigFolder = "AETHER HUB"})
+else
+    warn("AETHER HUB: Failed to load OrionLib, trying alternative...")
+    -- Try Rayfield as fallback
+    local rayfieldSuccess, rayfieldResult = pcall(function()
+        return loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+    end)
+    
+    if rayfieldSuccess and rayfieldResult then
+        OrionLib = rayfieldResult
+        Window = OrionLib:CreateWindow({Name = "AETHER HUB", LoadingTitle = "AETHER HUB", LoadingSubtitle = "Loading..."})
+    else
+        warn("AETHER HUB: No UI library loaded. Script may have limited functionality.")
+    end
+end
+
+if not OrionLib or not Window then
+    warn("AETHER HUB: UI failed to load. Check your executor.")
+    return
+end
 
 OrionLib:MakeNotification({
 	Name = "AETHER HUB",
