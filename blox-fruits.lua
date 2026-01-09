@@ -2681,112 +2681,76 @@ if not OrionLib or not Window then
     return
 end
 
-OrionLib:MakeNotification({
-	Name = "AETHER HUB",
-	Content = "Welcome! Choose Your Settings.",
-	Image = "rbxassetid://119980140458596",
-	Time = 7
-})
+-- Safe notification function (works with different UI libraries)
+local function SafeNotify(title, content)
+    pcall(function()
+        if OrionLib.MakeNotification then
+            OrionLib:MakeNotification({
+                Name = title,
+                Content = content,
+                Image = "rbxassetid://119980140458596",
+                Time = 5
+            })
+        elseif OrionLib.Notify then
+            OrionLib:Notify({
+                Title = title,
+                Content = content,
+                Duration = 5
+            })
+        end
+    end)
+end
 
-OrionLib:MakeNotification({
-	Name = "AETHER HUB",
-	Content = "AETHER HUB - Blox Fruits",
-	Image = "rbxassetid://119980140458596",
-	Time = 25
-})
-
-OrionLib:MakeNotification({
-    Name = "AETHER HUB",
-    Content = "Please Wait loading script..., Do not enable any function",
-    Image = "rbxassetid://119980140458596",
-    Time = 5
-})
+SafeNotify("AETHER HUB", "Welcome! Choose Your Settings.")
+SafeNotify("AETHER HUB", "AETHER HUB - Blox Fruits")
+SafeNotify("AETHER HUB", "Please Wait loading script...")
 
 -------------Tab-----------------------
 
-local W = Window:MakeTab({
-    Name = "Welcome",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+-- Safe tab creation function (works with different UI libraries)
+local function SafeTab(name, icon)
+    local tab = nil
+    pcall(function()
+        if Window.MakeTab then
+            tab = Window:MakeTab({
+                Name = name,
+                Icon = icon or "rbxassetid://119980140458596",
+                PremiumOnly = false
+            })
+        elseif Window.CreateTab then
+            tab = Window:CreateTab(name, icon)
+        end
+    end)
+    return tab or {}
+end
 
-local M = Window:MakeTab({
-    Name = "General",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local W = SafeTab("Welcome")
 
-local ST = Window:MakeTab({
-    Name = "Setting",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local M = SafeTab("General")
 
-local IQ = Window:MakeTab({
-    Name = "Item & Quest",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local ST = SafeTab("Setting")
 
-local S = Window:MakeTab({
-    Name = "Stats",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local IQ = SafeTab("Item & Quest")
 
-local E = Window:MakeTab({
-    Name = "ESP",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local S = SafeTab("Stats")
 
-local RA = Window:MakeTab({
-    Name = "Raid",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local E = SafeTab("ESP")
 
-local LC = Window:MakeTab({
-    Name = "Local Players",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local RA = SafeTab("Raid")
 
-local Wld = Window:MakeTab({
-    Name = "World Teleport",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local LC = SafeTab("Local Players")
 
-local SV = Window:MakeTab({
-    Name = "Status Sever",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local Wld = SafeTab("World Teleport")
 
-local D = Window:MakeTab({
-    Name = "Devil Fruit",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local SV = SafeTab("Status Sever")
 
-local R = Window:MakeTab({
-    Name = "Race V4",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local D = SafeTab("Devil Fruit")
 
-local SH = Window:MakeTab({
-    Name = "Shop",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local R = SafeTab("Race V4")
 
-local C = Window:MakeTab({
-    Name = "Misc",
-    Icon = "rbxassetid://119980140458596",
-    PremiumOnly = false
-})
+local SH = SafeTab("Shop")
+
+local C = SafeTab("Misc")
 
 -----Label--------------------
 local Section = W:AddSection({
