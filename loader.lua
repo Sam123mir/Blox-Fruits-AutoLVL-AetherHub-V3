@@ -21,7 +21,7 @@
 ]]
 
 -- CAMBIA ESTA URL POR LA TUYA:
-local SCRIPT_URL = "https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/blox-fruits.lua"
+local SCRIPT_URL = "https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/blox-fruits.lua"
 
 -- Loader con manejo de errores
 local success, result = pcall(function()
