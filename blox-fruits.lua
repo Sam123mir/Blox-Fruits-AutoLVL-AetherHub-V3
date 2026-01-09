@@ -2502,8 +2502,13 @@ spawn(function()
     end
 end)
 
-local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
-CamShake:Stop()
+local CamShake = nil
+pcall(function()
+    CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+    if CamShake then
+        CamShake:Stop()
+    end
+end)
 
     HttpService = game:GetService("HttpService")
     local i = "AETHER HUB"
