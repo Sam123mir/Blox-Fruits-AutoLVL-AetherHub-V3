@@ -2826,7 +2826,7 @@ local locallv = W:AddLabel("Level")
         Name = "Status Hack"
     })
     
-    local LevelFarmFarm W:AddLabel("Kaitun: Coming Soon")
+    local LevelFarmFarm = W:AddLabel("Kaitun: Coming Soon")
     W:AddLabel("Config Save : Comming Son...")
     local Farmfast = W:AddLabel("Farm Fast : ❌")
     local Bypass = W:AddLabel("Bypass ❌")
@@ -2859,7 +2859,7 @@ local locallv = W:AddLabel("Level")
     local   Shisui =            W:AddLabel("❌ : Shisui")
     local     Saddi =           W:AddLabel("❌ : Saddi")
     local      Wando =         W:AddLabel("❌ : Wando")
-    local     TrueTripleKatana          W:AddLabel("❌ : True Triple Katana")
+    local     TrueTripleKatana =          W:AddLabel("❌ : True Triple Katana")
     local Section = W:AddSection({
         Name = "World 1 Weapon"
     })
@@ -2880,7 +2880,7 @@ local locallv = W:AddLabel("Level")
     local     SpikeyTrident =          W:AddLabel("❌ : Spikey Trident")
     local   HallowScythe =            W:AddLabel("❌ : Hallow Scythe")
     local     DarkDagger =           W:AddLabel("❌ : Dark Dagger")
-    local     Tushita          W:AddLabel("❌ : Tushita")
+    local     Tushita =          W:AddLabel("❌ : Tushita")
     local Section = W:AddSection({
         Name = "Gun"
     })
