@@ -10408,7 +10408,7 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
         end
     end)
 
-    local CavandisPos = CFrame.new(5314.58203, 22.8796749, -125.942276, 1, 1.69639192e-10, 1.5617945e-15, -1.69639192e-10, 1, 5.38001999e-08, -1.55266783e-15, -5.38001999e-08, 1)
+    CavandisPos = CFrame.new(5314.58203, 22.8796749, -125.942276, 1, 1.69639192e-10, 1.5617945e-15, -1.69639192e-10, 1, 5.38001999e-08, -1.55266783e-15, -5.38001999e-08, 1)
     spawn(function()
         while wait() do
             if  _G.AutoCarvender and World3 then
@@ -10455,7 +10455,7 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
         end
     end)
 
-    local ElephantPos = CFrame.new(-13348.0654296875, 405.8904113769531, -8570.62890625)
+    ElephantPos = CFrame.new(-13348.0654296875, 405.8904113769531, -8570.62890625)
     spawn(function()
         while wait() do
             if  _G.AutoTwinHook and World3 then
