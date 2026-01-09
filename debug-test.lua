@@ -34,12 +34,15 @@ end
 
 -- Test 3: Ejecutar el script
 print("[TEST 3] Ejecutando script...")
-local success3, result3 = pcall(result2)
+local success3, result3 = xpcall(func, function(err)
+    return debug.traceback(err, 2)
+end)
 
 if success3 then
     print("[TEST 3] ✅ Script ejecutado correctamente")
 else
-    print("[TEST 3] ❌ Error al ejecutar: " .. tostring(result3))
+    print("[TEST 3] ❌ Error al ejecutar:")
+    print(tostring(result3))
 end
 
 print("═══════════════════════════════════════")
