@@ -10729,7 +10729,7 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
         end
     end)
 
-    local AdminPos = CFrame.new(-5344.822265625, 423.98541259766, -2725.0930175781)
+    AdminPos = CFrame.new(-5344.822265625, 423.98541259766, -2725.0930175781)
     spawn(function()
         pcall(function()
             while wait() do
