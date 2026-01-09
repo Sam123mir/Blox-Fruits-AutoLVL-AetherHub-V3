@@ -22,14 +22,13 @@ end
 
 -- Test 2: Verificar loadstring
 print("[TEST 2] Probando loadstring del script...")
-local success2, result2 = pcall(function()
-    return loadstring(result1)
-end)
+local func, syntaxError = loadstring(result1)
 
-if success2 and result2 then
+if func then
     print("[TEST 2] ✅ loadstring funcionando")
 else
-    print("[TEST 2] ❌ Error en loadstring: " .. tostring(result2))
+    print("[TEST 2] ❌ ERROR DE SINTAXIS:")
+    print(tostring(syntaxError))
     return
 end
 

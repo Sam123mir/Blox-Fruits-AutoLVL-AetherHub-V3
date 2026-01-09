@@ -10733,23 +10733,25 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
         end)
 
 
-local gg = getrawmetatable(game)
-local old = gg.__namecall
-setreadonly(gg,false)
-gg.__namecall = newcclosure(function(...)
-    local method = getnamecallmethod()
-    local args = {...}
-    if tostring(method) == "FireServer" then
-        if tostring(args[1]) == "RemoteEvent" then
-            if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-                if Skillaimbot then
-                    args[2] = AimBotSkillPosition
-                    return old(unpack(args))
+pcall(function()
+    gg = getrawmetatable(game)
+    old = gg.__namecall
+    setreadonly(gg,false)
+    gg.__namecall = newcclosure(function(...)
+        local method = getnamecallmethod()
+        local args = {...}
+        if tostring(method) == "FireServer" then
+            if tostring(args[1]) == "RemoteEvent" then
+                if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+                    if Skillaimbot then
+                        args[2] = AimBotSkillPosition
+                        return old(unpack(args))
+                    end
                 end
             end
         end
-    end
-    return old(...)
+        return old(...)
+    end)
 end)
 
 
