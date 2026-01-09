@@ -10538,7 +10538,7 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
         end
     end)
 
-    local GGPos = CFrame.new(3757.732421875, 91.99540710449219, 253.65066528320312)
+    GGPos = CFrame.new(3757.732421875, 91.99540710449219, 253.65066528320312)
     spawn(function()
         while wait() do
             if _G.Namfon and World3 then
