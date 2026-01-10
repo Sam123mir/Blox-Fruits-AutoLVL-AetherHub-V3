@@ -2748,7 +2748,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
     
-    local localrace = W:AddLabel("Race")
+    local localrace = W:AddParagraph({Title = "", Content = "Race"})
     
     spawn(function()
         while wait() do
@@ -2758,7 +2758,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
     
-    local localbeli = W:AddLabel("Beli")
+    local localbeli = W:AddParagraph({Title = "", Content = "Beli"})
     
     spawn(function()
         while wait() do
@@ -2767,7 +2767,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
             end)
         end
     end)
-    local localfrag = W:AddLabel("Fragment")
+    local localfrag = W:AddParagraph({Title = "", Content = "Fragment"})
     
     spawn(function()
         while wait() do
@@ -2778,7 +2778,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
     end)
     
     
-    local localexp = W:AddLabel("ExP")
+    local localexp = W:AddParagraph({Title = "", Content = "ExP"})
     
     spawn(function()
         while wait() do
@@ -2788,7 +2788,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
     
-    local localstat = W:AddLabel("Stats Points")
+    local localstat = W:AddParagraph({Title = "", Content = "Stats Points"})
     
     spawn(function()
         while wait() do
@@ -2798,7 +2798,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
     
-    local localbountyhornor = W:AddLabel("Bounty")
+    local localbountyhornor = W:AddParagraph({Title = "", Content = "Bounty"})
     
     spawn(function()
         while wait() do
@@ -2808,7 +2808,7 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
     
-    local localDevil = W:AddLabel("Devil Fruit")
+    local localDevil = W:AddParagraph({Title = "", Content = "Devil Fruit"})
     
     spawn(function()
         while wait() do
@@ -2826,16 +2826,16 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         Name = "Status Hack"
     })
     
-    local LevelFarmFarm = W:AddLabel("Kaitun: Coming Soon")
-    W:AddLabel("Config Save : Comming Son...")
-    local Farmfast = W:AddLabel("Farm Fast : ❌")
-    local Bypass = W:AddLabel("Bypass ❌")
+    local LevelFarmFarm = W:AddParagraph({Title = "", Content = "Kaitun: Coming Soon"})
+    W:AddParagraph({Title = "", Content = "Config Save : Comming Son..."})
+    local Farmfast = W:AddParagraph({Title = "", Content = "Farm Fast : ❌"})
+    local Bypass = W:AddParagraph({Title = "", Content = "Bypass ❌"})
     local Section = W:AddSection({
         Name = "World"
     })
-    local WolrdSet3 = W:AddLabel("World 1 ❌ ")
-    local WolrdSet = W:AddLabel("Wolrd : 2 ❌")
-    local WolrdSet1 = W:AddLabel("Wolrd : 3 ❌")
+    local WolrdSet3 = W:AddParagraph({Title = "", Content = "World 1 ❌ "})
+    local WolrdSet = W:AddParagraph({Title = "", Content = "Wolrd : 2 ❌"})
+    local WolrdSet1 = W:AddParagraph({Title = "", Content = "Wolrd : 3 ❌"})
     local Section = W:AddSection({
         Name = "Stats Point"
     })
@@ -2848,51 +2848,51 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
     local Section = W:AddSection({
         Name = "Melee Check"
     })
-    local  Superhuman =             W:AddLabel("❌ : Superhuman")
-    local  DeathStep =              W:AddLabel("❌ : Sharkman Karate")
-    local  ElectricClaw =             W:AddLabel("❌ : Electric Claw")
-    local  DragonTalon =             W:AddLabel("❌ : Dragon Talon")
-    local   GodHuman =            W:AddLabel("❌ : God Human")
+    local  Superhuman =             W:AddParagraph({Title = "", Content = "❌ : Superhuman"})
+    local  DeathStep =              W:AddParagraph({Title = "", Content = "❌ : Sharkman Karate"})
+    local  ElectricClaw =             W:AddParagraph({Title = "", Content = "❌ : Electric Claw"})
+    local  DragonTalon =             W:AddParagraph({Title = "", Content = "❌ : Dragon Talon"})
+    local   GodHuman =            W:AddParagraph({Title = "", Content = "❌ : God Human"})
     local Section = W:AddSection({
         Name = "Sword Legend Check"
     })
-    local   Shisui =            W:AddLabel("❌ : Shisui")
-    local     Saddi =           W:AddLabel("❌ : Saddi")
-    local      Wando =         W:AddLabel("❌ : Wando")
-    local     TrueTripleKatana =          W:AddLabel("❌ : True Triple Katana")
+    local   Shisui =            W:AddParagraph({Title = "", Content = "❌ : Shisui"})
+    local     Saddi =           W:AddParagraph({Title = "", Content = "❌ : Saddi"})
+    local      Wando =         W:AddParagraph({Title = "", Content = "❌ : Wando"})
+    local     TrueTripleKatana =          W:AddParagraph({Title = "", Content = "❌ : True Triple Katana"})
     local Section = W:AddSection({
         Name = "World 1 Weapon"
     })
-    local   Saber  = W:AddLabel("❌ : Saber")
+    local   Saber  = W:AddParagraph({Title = "", Content = "❌ : Saber"})
     local Section = W:AddSection({
         Name = "World 2 Weapon"
     })
-    local       Rengoku =         W:AddLabel("❌ : Rengoku")
-    local    MidnightBlade =            W:AddLabel("❌ : Midnight Blade")
-    local       DragonTrident =        W:AddLabel("❌ : DragonTrident")
+    local       Rengoku =         W:AddParagraph({Title = "", Content = "❌ : Rengoku"})
+    local    MidnightBlade =            W:AddParagraph({Title = "", Content = "❌ : Midnight Blade"})
+    local       DragonTrident =        W:AddParagraph({Title = "", Content = "❌ : DragonTrident"})
     local Section = W:AddSection({
         Name = "World 3 Weapon"
     })
-    local     Yama =          W:AddLabel("❌ : Yama")
-    local        BuddySword =        W:AddLabel("❌ : Buddy Sword")
-    local       Canvander =        W:AddLabel("❌ : Canvander")
-    local      TwinHooks =         W:AddLabel("❌ : Twin Hooks")
-    local     SpikeyTrident =          W:AddLabel("❌ : Spikey Trident")
-    local   HallowScythe =            W:AddLabel("❌ : Hallow Scythe")
-    local     DarkDagger =           W:AddLabel("❌ : Dark Dagger")
-    local     Tushita =          W:AddLabel("❌ : Tushita")
+    local     Yama =          W:AddParagraph({Title = "", Content = "❌ : Yama"})
+    local        BuddySword =        W:AddParagraph({Title = "", Content = "❌ : Buddy Sword"})
+    local       Canvander =        W:AddParagraph({Title = "", Content = "❌ : Canvander"})
+    local      TwinHooks =         W:AddParagraph({Title = "", Content = "❌ : Twin Hooks"})
+    local     SpikeyTrident =          W:AddParagraph({Title = "", Content = "❌ : Spikey Trident"})
+    local   HallowScythe =            W:AddParagraph({Title = "", Content = "❌ : Hallow Scythe"})
+    local     DarkDagger =           W:AddParagraph({Title = "", Content = "❌ : Dark Dagger"})
+    local     Tushita =          W:AddParagraph({Title = "", Content = "❌ : Tushita"})
     local Section = W:AddSection({
         Name = "Gun"
     })
-    local   Kabucha =            W:AddLabel("❌ : Kabucha")
-    local   AcidumRifle =             W:AddLabel("❌ : Acidum Rifle")
-    local    BizarreRifle =            W:AddLabel("❌ : Bizarre Rifle")
+    local   Kabucha =            W:AddParagraph({Title = "", Content = "❌ : Kabucha"})
+    local   AcidumRifle =             W:AddParagraph({Title = "", Content = "❌ : Acidum Rifle"})
+    local    BizarreRifle =            W:AddParagraph({Title = "", Content = "❌ : Bizarre Rifle"})
     local Section = W:AddSection({
         Name = "Quest"
     })
-    local   BartiloQuest =            W:AddLabel("❌ : Bartilo Quest")
-    local   DonSwanQuest =             W:AddLabel("❌ : Don Swan Quest")
-    local    KillDonSwan =           W:AddLabel("❌ : Kill Don Swan")
+    local   BartiloQuest =            W:AddParagraph({Title = "", Content = "❌ : Bartilo Quest"})
+    local   DonSwanQuest =             W:AddParagraph({Title = "", Content = "❌ : Don Swan Quest"})
+    local    KillDonSwan =           W:AddParagraph({Title = "", Content = "❌ : Kill Don Swan"})
 
 
 local Section = W:AddSection({
@@ -2900,11 +2900,11 @@ local Section = W:AddSection({
 })
 
 
-local Dark_Coat = W:AddLabel("❌: Dark Coat")
-local Ghoul_Mask = W:AddLabel("❌: Ghoul Mask")
-local Swan_Glass = W:AddLabel("❌: Swan Glass")
-local Pale_Scarf = W:AddLabel("❌: Pale Scarf")
-local Valkyrie_Helm = W:AddLabel("❌: Valkyrie Helm")
+local Dark_Coat = W:AddParagraph({Title = "", Content = "❌: Dark Coat"})
+local Ghoul_Mask = W:AddParagraph({Title = "", Content = "❌: Ghoul Mask"})
+local Swan_Glass = W:AddParagraph({Title = "", Content = "❌: Swan Glass"})
+local Pale_Scarf = W:AddParagraph({Title = "", Content = "❌: Pale Scarf"})
+local Valkyrie_Helm = W:AddParagraph({Title = "", Content = "❌: Valkyrie Helm"})
 
 
 spawn(function()
@@ -3591,7 +3591,7 @@ local Section = M:AddSection({
     Name = "Bone Menu"
 })
 
-local Bone = M:AddLabel("Bone : ")
+local Bone = M:AddParagraph({Title = "", Content = "Bone : "})
 
 spawn(function()
     while wait() do
@@ -3892,7 +3892,7 @@ local Section = IQ:AddSection({
     Name = "Saber Menu"
 })
 
-local SaberBoss = IQ:AddLabel("Boss Saber : ")
+local SaberBoss = IQ:AddParagraph({Title = "", Content = "Boss Saber : "})
 spawn(function()
     while wait() do
         pcall(function()
@@ -3931,7 +3931,7 @@ local Section = IQ:AddSection({
     Name = "Pole V.1"
 })
 
-local PoleBoss = IQ:AddLabel("Boss Thunder God : ")
+local PoleBoss = IQ:AddParagraph({Title = "", Content = "Boss Thunder God : "})
 spawn(function()
     while wait() do
         pcall(function()
@@ -4209,7 +4209,7 @@ IQ:AddToggle({
             Name = "ArenaTrainer"
         })
 
-        IQ:AddLabel("Cho thằng nào đell hiểu thì đây là tự động đánh hình nộm")
+        IQ:AddParagraph({Title = "", Content = "Cho thằng nào đell hiểu thì đây là tự động đánh hình nộm"})
 
         IQ:AddToggle({
             Name = "Automatically hit the dummy",
@@ -4460,11 +4460,11 @@ spawn(function()
     end
 end)
 
-Chest = S:AddLabel("Chest")
+Chest = S:AddParagraph({Title = "", Content = "Chest"})
 
-Fruit = S:AddLabel("Fruit")
+Fruit = S:AddParagraph({Title = "", Content = "Fruit"})
 
-  local Pointstat = S:AddLabel("Stat Points")
+  local Pointstat = S:AddParagraph({Title = "", Content = "Stat Points"})
     
     spawn(function()
         while wait() do
@@ -4474,11 +4474,11 @@ Fruit = S:AddLabel("Fruit")
         end
     end)
     
-local Melee = S:AddLabel("Melee : ")
-local Defense = S:AddLabel("Defense : ")
-local Sword = S:AddLabel("Sword : ")
-local Gun = S:AddLabel("Gun : ")
-local Fruit = S:AddLabel("Fruit : ")
+local Melee = S:AddParagraph({Title = "", Content = "Melee : "})
+local Defense = S:AddParagraph({Title = "", Content = "Defense : "})
+local Sword = S:AddParagraph({Title = "", Content = "Sword : "})
+local Gun = S:AddParagraph({Title = "", Content = "Gun : "})
+local Fruit = S:AddParagraph({Title = "", Content = "Fruit : "})
 
     spawn(function()
         while wait() do
@@ -4821,9 +4821,9 @@ function UpdateFlowerChams()
     end
 end
 
-local TimeRaid = RA:AddLabel("Wait For Dungeon")
+local TimeRaid = RA:AddParagraph({Title = "", Content = "Wait For Dungeon"})
 
-local checkisland = RA:AddLabel("Island : Not Raid")
+local checkisland = RA:AddParagraph({Title = "", Content = "Island : Not Raid"})
 
 _G.SelectChip = selectraids or ""
     Raidslist = {}
@@ -5513,7 +5513,7 @@ local Section = SV:AddSection({
     Name = "Elite Check"
 })
 
-local Elite_Hunter_Status = SV:AddLabel("Only Third Sea")
+local Elite_Hunter_Status = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
     
     
         spawn(function()
@@ -5559,13 +5559,13 @@ local Elite_Hunter_Status = SV:AddLabel("Only Third Sea")
     end)
 end
 
-Mirragecheck = SV:AddLabel("Only Third Sea")
+Mirragecheck = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
 
 local Section = SV:AddSection({
     Name = "Dough King Check"
 })
 
-local MobKilled = SV:AddLabel("Only Third Sea")
+local MobKilled = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
 
 spawn(function()
     while wait() do
