@@ -2833,12 +2833,12 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
     local WolrdSet = W:AddParagraph({Title = "", Content = "Wolrd : 2 ❌"})
     local WolrdSet1 = W:AddParagraph({Title = "", Content = "Wolrd : 3 ❌"})
     local Section = W:AddSection("Stats Point")
-    local StastMelee = W:AddLabel("")
-    local StastDefense = W:AddLabel("")
-    local StastSword = W:AddLabel("")
-    local StastGun = W:AddLabel("")
-    local StastDevilFruit = W:AddLabel("")
-    local PointsStast = W:AddLabel("")
+    local StastMelee = W:AddParagraph({Title = "", Content = ""})
+    local StastDefense = W:AddParagraph({Title = "", Content = ""})
+    local StastSword = W:AddParagraph({Title = "", Content = ""})
+    local StastGun = W:AddParagraph({Title = "", Content = ""})
+    local StastDevilFruit = W:AddParagraph({Title = "", Content = ""})
+    local PointsStast = W:AddParagraph({Title = "", Content = ""})
     local Section = W:AddSection("Melee Check")
     local  Superhuman =             W:AddParagraph({Title = "", Content = "❌ : Superhuman"})
     local  DeathStep =              W:AddParagraph({Title = "", Content = "❌ : Sharkman Karate"})
@@ -3581,7 +3581,7 @@ ToggleRandom = M:AddToggle({
     
     local Section = M:AddSection("Other Menu")
 
-local EliteProgress = M:AddLabel("")
+local EliteProgress = M:AddParagraph({Title = "", Content = ""})
 
     spawn(function()
         pcall(function()
@@ -5373,7 +5373,7 @@ Wld:AddButton({
 
 local Section = SV:AddSection("FullMoon Check")
 
-local FM = SV:AddLabel("Server Time : " .. function8() .. " | ".. CheckMoon() .. " | " .. function7())
+local FM = SV:AddParagraph({Title = "", Content = "Server Time : " .. function8() .. " | ".. CheckMoon() .. " | " .. function7()})
 
 spawn(function()
         while wait() do
@@ -5383,7 +5383,7 @@ spawn(function()
 
             local Section = SV:AddSection("Anclient One Check")
 
-            local bL = SV:AddLabel("Anclient One Status : " .. tostring(CheckAcientOneStatus()))
+            local bL = SV:AddParagraph({Title = "", Content = "Anclient One Status : " .. tostring(CheckAcientOneStatus())})
 
 local Section = SV:AddSection("Elite Check")
 
@@ -5404,7 +5404,7 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = "", Content = "Only Third S
 
         local Section = SV:AddSection("Elite Hunter")
 
-        local EliteProgress = SV:AddLabel("")
+        local EliteProgress = SV:AddParagraph({Title = "", Content = ""})
     
         spawn(function()
             pcall(function()
