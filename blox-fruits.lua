@@ -2650,226 +2650,95 @@ end)
         return "Remaining " .. 10 - v228 .. " training sessions."
     end
 
-local OrionLib = nil
-local Window = nil
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- Try to load OrionLib with error handling
-local orionSuccess, orionResult = pcall(function()
-    return loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-end)
+local Window = Fluent:CreateWindow({
+    Title = "AETHER HUB - Blox Fruits",
+    SubTitle = "by samir",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
 
-if orionSuccess and orionResult then
-    OrionLib = orionResult
-    Window = OrionLib:MakeWindow({Name = "AETHER HUB", HidePremium = false, IntroText = "", SaveConfig = true, ConfigFolder = "AETHER HUB"})
-else
-    warn("AETHER HUB: Failed to load OrionLib, trying alternative...")
-    -- Try Rayfield as fallback
-    local rayfieldSuccess, rayfieldResult = pcall(function()
-        return loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-    end)
-    
-    if rayfieldSuccess and rayfieldResult then
-        OrionLib = rayfieldResult
-        Window = OrionLib:CreateWindow({Name = "AETHER HUB", LoadingTitle = "AETHER HUB", LoadingSubtitle = "Loading..."})
-    else
-        warn("AETHER HUB: No UI library loaded. Script may have limited functionality.")
-    end
-end
-
-if not OrionLib or not Window then
-    warn("AETHER HUB: UI failed to load. Check your executor.")
-    return
-end
-
--- Safe notification function (works with different UI libraries)
+-- Fluent notification function
 local function SafeNotify(title, content)
-    pcall(function()
-        if OrionLib.MakeNotification then
-            OrionLib:MakeNotification({
-                Name = title,
-                Content = content,
-                Image = "rbxassetid://119980140458596",
-                Time = 5
-            })
-        elseif OrionLib.Notify then
-            OrionLib:Notify({
-                Title = title,
-                Content = content,
-                Duration = 5
-            })
-        end
-    end)
+    Fluent:Notify({
+        Title = title,
+        Content = content,
+        Duration = 5
+    })
 end
 
-SafeNotify("AETHER HUB", "Welcome! Choose Your Settings.")
+SafeNotify("AETHER HUB", "Welcome! Loading script...")
 SafeNotify("AETHER HUB", "AETHER HUB - Blox Fruits")
-SafeNotify("AETHER HUB", "Please Wait loading script...")
+SafeNotify("AETHER HUB", "Please wait while we initialize...")
 
 -------------Tab-----------------------
 
--- Safe tab creation function (works with different UI libraries)
--- Wraps tab methods to be compatible with both OrionLib and Rayfield
-local function SafeTab(name, icon)
-    local originalTab = nil
-    pcall(function()
-        if Window.MakeTab then
-            originalTab = Window:MakeTab({
-                Name = name,
-                Icon = icon or "rbxassetid://119980140458596",
-                PremiumOnly = false
-            })
-        elseif Window.CreateTab then
-            originalTab = Window:CreateTab(name, icon)
-        end
-    end)
-    
-    -- Create a wrapper with safe methods
-    local safeTab = {}
-    
-    -- Store original tab for methods that work natively
-    safeTab._original = originalTab or {}
-    
-    -- Safe AddLabel
-    function safeTab:AddLabel(text)
-        local label = nil
-        pcall(function()
-            if originalTab and originalTab.AddLabel then
-                label = originalTab:AddLabel(text)
-            end
-        end)
-        return label or {Set = function() end}
-    end
-    
-    -- Safe AddSection
-    function safeTab:AddSection(config)
-        pcall(function()
-            if originalTab and originalTab.AddSection then
-                originalTab:AddSection(config)
-            end
-        end)
-    end
-    
-    -- Safe AddToggle
-    function safeTab:AddToggle(config)
-        local toggle = nil
-        pcall(function()
-            if originalTab and originalTab.AddToggle then
-                toggle = originalTab:AddToggle(config)
-            end
-        end)
-        return toggle or {Set = function() end}
-    end
-    
-    -- Safe AddButton
-    function safeTab:AddButton(config)
-        local button = nil
-        pcall(function()
-            if originalTab and originalTab.AddButton then
-                button = originalTab:AddButton(config)
-            end
-        end)
-        return button or {}
-    end
-    
-    -- Safe AddDropdown
-    function safeTab:AddDropdown(config)
-        local dropdown = nil
-        pcall(function()
-            if originalTab and originalTab.AddDropdown then
-                dropdown = originalTab:AddDropdown(config)
-            end
-        end)
-        return dropdown or {Set = function() end, Refresh = function() end}
-    end
-    
-    -- Safe AddSlider
-    function safeTab:AddSlider(config)
-        local slider = nil
-        pcall(function()
-            if originalTab and originalTab.AddSlider then
-                slider = originalTab:AddSlider(config)
-            end
-        end)
-        return slider or {Set = function() end}
-    end
-    
-    -- Safe AddTextbox
-    function safeTab:AddTextbox(config)
-        local textbox = nil
-        pcall(function()
-            if originalTab and originalTab.AddTextbox then
-                textbox = originalTab:AddTextbox(config)
-            end
-        end)
-        return textbox or {}
-    end
-    
-    return safeTab
-end
+-- Tabs creation for Fluent UI
+local Tabs = {
+    Welcome = Window:AddTab({ Title = "Welcome", Icon = "" }),
+    General = Window:AddTab({ Title = "General", Icon = "" }),
+    Setting = Window:AddTab({ Title = "Setting", Icon = "" }),
+    ItemQuest = Window:AddTab({ Title = "Item & Quest", Icon = "" }),
+    Stats = Window:AddTab({ Title = "Stats", Icon = "" }),
+    ESP = Window:AddTab({ Title = "ESP", Icon = "" }),
+    Raid = Window:AddTab({ Title = "Raid", Icon = "" }),
+    LocalPlayers = Window:AddTab({ Title = "Local Players", Icon = "" }),
+    WorldTeleport = Window:AddTab({ Title = "World Teleport", Icon = "" }),
+    StatusSever = Window:AddTab({ Title = "Status Sever", Icon = "" }),
+    DevilFruit = Window:AddTab({ Title = "Devil Fruit", Icon = "" }),
+    RaceV4 = Window:AddTab({ Title = "Race V4", Icon = "" }),
+    Shop = Window:AddTab({ Title = "Shop", Icon = "" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "" })
+}
 
-local W = SafeTab("Welcome")
+local W = Tabs.Welcome
+local M = Tabs.General
+local ST = Tabs.Setting
+local IQ = Tabs.ItemQuest
+local S = Tabs.Stats
+local E = Tabs.ESP
+local RA = Tabs.Raid
+local LC = Tabs.LocalPlayers
+local Wld = Tabs.WorldTeleport
+local SV = Tabs.StatusSever
+local D = Tabs.DevilFruit
+local R = Tabs.RaceV4
+local SH = Tabs.Shop
+local C = Tabs.Misc
 
-local M = SafeTab("General")
-
-local ST = SafeTab("Setting")
-
-local IQ = SafeTab("Item & Quest")
-
-local S = SafeTab("Stats")
-
-local E = SafeTab("ESP")
-
-local RA = SafeTab("Raid")
-
-local LC = SafeTab("Local Players")
-
-local Wld = SafeTab("World Teleport")
-
-local SV = SafeTab("Status Sever")
-
-local D = SafeTab("Devil Fruit")
-
-local R = SafeTab("Race V4")
-
-local SH = SafeTab("Shop")
-
-
-local C = SafeTab("Misc")
 
 -----Label--------------------
--- Safe section and label functions (works with different UI libraries)
+-- Fluent UI helper functions
 local function SafeSection(tab, name)
-    pcall(function()
-        if tab and tab.AddSection then
-            tab:AddSection({Name = name})
-        elseif tab and tab.Section then
-            tab:Section({Title = name})
-        end
-    end)
+    tab:AddParagraph({
+        Title = name,
+        Content = ""
+    })
 end
 
 local function SafeLabel(tab, text)
-    local label = nil
-    pcall(function()
-        if tab and tab.AddLabel then
-            label = tab:AddLabel(text)
-        elseif tab and tab.AddParagraph then
-            label = tab:AddParagraph({Title = "", Content = text})
-        end
-    end)
-    return label or {Set = function() end}
+    return tab:AddParagraph({
+        Title = "",
+        Content = text
+    })
 end
 
 SafeSection(W, "Update")
 
-SafeLabel(W, "[+] AETHER HUB is HERE!")
-SafeLabel(W, "[+] Best AutoFarm!")
-SafeLabel(W, "[+] Up and Growing")
-SafeLabel(W, "[+] Smooth")
+W:AddParagraph({Title = "", Content = "[+] AETHER HUB is HERE!"})
+W:AddParagraph({Title = "", Content = "[+] Best AutoFarm!"})
+W:AddParagraph({Title = "", Content = "[+] Up and Growing"})
+W:AddParagraph({Title = "", Content = "[+] Smooth"})
 
 SafeSection(W, "Status")
 
-local locallv = SafeLabel(W, "Level")
+local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
     
     spawn(function()
         while wait() do
