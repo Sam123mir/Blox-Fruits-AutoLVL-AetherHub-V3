@@ -2750,23 +2750,43 @@ local R = SafeTab("Race V4")
 
 local SH = SafeTab("Shop")
 
+
 local C = SafeTab("Misc")
 
 -----Label--------------------
-local Section = W:AddSection({
-    Name = "Update"
-})
+-- Safe section and label functions (works with different UI libraries)
+local function SafeSection(tab, name)
+    pcall(function()
+        if tab and tab.AddSection then
+            tab:AddSection({Name = name})
+        elseif tab and tab.Section then
+            tab:Section({Title = name})
+        end
+    end)
+end
 
-W:AddLabel("[+] AETHER HUB is HERE!")
-W:AddLabel("[+] Best AutoFarm!")
-W:AddLabel("[+] Up and Growing")
-W:AddLabel("[+] Smooth")
+local function SafeLabel(tab, text)
+    local label = nil
+    pcall(function()
+        if tab and tab.AddLabel then
+            label = tab:AddLabel(text)
+        elseif tab and tab.AddParagraph then
+            label = tab:AddParagraph({Title = "", Content = text})
+        end
+    end)
+    return label or {Set = function() end}
+end
 
-local Section = W:AddSection({
-    Name = "Status"
-})
+SafeSection(W, "Update")
 
-local locallv = W:AddLabel("Level")
+SafeLabel(W, "[+] AETHER HUB is HERE!")
+SafeLabel(W, "[+] Best AutoFarm!")
+SafeLabel(W, "[+] Up and Growing")
+SafeLabel(W, "[+] Smooth")
+
+SafeSection(W, "Status")
+
+local locallv = SafeLabel(W, "Level")
     
     spawn(function()
         while wait() do
