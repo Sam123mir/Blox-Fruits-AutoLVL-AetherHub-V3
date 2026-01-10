@@ -2822,57 +2822,41 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
         end
     end)
 
-    local Section = W:AddSection({
-        Name = "Status Hack"
-    })
+    local Section = W:AddSection("Status Hack")
     
     local LevelFarmFarm = W:AddParagraph({Title = "", Content = "Kaitun: Coming Soon"})
     W:AddParagraph({Title = "", Content = "Config Save : Comming Son..."})
     local Farmfast = W:AddParagraph({Title = "", Content = "Farm Fast : ❌"})
     local Bypass = W:AddParagraph({Title = "", Content = "Bypass ❌"})
-    local Section = W:AddSection({
-        Name = "World"
-    })
+    local Section = W:AddSection("World")
     local WolrdSet3 = W:AddParagraph({Title = "", Content = "World 1 ❌ "})
     local WolrdSet = W:AddParagraph({Title = "", Content = "Wolrd : 2 ❌"})
     local WolrdSet1 = W:AddParagraph({Title = "", Content = "Wolrd : 3 ❌"})
-    local Section = W:AddSection({
-        Name = "Stats Point"
-    })
+    local Section = W:AddSection("Stats Point")
     local StastMelee = W:AddLabel("")
     local StastDefense = W:AddLabel("")
     local StastSword = W:AddLabel("")
     local StastGun = W:AddLabel("")
     local StastDevilFruit = W:AddLabel("")
     local PointsStast = W:AddLabel("")
-    local Section = W:AddSection({
-        Name = "Melee Check"
-    })
+    local Section = W:AddSection("Melee Check")
     local  Superhuman =             W:AddParagraph({Title = "", Content = "❌ : Superhuman"})
     local  DeathStep =              W:AddParagraph({Title = "", Content = "❌ : Sharkman Karate"})
     local  ElectricClaw =             W:AddParagraph({Title = "", Content = "❌ : Electric Claw"})
     local  DragonTalon =             W:AddParagraph({Title = "", Content = "❌ : Dragon Talon"})
     local   GodHuman =            W:AddParagraph({Title = "", Content = "❌ : God Human"})
-    local Section = W:AddSection({
-        Name = "Sword Legend Check"
-    })
+    local Section = W:AddSection("Sword Legend Check")
     local   Shisui =            W:AddParagraph({Title = "", Content = "❌ : Shisui"})
     local     Saddi =           W:AddParagraph({Title = "", Content = "❌ : Saddi"})
     local      Wando =         W:AddParagraph({Title = "", Content = "❌ : Wando"})
     local     TrueTripleKatana =          W:AddParagraph({Title = "", Content = "❌ : True Triple Katana"})
-    local Section = W:AddSection({
-        Name = "World 1 Weapon"
-    })
+    local Section = W:AddSection("World 1 Weapon")
     local   Saber  = W:AddParagraph({Title = "", Content = "❌ : Saber"})
-    local Section = W:AddSection({
-        Name = "World 2 Weapon"
-    })
+    local Section = W:AddSection("World 2 Weapon")
     local       Rengoku =         W:AddParagraph({Title = "", Content = "❌ : Rengoku"})
     local    MidnightBlade =            W:AddParagraph({Title = "", Content = "❌ : Midnight Blade"})
     local       DragonTrident =        W:AddParagraph({Title = "", Content = "❌ : DragonTrident"})
-    local Section = W:AddSection({
-        Name = "World 3 Weapon"
-    })
+    local Section = W:AddSection("World 3 Weapon")
     local     Yama =          W:AddParagraph({Title = "", Content = "❌ : Yama"})
     local        BuddySword =        W:AddParagraph({Title = "", Content = "❌ : Buddy Sword"})
     local       Canvander =        W:AddParagraph({Title = "", Content = "❌ : Canvander"})
@@ -2881,23 +2865,17 @@ local locallv = W:AddParagraph({Title = "", Content = "Level: Loading..."})
     local   HallowScythe =            W:AddParagraph({Title = "", Content = "❌ : Hallow Scythe"})
     local     DarkDagger =           W:AddParagraph({Title = "", Content = "❌ : Dark Dagger"})
     local     Tushita =          W:AddParagraph({Title = "", Content = "❌ : Tushita"})
-    local Section = W:AddSection({
-        Name = "Gun"
-    })
+    local Section = W:AddSection("Gun")
     local   Kabucha =            W:AddParagraph({Title = "", Content = "❌ : Kabucha"})
     local   AcidumRifle =             W:AddParagraph({Title = "", Content = "❌ : Acidum Rifle"})
     local    BizarreRifle =            W:AddParagraph({Title = "", Content = "❌ : Bizarre Rifle"})
-    local Section = W:AddSection({
-        Name = "Quest"
-    })
+    local Section = W:AddSection("Quest")
     local   BartiloQuest =            W:AddParagraph({Title = "", Content = "❌ : Bartilo Quest"})
     local   DonSwanQuest =             W:AddParagraph({Title = "", Content = "❌ : Don Swan Quest"})
     local    KillDonSwan =           W:AddParagraph({Title = "", Content = "❌ : Kill Don Swan"})
 
 
-local Section = W:AddSection({
-    Name = "Acessory"
-})
+local Section = W:AddSection("Acessory")
 
 
 local Dark_Coat = W:AddParagraph({Title = "", Content = "❌: Dark Coat"})
@@ -2931,9 +2909,7 @@ spawn(function()
     end
 end)
 
-local Section = M:AddSection({
-    Name = "Select Weapon"
-})
+local Section = M:AddSection("Select Weapon")
 
 M:AddParagraph("Select Weapon","Please Select Weapon")
 
@@ -2990,9 +2966,7 @@ task.spawn(function()
     end)
 
 if World2 and World1 then
-    local Section = M:AddSection({
-        Name = "BOOTS"
-    })
+    local Section = M:AddSection("BOOTS")
 
     M:AddButton({
         Name = "BOOST FPS",
@@ -3046,9 +3020,7 @@ if World2 and World1 then
     })
 end
 
-    local Section = M:AddSection({
-        Name = "Other Farm"
-    })
+    local Section = M:AddSection("Other Farm")
 
     M:AddParagraph("Redeem Code","Click to Button to Reddem All Code In Blox Fruits.")
 
@@ -3095,9 +3067,7 @@ end
           end    
     })
 
-    local Section = M:AddSection({
-        Name = "Auto Farm Level"
-    })
+    local Section = M:AddSection("Auto Farm Level")
 
 
 M:AddParagraph("Main Farm","Click to Box to Farm, I ready update new mob farm!.")
@@ -3113,9 +3083,7 @@ ToggleFarm = M:AddToggle({
     end    
 })
 
-local Section = M:AddSection({
-    Name = "Mastery Menu"
-})
+local Section = M:AddSection("Mastery Menu")
 
 M:AddParagraph("Mastery Menu","Click To Box to Start Farm Mastery")
 
@@ -3215,9 +3183,7 @@ M:AddToggle({
         end    
     })
 
-    local Section = M:AddSection({
-        Name = "Bring Mob"
-    })
+    local Section = M:AddSection("Bring Mob")
 
 M:AddToggle({
     Name = "Bring Mobs[Fix]",
@@ -3257,9 +3223,7 @@ spawn(function()
     end
 end)
 
-local Section = M:AddSection({
-    Name = "FastAttack :"
-})
+local Section = M:AddSection("FastAttack :")
 
 M:AddToggle({
     Name = "FastAttack",
@@ -3364,9 +3328,7 @@ spawn(function()
     end
 end)
 
-local Section = M:AddSection({
-    Name = "Bypass Teleport"
-})
+local Section = M:AddSection("Bypass Teleport")
 
 M:AddToggle({
     Name = "Bypass TP[BETA]",
@@ -3379,9 +3341,7 @@ M:AddToggle({
 })
 
 
-local Section = M:AddSection({
-    Name = "Distance Mobs"
-})
+local Section = M:AddSection("Distance Mobs")
 
 PosY = 30
 M:AddSlider({
@@ -3400,9 +3360,7 @@ M:AddSlider({
     end    
 })
 
-local Section = M:AddSection({
-    Name = "Farm Fast : Lv 10 => 120"
-})
+local Section = M:AddSection("Farm Fast : Lv 10 => 120")
 
 Farmfasttoggle = M:AddToggle({
     Name = "Auto Farm Fast",
@@ -3415,9 +3373,7 @@ Farmfasttoggle = M:AddToggle({
     end    
 })
 
-local Section = M:AddSection({
-    Name = "Kaitun Met Vaiz"
-})
+local Section = M:AddSection("Kaitun Met Vaiz")
 
 M:AddParagraph("Kaitun/Cantay","Kaitun bản này đell khác gì bản kia.")
 
@@ -3481,9 +3437,7 @@ spawn(function()
     end
 end)
 
-   local Section = M:AddSection({
-    Name = "Mob & Boss Farm"
-})
+   local Section = M:AddSection("Mob & Boss Farm")
 
 if World1 then
     M:AddDropdown({
@@ -3526,9 +3480,7 @@ if World1 then
         end    
     }) 
 
-local Section = M:AddSection({
-    Name = "Nearest Farm"
-})
+local Section = M:AddSection("Nearest Farm")
 
 M:AddToggle({
     Name = "Auto Farm Nearest",
@@ -3541,9 +3493,7 @@ M:AddToggle({
     end    
 })
 
-    local Section = M:AddSection({
-        Name = "Chest Farm"
-    })
+    local Section = M:AddSection("Chest Farm")
 
 TweenChest = M:AddToggle({
         Name = "Auto Chest [MUP]",
@@ -3587,9 +3537,7 @@ spawn(function()
 end
 end)
 
-local Section = M:AddSection({
-    Name = "Bone Menu"
-})
+local Section = M:AddSection("Bone Menu")
 
 local Bone = M:AddParagraph({Title = "", Content = "Bone : "})
 
@@ -3631,9 +3579,7 @@ ToggleRandom = M:AddToggle({
         end)
     end)
     
-    local Section = M:AddSection({
-        Name = "Other Menu"
-    })
+    local Section = M:AddSection("Other Menu")
 
 local EliteProgress = M:AddLabel("")
 
@@ -3678,9 +3624,7 @@ local EliteProgress = M:AddLabel("")
                 StopTween(_G.RaidPirate)
             end    
         })
-        local Section = M:AddSection({
-            Name = "Dough King Menu"
-        })
+        local Section = M:AddSection("Dough King Menu")
         
 
         M:AddToggle({
@@ -3723,15 +3667,11 @@ local EliteProgress = M:AddLabel("")
             end    
         })
 
-local Section = M:AddSection({
-    Name = "Boss"
-})
+local Section = M:AddSection("Boss")
 
 M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
 
-    local Section = M:AddSection({
-        Name = "Observation Haki"
-    })
+    local Section = M:AddSection("Observation Haki")
 
     M:AddToggle({
         Name = "Auto Farm Observation Haki",
@@ -3754,9 +3694,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    local Section = M:AddSection({
-        Name = "Melee v2"
-    })
+    local Section = M:AddSection("Melee v2")
     
     M:AddToggle({
         Name = "Auto Death Step",
@@ -3888,9 +3826,7 @@ elseif _G.WhiteScreen == false then
         end    
     })
 
-local Section = IQ:AddSection({
-    Name = "Saber Menu"
-})
+local Section = IQ:AddSection("Saber Menu")
 
 local SaberBoss = IQ:AddParagraph({Title = "", Content = "Boss Saber : "})
 spawn(function()
@@ -3927,9 +3863,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Pole V.1"
-})
+local Section = IQ:AddSection("Pole V.1")
 
 local PoleBoss = IQ:AddParagraph({Title = "", Content = "Boss Thunder God : "})
 spawn(function()
@@ -3965,9 +3899,7 @@ TogglePolev1Hop = IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Second Sea"
-})
+local Section = IQ:AddSection("Second Sea")
 
 IQ:AddToggle({
     Name = "Auto Second Sea",
@@ -3980,9 +3912,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Vampire"
-})
+local Section = IQ:AddSection("Vampire")
 IQ:AddToggle({
     Name = "Auto Vampire",
     Default = false,
@@ -3995,9 +3925,7 @@ IQ:AddToggle({
 })
 
 
-local Section = IQ:AddSection({
-    Name = "SuperHuman"
-})
+local Section = IQ:AddSection("SuperHuman")
 
 IQ:AddToggle({
     Name = "Auto SuperHuman",
@@ -4010,9 +3938,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Bartilo"
-})
+local Section = IQ:AddSection("Bartilo")
 
 
 BartiloToggle = IQ:AddToggle({
@@ -4027,9 +3953,7 @@ BartiloToggle = IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Next Sea Third"
-})
+local Section = IQ:AddSection("Next Sea Third")
 
 
 IQ:AddToggle({
@@ -4053,9 +3977,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Buddy Sword"
-})
+local Section = IQ:AddSection("Buddy Sword")
 
 IQ:AddToggle({
     Name = "Auto Buddy Sword",
@@ -4078,9 +4000,7 @@ IQ:AddToggle({
     end    
 })
 
-    local Section = IQ:AddSection({
-        Name = "Soul Guita"
-    })
+    local Section = IQ:AddSection("Soul Guita")
 
     IQ:AddToggle({
         Name = "Auto Soul Guita",
@@ -4114,9 +4034,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Auto Dual Curset Katana[Not Work]"
-})
+local Section = IQ:AddSection("Auto Dual Curset Katana[Not Work]")
 
 IQ:AddToggle({
     Name = "Auto Dual Curset Katana",
@@ -4129,9 +4047,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = IQ:AddSection({
-    Name = "Tushita"
-})
+local Section = IQ:AddSection("Tushita")
 
 IQ:AddToggle({
     Name = "Auto Tushita",
@@ -4155,9 +4071,7 @@ IQ:AddToggle({
     end  
 })
 
-local Section = IQ:AddSection({
-    Name = "Cavander"
-})
+local Section = IQ:AddSection("Cavander")
 
 IQ:AddToggle({
     Name = "Auto Cavander",
@@ -4180,9 +4094,7 @@ IQ:AddToggle({
     end    
 })
 
-        local Section = IQ:AddSection({
-            Name = "Twin Hook"
-        })
+        local Section = IQ:AddSection("Twin Hook")
 
         IQ:AddToggle({
             Name = "Auto Twin Hook",
@@ -4205,9 +4117,7 @@ IQ:AddToggle({
             end    
         })
         
-        local Section = IQ:AddSection({
-            Name = "ArenaTrainer"
-        })
+        local Section = IQ:AddSection("ArenaTrainer")
 
         IQ:AddParagraph({Title = "", Content = "Cho thằng nào đell hiểu thì đây là tự động đánh hình nộm"})
 
@@ -4232,9 +4142,7 @@ IQ:AddToggle({
             end    
         })
 
-        local Section = IQ:AddSection({
-            Name = "Seperator Hallow Scythe"
-        })
+        local Section = IQ:AddSection("Seperator Hallow Scythe")
 
         IQ:AddToggle({
             Name = "Auto Hallow Scythe",
@@ -4257,9 +4165,7 @@ ToggleHallow = IQ:AddToggle({
             end    
         })
 
-        local Section = IQ:AddSection({
-            Name = "Dark Dragger"
-        })
+        local Section = IQ:AddSection("Dark Dragger")
 
         IQ:AddToggle({
             Name = "Auto Dark Dragger",
@@ -4305,9 +4211,7 @@ ToggleHallow = IQ:AddToggle({
         end)
     end
 
-    local Section = IQ:AddSection({
-        Name = "SeaBeast"
-    })
+    local Section = IQ:AddSection("SeaBeast")
 
     IQ:AddToggle({
         Name = "Auto Seabeast",
@@ -4342,9 +4246,7 @@ spawn(function()
     end)
 end)
 
-local Section = IQ:AddSection({
-        Name = "Mirrage Menu"
-    })
+local Section = IQ:AddSection("Mirrage Menu")
 
 IQ:AddToggle({
     Name = "Auto Summon and Find Mirrage Island",
@@ -4430,9 +4332,7 @@ IQ:AddToggle({
     end    
 })
 
-local Section = S:AddSection({
-    Name = "Stats Select"
-})
+local Section = S:AddSection("Stats Select")
 
 spawn(function()
     while wait() do
@@ -4596,9 +4496,7 @@ S:AddSlider({
     end    
 })
 
-local Section = E:AddSection({
-    Name = "ESP MENU"
-})
+local Section = E:AddSection("ESP MENU")
 
 E:AddToggle({
     Name = "ESP Players",
@@ -4874,9 +4772,7 @@ RA:AddToggle({
 })
 
 
-local Section = RA:AddSection({
-    Name = "Raid Menu"
-})
+local Section = RA:AddSection("Raid Menu")
 
 RA:AddToggle({
     Name = "KillAura",
@@ -4909,9 +4805,7 @@ RA:AddToggle({
     end    
 })
 
-local Section = RA:AddSection({
-    Name = "Raid Law Menu"
-})
+local Section = RA:AddSection("Raid Law Menu")
 
 RA:AddToggle({
     Name = "Auto Buy Chips Law[Raid]",
@@ -4944,9 +4838,7 @@ RA:AddToggle({
     end    
 })
 
-local Section = LC:AddSection({
-    Name = "Teleport Island"
-})
+local Section = LC:AddSection("Teleport Island")
 
 
 if World1 then
@@ -5146,9 +5038,7 @@ LC:AddToggle({
     end    
 })
 
-local Section = LC:AddSection({
-    Name = "Teleport NPC"
-})
+local Section = LC:AddSection("Teleport NPC")
 
 NPC1 = {
             "Random Devil Fruit",
@@ -5329,9 +5219,7 @@ end
             end    
         })
 
-        local Section = LC:AddSection({
-            Name = "Teleport SeSeabeast"
-        })
+        local Section = LC:AddSection("Teleport SeSeabeast")
 
 LC:AddToggle({
     Name = "Teleport to Seabeast",
@@ -5347,9 +5235,7 @@ LC:AddToggle({
     end    
 })
 
-local Section = LC:AddSection({
-    Name = "Teleport Mirrage"
-})
+local Section = LC:AddSection("Teleport Mirrage")
 
 LC:AddButton({
     Name = "Revome Frog",
@@ -5370,9 +5256,7 @@ LC:AddToggle({
     end    
 })
 
-local Section = LC:AddSection({
-    Name = "Players"
-})
+local Section = LC:AddSection("Players")
 
 spawn(function()
     while wait() do
@@ -5440,9 +5324,7 @@ LC:AddToggle({
     end    
 })
 
-local Section = LC:AddSection({
-    Name = "AimBot"
-})
+local Section = LC:AddSection("AimBot")
 
 LC:AddToggle({
     Name = "AimBot",
@@ -5466,9 +5348,7 @@ LC:AddToggle({
     end    
 })
 
-local Section = Wld:AddSection({
-    Name = "World Menu"
-})
+local Section = Wld:AddSection("World Menu")
 
 Wld:AddButton({
     Name = "Old World",
@@ -5491,9 +5371,7 @@ Wld:AddButton({
       end    
 })
 
-local Section = SV:AddSection({
-    Name = "FullMoon Check"
-})
+local Section = SV:AddSection("FullMoon Check")
 
 local FM = SV:AddLabel("Server Time : " .. function8() .. " | ".. CheckMoon() .. " | " .. function7())
 
@@ -5503,15 +5381,11 @@ spawn(function()
                 end
             end)
 
-            local Section = SV:AddSection({
-                Name = "Anclient One Check"
-            })
+            local Section = SV:AddSection("Anclient One Check")
 
             local bL = SV:AddLabel("Anclient One Status : " .. tostring(CheckAcientOneStatus()))
 
-local Section = SV:AddSection({
-    Name = "Elite Check"
-})
+local Section = SV:AddSection("Elite Check")
 
 local Elite_Hunter_Status = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
     
@@ -5528,9 +5402,7 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = "", Content = "Only Third S
             end
         end)
 
-        local Section = SV:AddSection({
-            Name = "Elite Hunter"
-        })
+        local Section = SV:AddSection("Elite Hunter")
 
         local EliteProgress = SV:AddLabel("")
     
@@ -5542,9 +5414,7 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = "", Content = "Only Third S
             end)
         end)
     
-        local Section = SV:AddSection({
-            Name = "Mirage Check"
-        })
+        local Section = SV:AddSection("Mirage Check")
 
       if World3 then
         spawn(function()
@@ -5561,9 +5431,7 @@ end
 
 Mirragecheck = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
 
-local Section = SV:AddSection({
-    Name = "Dough King Check"
-})
+local Section = SV:AddSection("Dough King Check")
 
 local MobKilled = SV:AddParagraph({Title = "", Content = "Only Third Sea"})
 
@@ -5583,9 +5451,7 @@ spawn(function()
     end
 end)
 
-local Section = SV:AddSection({
-    Name = "Hop Find"
-})
+local Section = SV:AddSection("Hop Find")
 
 SV:AddToggle({
 	Name = "Hop Find Moon 3/4 or 4/4",
@@ -5608,9 +5474,7 @@ SV:AddToggle({
 })
 
 
-local Section = SV:AddSection({
-    Name = "Misc Sever"
-})
+local Section = SV:AddSection("Misc Sever")
 
         SV:AddTextbox({
             Name = "Job Id Placed",
@@ -5891,9 +5755,7 @@ spawn(function()
     end
 end)
 
-local Section = R:AddSection({
-	Name = "Race v2"
-})
+local Section = R:AddSection("Race v2")
 
 R:AddToggle({
 	Name = "Auto Race(V1 - V2 - V3)",
@@ -5905,9 +5767,7 @@ R:AddToggle({
 	end    
 })
 
-local Section = R:AddSection({
-	Name = "Pull Lever"
-})
+local Section = R:AddSection("Pull Lever")
 
 AutoPullLever = R:AddToggle({
     Name = "Auto Pull Lever",
@@ -5990,9 +5850,7 @@ R:AddButton({
       end    
 })
 
-local Section = R:AddSection({
-	Name = "Race v4"
-})
+local Section = R:AddSection("Race v4")
 
 R:AddToggle({
     Name = "Auto Buy Gear",
@@ -6036,9 +5894,7 @@ R:AddToggle({
     end    
 })
 
-local Section = R:AddSection({
-	Name = "Temple Of Time"
-})
+local Section = R:AddSection("Temple Of Time")
 
 R:AddButton({
     Name = "Teleport to Top On Great Tree",
@@ -6121,9 +5977,7 @@ R:AddButton({
             end
 })
 
-local Section = R:AddSection({
-    Name = "Other Trials"
-})
+local Section = R:AddSection("Other Trials")
 
 R:AddToggle({
     Name = "Auto Complete Trials",
@@ -6148,9 +6002,7 @@ R:AddToggle({
     end
 })
 
-local Section = SH:AddSection({
-    Name = "Melee"
-})
+local Section = SH:AddSection("Melee")
 
 SH:AddButton({
     Name = "Black Leg",
@@ -6225,9 +6077,7 @@ SH:AddButton({
       end    
 })
 
-local Section = SH:AddSection({
-    Name = "Haki :"
-})
+local Section = SH:AddSection("Haki :")
 
 SH:AddButton({
     Name = "Buy Buso Haki",
@@ -6259,9 +6109,7 @@ SH:AddButton({
 
 
 
-local Section = SH:AddSection({
-    Name = "Race :"
-})
+local Section = SH:AddSection("Race :")
 
 SH:AddButton({
     Name = "Buy Ghoul Race :",
@@ -6292,9 +6140,7 @@ SH:AddButton({
       end    
 })
 
-local Section = SH:AddSection({
-    Name = "Other"
-})
+local Section = SH:AddSection("Other")
 
 SH:AddButton({
     Name = "Cutlass Katana",
@@ -6366,9 +6212,7 @@ SH:AddButton({
       end    
 })
 
-local Section = SH:AddSection({
-    Name = "Gun"
-})
+local Section = SH:AddSection("Gun")
 
 SH:AddButton({
     Name = "Slingshot",
@@ -6456,9 +6300,7 @@ SH:AddButton({
       end    
 })
 
-local Section = C:AddSection({
-    Name = "Open Tab"
-})
+local Section = C:AddSection("Open Tab")
 
 C:AddButton({
     Name = "Open Devil Fruit Shop",
@@ -6488,9 +6330,7 @@ C:AddButton({
       end    
 })
 
-local Section = C:AddSection({
-    Name = "Color Haki"
-})
+local Section = C:AddSection("Color Haki")
 
 C:AddButton({
     Name = "Color Haki",
@@ -6522,9 +6362,7 @@ spawn(function()
     end
 end)
 
-local Section = C:AddSection({
-    Name = "Level Lock"
-})
+local Section = C:AddSection("Level Lock")
 
 C:AddToggle({
 	Name = "Lock Level",
@@ -6577,9 +6415,7 @@ spawn(function()
     end)
 
 
-    local Section = C:AddSection({
-        Name = "Rejoin"
-    })
+    local Section = C:AddSection("Rejoin")
 
 C:AddToggle({
     Name = "Auto Rejoin",
@@ -6600,9 +6436,7 @@ spawn(function()
         end
     end)
 
-    local Section = C:AddSection({
-        Name = "Players"
-    })
+    local Section = C:AddSection("Players")
 
     C:AddToggle({
         Name = "Walk On Water",
@@ -6623,9 +6457,7 @@ spawn(function()
         end
     end)
 
-    local Section = C:AddSection({
-        Name = "Misc Players"
-    })
+    local Section = C:AddSection("Misc Players")
 
     C:AddToggle({
         Name = "Infinity Soru",
