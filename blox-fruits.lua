@@ -2968,8 +2968,7 @@ task.spawn(function()
 if World2 and World1 then
     local Section = M:AddSection("BOOTS")
 
-    M:AddButton({
-        Name = "BOOST FPS",
+    M:AddButton({Title = "BOOST FPS",
         Callback = function()
             pcall(function()
                 game:GetService("Lighting").FantasySky:Destroy()
@@ -3055,8 +3054,7 @@ end
     
     
     
-    M:AddButton({
-        Name = "Redeem all code",
+    M:AddButton({Title = "Redeem all code",
         Callback = function()
             function RedeemCode(value)
                 game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
@@ -3072,8 +3070,7 @@ end
 
 M:AddParagraph("Main Farm","Click to Box to Farm, I ready update new mob farm!.")
 
-ToggleFarm = M:AddToggle({
-    Name = "Auto Farm",
+ToggleFarm = M:AddToggle({Title = "Auto Farm",
     Default = false,
     Flag = "LevelFarm",
     Save = true,
@@ -3087,8 +3084,7 @@ local Section = M:AddSection("Mastery Menu")
 
 M:AddParagraph("Mastery Menu","Click To Box to Start Farm Mastery")
 
-M:AddToggle({
-    Name = "Auto Farm BF Mastery",
+M:AddToggle({Title = "Auto Farm BF Mastery",
     Default = false,
     Flag = "Mastery",
     Save = true,
@@ -3101,8 +3097,7 @@ M:AddToggle({
     end    
 })
 
-M:AddToggle({
-    Name = "Auto Farm Gun Mastery",
+M:AddToggle({Title = "Auto Farm Gun Mastery",
     Default = false,
     Flag = "Gun Mastery",
     Save = true,
@@ -3112,8 +3107,7 @@ M:AddToggle({
     end    
 })
 
-    M:AddSlider({
-        Name = "Health Mob",
+    M:AddSlider({Title = "Health Mob",
         Min = 0,
         Max = 100,
         Default = 25,
@@ -3127,8 +3121,7 @@ M:AddToggle({
         end    
     })
 
-    M:AddToggle({
-        Name = "Skill Z",
+    M:AddToggle({Title = "Skill Z",
         Default = false,
         Flag = "Skill Z",
         Save = true,
@@ -3137,8 +3130,7 @@ M:AddToggle({
         end    
     })
 
-    M:AddToggle({
-        Name = "Skill! X",
+    M:AddToggle({Title = "Skill! X",
         Default = false,
         Default = false,
         Flag = "Skill X",
@@ -3149,8 +3141,7 @@ M:AddToggle({
     })
 
 
-    M:AddToggle({
-        Name = "Skill C",
+    M:AddToggle({Title = "Skill C",
         Default = false,
         Default = false,
         Flag = "Skill C",
@@ -3161,8 +3152,7 @@ M:AddToggle({
     })
 
 
-    M:AddToggle({
-        Name = "Skill V",
+    M:AddToggle({Title = "Skill V",
         Default = false,
         Default = false,
         Flag = "Skill V",
@@ -3172,8 +3162,7 @@ M:AddToggle({
         end    
     })
 
-    M:AddToggle({
-        Name = "Skill F",
+    M:AddToggle({Title = "Skill F",
         Default = false,
         Default = false,
         Flag = "Skill F",
@@ -3185,8 +3174,7 @@ M:AddToggle({
 
     local Section = M:AddSection("Bring Mob")
 
-M:AddToggle({
-    Name = "Bring Mobs[Fix]",
+M:AddToggle({Title = "Bring Mobs[Fix]",
     Default = true,
     Flag = "Bring Mobs",
     Save = false,
@@ -3225,8 +3213,7 @@ end)
 
 local Section = M:AddSection("FastAttack :")
 
-M:AddToggle({
-    Name = "FastAttack",
+M:AddToggle({Title = "FastAttack",
     Default = true,
     Flag = "FastAttack",
     Save = false,
@@ -3330,8 +3317,7 @@ end)
 
 local Section = M:AddSection("Bypass Teleport")
 
-M:AddToggle({
-    Name = "Bypass TP[BETA]",
+M:AddToggle({Title = "Bypass TP[BETA]",
     Default = false,
     Flag = "Bypass TP",
     Save = true,
@@ -3344,8 +3330,7 @@ M:AddToggle({
 local Section = M:AddSection("Distance Mobs")
 
 PosY = 30
-M:AddSlider({
-    Name = "Distance Mob",
+M:AddSlider({Title = "Distance Mob",
     Min = 0,
     Max = 65,
     Default = PosY,
@@ -3362,8 +3347,7 @@ M:AddSlider({
 
 local Section = M:AddSection("Farm Fast : Lv 10 => 120")
 
-Farmfasttoggle = M:AddToggle({
-    Name = "Auto Farm Fast",
+Farmfasttoggle = M:AddToggle({Title = "Auto Farm Fast",
     Default = false,
     Flag = "Farm Fast",
     Save = true,
@@ -3377,8 +3361,7 @@ local Section = M:AddSection("Kaitun Met Vaiz")
 
 M:AddParagraph("Kaitun/Cantay","Kaitun bản này đell khác gì bản kia.")
 
-M:AddToggle({
-    Name = "Kaitun[Ko có kill players]",
+M:AddToggle({Title = "Kaitun[Ko có kill players]",
     Default = false,
     Flag = "Kaitun",
     Save = true,
@@ -3401,8 +3384,7 @@ M:AddToggle({
     end    
 })
 
-M:AddToggle({
-    Name = "Auto Click[Kick]",
+M:AddToggle({Title = "Auto Click[Kick]",
     Default = false,
     Flag = "Auto Click",
     Save = true,
@@ -3472,8 +3454,7 @@ if World1 then
     }) 
     end
     
-    M:AddToggle({
-        Name = "Farm Mob",
+    M:AddToggle({Title = "Farm Mob",
         Default = false,
         Callback = function(Value)
             _G.AutoFarmSelectMonster = Value
@@ -3482,8 +3463,7 @@ if World1 then
 
 local Section = M:AddSection("Nearest Farm")
 
-M:AddToggle({
-    Name = "Auto Farm Nearest",
+M:AddToggle({Title = "Auto Farm Nearest",
     Default = false,
     Flag = "Auto Farm Nearest",
     Save = true,
@@ -3495,8 +3475,7 @@ M:AddToggle({
 
     local Section = M:AddSection("Chest Farm")
 
-TweenChest = M:AddToggle({
-        Name = "Auto Chest [MUP]",
+TweenChest = M:AddToggle({Title = "Auto Chest [MUP]",
         Default = false,
         Flag = "Auto Chest",
         Save = true,
@@ -3506,8 +3485,7 @@ TweenChest = M:AddToggle({
         end    
     })
 
-    M:AddToggle({
-        Name = "Auto Chest[Bypass]",
+    M:AddToggle({Title = "Auto Chest[Bypass]",
         Default = false,
         Flag = "Auto Chest[Bypass]",
         Save = true,
@@ -3516,8 +3494,7 @@ TweenChest = M:AddToggle({
         end    
     })
 
-M:AddToggle({
-    Name = "Stop Only Dark Key or God's Chalice",
+M:AddToggle({Title = "Stop Only Dark Key or God's Chalice",
     Default = false,
     Flag = "Stop Only Dark Key or God's Chalice",
     Save = true,
@@ -3549,8 +3526,7 @@ spawn(function()
     end
 end)
 
-ToggleBone = M:AddToggle({
-    Name = "Auto Farm Bone",
+ToggleBone = M:AddToggle({Title = "Auto Farm Bone",
     Default = false,
     Flag = "Auto Farm Bone",
     Save = true,
@@ -3560,8 +3536,7 @@ ToggleBone = M:AddToggle({
     end    
 })
         
-ToggleRandom = M:AddToggle({
-        Name = "Auto Random Bone",
+ToggleRandom = M:AddToggle({Title = "Auto Random Bone",
         Default = false,
         Flag = "Auto Random Bone",
         Save = true,
@@ -3591,8 +3566,7 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
         end)
     end)
 
-    M:AddToggle({
-        Name = "Auto Elite",
+    M:AddToggle({Title = "Auto Elite",
         Default = false,
         Flag = "Auto Elite",
         Save = true,
@@ -3603,8 +3577,7 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
     })
 
 
-    M:AddToggle({
-        Name = "Auto Factory",
+    M:AddToggle({Title = "Auto Factory",
         Default = false,
         Flag = "Auto Factory",
         Save = true,
@@ -3614,8 +3587,7 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
         end    
     })
 
-        M:AddToggle({
-            Name = "Raid Castle",
+        M:AddToggle({Title = "Raid Castle",
             Default = false,
             Flag = "Auto Castle",
             Save = true,
@@ -3627,8 +3599,7 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
         local Section = M:AddSection("Dough King Menu")
         
 
-        M:AddToggle({
-            Name = "Auto Katakuri",
+        M:AddToggle({Title = "Auto Katakuri",
             Default = false,
             Flag = "Auto Katakuri",
             Save = true,
@@ -3638,16 +3609,14 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
             end    
         })    
         
-        M:AddToggle({
-            Name = "Auto Spawn Katakuri",
+        M:AddToggle({Title = "Auto Spawn Katakuri",
             Default = true,
             Callback = function(Value)
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner",Value)
             end    
         })
         
-        M:AddToggle({
-            Name = "Auto Katakuri v2",
+        M:AddToggle({Title = "Auto Katakuri v2",
             Default = false,
             Flag = "Auto Katakuri v2",
             Save = true,
@@ -3657,8 +3626,7 @@ local EliteProgress = M:AddParagraph({Title = "", Content = ""})
             end    
         })
         
-        M:AddToggle({
-            Name = "Auto Katakuri v2[HOP]",
+        M:AddToggle({Title = "Auto Katakuri v2[HOP]",
             Default = false,
             Flag = "Auto Katakuri v2[HOP]",
             Save = true,
@@ -3673,8 +3641,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
 
     local Section = M:AddSection("Observation Haki")
 
-    M:AddToggle({
-        Name = "Auto Farm Observation Haki",
+    M:AddToggle({Title = "Auto Farm Observation Haki",
         Default = false,
         Flag = "Auto Farm Observation Haki",
         Save = true,
@@ -3684,8 +3651,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
     
-    M:AddToggle({
-        Name = "Auto Farm Observation Haki[HOP]",
+    M:AddToggle({Title = "Auto Farm Observation Haki[HOP]",
         Default = false,
         Flag = "Auto Farm Observation Haki[HOP]",
         Save = true,
@@ -3696,8 +3662,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
 
     local Section = M:AddSection("Melee v2")
     
-    M:AddToggle({
-        Name = "Auto Death Step",
+    M:AddToggle({Title = "Auto Death Step",
         Default = false,
         Flag = "Auto Death Step",
         Save = true,
@@ -3706,8 +3671,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    M:AddToggle({
-        Name = "Auto SharkMan Karate",
+    M:AddToggle({Title = "Auto SharkMan Karate",
         Default = false,
         Flag = "Auto SharkMan",
         Save = true,
@@ -3717,8 +3681,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
- M:AddToggle({
-        Name = "Auto Electric Claw",
+ M:AddToggle({Title = "Auto Electric Claw",
         Default = false,
         Flag = "Auto Electric Claw",
         Save = true,
@@ -3728,8 +3691,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    M:AddToggle({
-        Name = "Auto Dragon Talon",
+    M:AddToggle({Title = "Auto Dragon Talon",
         Default = false,
         Flag = "Auto Dragon Talon",
         Save = true,
@@ -3738,8 +3700,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    M:AddToggle({
-        Name = "Auto GodHuman",
+    M:AddToggle({Title = "Auto GodHuman",
         Default = false,
         Flag = "Auto GodHuman",
         Save = true,
@@ -3748,8 +3709,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    ST:AddToggle({
-        Name = "Auto Haki",
+    ST:AddToggle({Title = "Auto Haki",
         Default = true,
         Callback = function(Value)
             _G.AUTOHAKI = Value
@@ -3768,8 +3728,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end
     end)
 
-    ST:AddToggle({
-        Name = "Anti Afk",
+    ST:AddToggle({Title = "Anti Afk",
         Default = true,
         Callback = function(Value)
             local vu = game:GetService("VirtualUser")
@@ -3783,8 +3742,7 @@ M:AddParagraph("Auto Farm Boss :","Chờ Update thôi ae!!!")
         end    
     })
 
-    ST:AddToggle({
-        Name = "White screen",
+    ST:AddToggle({Title = "White screen",
         Default = false,
         Flag = "White screen",
         Save = true,
@@ -3817,8 +3775,7 @@ elseif _G.WhiteScreen == false then
     
     CheckAntiCheatBypass()
     
-    ST:AddToggle({
-        Name = "Antiban",
+    ST:AddToggle({Title = "Antiban",
         Default = true,
         Callback = function(Value)
             _G.AntiCheat = Value
@@ -3841,8 +3798,7 @@ spawn(function()
     end
 end)
 
-IQ:AddToggle({
-    Name = "Auto Saber",
+IQ:AddToggle({Title = "Auto Saber",
     Default = false,
     Flag = "Auto Saber",
     Save = true,
@@ -3853,8 +3809,7 @@ IQ:AddToggle({
 })
 
 
-IQ:AddToggle({
-    Name = "Auto Saber[HOP]",
+IQ:AddToggle({Title = "Auto Saber[HOP]",
     Default = false,
     Flag = "Auto Saber[HOP]",
     Save = true,
@@ -3878,8 +3833,7 @@ spawn(function()
     end
 end)
 
-TogglePolev1 = IQ:AddToggle({
-    Name = "Auto Pole V.1",
+TogglePolev1 = IQ:AddToggle({Title = "Auto Pole V.1",
     Default = false,
     Flag = "Auto Pole",
     Save = true,
@@ -3889,8 +3843,7 @@ TogglePolev1 = IQ:AddToggle({
     end    
 })
 
-TogglePolev1Hop = IQ:AddToggle({
-    Name = "Auto Pole V.1[HOP]",
+TogglePolev1Hop = IQ:AddToggle({Title = "Auto Pole V.1[HOP]",
     Default = false,
     Flag = "Auto Pole[HOP]",
     Save = true,
@@ -3901,8 +3854,7 @@ TogglePolev1Hop = IQ:AddToggle({
 
 local Section = IQ:AddSection("Second Sea")
 
-IQ:AddToggle({
-    Name = "Auto Second Sea",
+IQ:AddToggle({Title = "Auto Second Sea",
     Default = false,
     Flag = "Auto Second",
     Save = true,
@@ -3913,8 +3865,7 @@ IQ:AddToggle({
 })
 
 local Section = IQ:AddSection("Vampire")
-IQ:AddToggle({
-    Name = "Auto Vampire",
+IQ:AddToggle({Title = "Auto Vampire",
     Default = false,
     Flag = "Auto Vampire",
     Save = true,
@@ -3927,8 +3878,7 @@ IQ:AddToggle({
 
 local Section = IQ:AddSection("SuperHuman")
 
-IQ:AddToggle({
-    Name = "Auto SuperHuman",
+IQ:AddToggle({Title = "Auto SuperHuman",
     Default = false,
     Flag = "Auto SuperHuman",
     Save = true,
@@ -3941,8 +3891,7 @@ IQ:AddToggle({
 local Section = IQ:AddSection("Bartilo")
 
 
-BartiloToggle = IQ:AddToggle({
-    Name = "Auto Bartilo Quest",
+BartiloToggle = IQ:AddToggle({Title = "Auto Bartilo Quest",
     Default = false,
     Flag = "Auto Bartilo",
     Save = true,
@@ -3956,8 +3905,7 @@ BartiloToggle = IQ:AddToggle({
 local Section = IQ:AddSection("Next Sea Third")
 
 
-IQ:AddToggle({
-    Name = "Auto Third Sea",
+IQ:AddToggle({Title = "Auto Third Sea",
     Default = false,
     Flag = "Auto Third",
     Save = true,
@@ -3967,8 +3915,7 @@ IQ:AddToggle({
     end    
 })
 
-IQ:AddToggle({
-    Name = "Auto Buy Legend Sword",
+IQ:AddToggle({Title = "Auto Buy Legend Sword",
     Default = false,
     Flag = "Auto Legend",
     Save = true,
@@ -3979,8 +3926,7 @@ IQ:AddToggle({
 
 local Section = IQ:AddSection("Buddy Sword")
 
-IQ:AddToggle({
-    Name = "Auto Buddy Sword",
+IQ:AddToggle({Title = "Auto Buddy Sword",
     Default = false,
     Flag = "Auto Buddy",
     Save = true,
@@ -3990,8 +3936,7 @@ IQ:AddToggle({
     end    
 })
 
-IQ:AddToggle({
-    Name = "Auto Buddy Sword[HOP]",
+IQ:AddToggle({Title = "Auto Buddy Sword[HOP]",
     Default = false,
     Flag = "Auto Buddy[HOP]",
     Save = true,
@@ -4002,8 +3947,7 @@ IQ:AddToggle({
 
     local Section = IQ:AddSection("Soul Guita")
 
-    IQ:AddToggle({
-        Name = "Auto Soul Guita",
+    IQ:AddToggle({Title = "Auto Soul Guita",
         Default = false,
         Flag = "Auto Soul",
         Save = true,
@@ -4013,8 +3957,7 @@ IQ:AddToggle({
         end    
     })
 
-IQ:AddToggle({
-    Name = "Auto Soul Guita[HOP]",
+IQ:AddToggle({Title = "Auto Soul Guita[HOP]",
     Default = false,
     Flag = "Auto Soul[HOP]",
     Save = true,
@@ -4023,8 +3966,7 @@ IQ:AddToggle({
     end    
 })
 
-IQ:AddToggle({
-    Name = "Auto Auto Observation V2",
+IQ:AddToggle({Title = "Auto Auto Observation V2",
     Default = false,
     Flag = "Auto ObservationV2",
     Save = true,
@@ -4036,8 +3978,7 @@ IQ:AddToggle({
 
 local Section = IQ:AddSection("Auto Dual Curset Katana[Not Work]")
 
-IQ:AddToggle({
-    Name = "Auto Dual Curset Katana",
+IQ:AddToggle({Title = "Auto Dual Curset Katana",
     Default = false,
     Flag = "Auto DualCursetKatana",
     Save = true,
@@ -4049,8 +3990,7 @@ IQ:AddToggle({
 
 local Section = IQ:AddSection("Tushita")
 
-IQ:AddToggle({
-    Name = "Auto Tushita",
+IQ:AddToggle({Title = "Auto Tushita",
     Default = false,
     Flag = "Auto Tushita",
     Save = true,
@@ -4061,8 +4001,7 @@ IQ:AddToggle({
     end    
 })
 
-IQ:AddToggle({
-    Name = "Auto Tushita[HOP]",
+IQ:AddToggle({Title = "Auto Tushita[HOP]",
     Default = false,
     Flag = "Auto Tushita[HOP]",
     Save = true,
@@ -4073,8 +4012,7 @@ IQ:AddToggle({
 
 local Section = IQ:AddSection("Cavander")
 
-IQ:AddToggle({
-    Name = "Auto Cavander",
+IQ:AddToggle({Title = "Auto Cavander",
     Default = false,
     Flag = "Auto Cavander",
     Save = true,
@@ -4084,8 +4022,7 @@ IQ:AddToggle({
     end    
 })
 
-IQ:AddToggle({
-    Name = "Auto Cavander[HOP]",
+IQ:AddToggle({Title = "Auto Cavander[HOP]",
     Default = false,
     Flag = "Auto Cavander[HOP]",
     Save = true,
@@ -4096,8 +4033,7 @@ IQ:AddToggle({
 
         local Section = IQ:AddSection("Twin Hook")
 
-        IQ:AddToggle({
-            Name = "Auto Twin Hook",
+        IQ:AddToggle({Title = "Auto Twin Hook",
             Default = false,
             Flag = "Auto Twin",
             Save = true,
@@ -4107,8 +4043,7 @@ IQ:AddToggle({
             end    
         })
         
-        IQ:AddToggle({
-            Name = "Auto Twin Hook[HOP]",
+        IQ:AddToggle({Title = "Auto Twin Hook[HOP]",
             Default = false,
             Flag = "Auto Twin[HOP]",
             Save = true,
@@ -4121,8 +4056,7 @@ IQ:AddToggle({
 
         IQ:AddParagraph({Title = "", Content = "Cho thằng nào đell hiểu thì đây là tự động đánh hình nộm"})
 
-        IQ:AddToggle({
-            Name = "Automatically hit the dummy",
+        IQ:AddToggle({Title = "Automatically hit the dummy",
             Default = false,
             Flag = "Auto dummy",
             Save = true,
@@ -4132,8 +4066,7 @@ IQ:AddToggle({
             end    
         })
 
-        IQ:AddToggle({
-            Name = "Automatically hit the dummy[HOP]",
+        IQ:AddToggle({Title = "Automatically hit the dummy[HOP]",
             Default = false,
             Flag = "Auto dummy[HOP]",
             Save = true,
@@ -4144,8 +4077,7 @@ IQ:AddToggle({
 
         local Section = IQ:AddSection("Seperator Hallow Scythe")
 
-        IQ:AddToggle({
-            Name = "Auto Hallow Scythe",
+        IQ:AddToggle({Title = "Auto Hallow Scythe",
             Default = false,
             Flag = "Auto Hallow",
             Save = true,
@@ -4155,8 +4087,7 @@ IQ:AddToggle({
             end    
         })
 
-ToggleHallow = IQ:AddToggle({
-            Name = "Auto Hallow Scythe[HOP]",
+ToggleHallow = IQ:AddToggle({Title = "Auto Hallow Scythe[HOP]",
             Default = false,
             Flag = "Auto Hallow[HOP]",
             Save = true,
@@ -4167,8 +4098,7 @@ ToggleHallow = IQ:AddToggle({
 
         local Section = IQ:AddSection("Dark Dragger")
 
-        IQ:AddToggle({
-            Name = "Auto Dark Dragger",
+        IQ:AddToggle({Title = "Auto Dark Dragger",
             Default = false,
             Flag = "Auto Dark",
             Save = true,
@@ -4178,8 +4108,7 @@ ToggleHallow = IQ:AddToggle({
             end    
         })
 
-        IQ:AddToggle({
-            Name = "Auto Dark Dragger[HOP]",
+        IQ:AddToggle({Title = "Auto Dark Dragger[HOP]",
             Default = false,
             Flag = "Auto Dark[HOP]",
             Save = true,
@@ -4213,8 +4142,7 @@ ToggleHallow = IQ:AddToggle({
 
     local Section = IQ:AddSection("SeaBeast")
 
-    IQ:AddToggle({
-        Name = "Auto Seabeast",
+    IQ:AddToggle({Title = "Auto Seabeast",
         Default = false,
         Flag = "Auto Seabeast",
         Save = true,
@@ -4224,8 +4152,7 @@ ToggleHallow = IQ:AddToggle({
         end    
     })
 
-IQ:AddToggle({
-    Name = "Auto Seabeast[HOP]",
+IQ:AddToggle({Title = "Auto Seabeast[HOP]",
     Default = false,
     Flag = "Auto Seabeast[HOP]",
     Save = true,
@@ -4248,8 +4175,7 @@ end)
 
 local Section = IQ:AddSection("Mirrage Menu")
 
-IQ:AddToggle({
-    Name = "Auto Summon and Find Mirrage Island",
+IQ:AddToggle({Title = "Auto Summon and Find Mirrage Island",
     Default = false,
     Flag = "Auto Mirrage",
     Save = true,
@@ -4322,8 +4248,7 @@ IQ:AddToggle({
     end    
 }) 
     
-IQ:AddToggle({
-    Name = "Find Mirrage[HOP]",
+IQ:AddToggle({Title = "Find Mirrage[HOP]",
     Default = false,
     Flag = "Auto Mirrage2",
     Save = true,
@@ -4420,8 +4345,7 @@ local Fruit = S:AddParagraph({Title = "", Content = "Fruit : "})
         end
     end)
 
-S:AddToggle({
-    Name = "Auto Stats Kaitun",
+S:AddToggle({Title = "Auto Stats Kaitun",
     Default = false,
     Flag = "Auto Kaitun",
     Save = true,
@@ -4430,8 +4354,7 @@ S:AddToggle({
     end    
 })
 
-S:AddToggle({
-    Name = "Melee",
+S:AddToggle({Title = "Melee",
     Default = false,
     Flag = "Auto Melee",
     Save = true,
@@ -4440,8 +4363,7 @@ S:AddToggle({
     end    
 })
 
-S:AddToggle({
-    Name = "Defense",
+S:AddToggle({Title = "Defense",
     Default = false,
     Flag = "Auto Defense",
     Save = true,
@@ -4450,8 +4372,7 @@ S:AddToggle({
     end    
 })
 
-S:AddToggle({
-    Name = "Sword",
+S:AddToggle({Title = "Sword",
     Default = false,
     Flag = "Auto Sword",
     Save = true,
@@ -4460,8 +4381,7 @@ S:AddToggle({
     end    
 })
 
-S:AddToggle({
-    Name = "Gun",
+S:AddToggle({Title = "Gun",
     Default = false,
     Flag = "Auto Gun",
     Save = true,
@@ -4470,8 +4390,7 @@ S:AddToggle({
     end    
 })
 
-S:AddToggle({
-    Name = "Devil Fruit",
+S:AddToggle({Title = "Devil Fruit",
     Default = false,
     Flag = "Auto Fruit",
     Save = true,
@@ -4481,8 +4400,7 @@ S:AddToggle({
 })
 
 PointStats = 1
-S:AddSlider({
-    Name = "Point",
+S:AddSlider({Title = "Point",
     Min = 1,
     Max = 2450,
     Default = 1,
@@ -4498,8 +4416,7 @@ S:AddSlider({
 
 local Section = E:AddSection("ESP MENU")
 
-E:AddToggle({
-    Name = "ESP Players",
+E:AddToggle({Title = "ESP Players",
     Default = false,
     Flag = "ESP Players",
     Save = true,
@@ -4554,8 +4471,7 @@ function UpdatePlayerChams()
     end
 end
 
-E:AddToggle({
-    Name = "ESP Fruits",
+E:AddToggle({Title = "ESP Fruits",
     Default = false,
     Flag = "ESP Fruits",
     Save = true,
@@ -4621,8 +4537,7 @@ spawn(function()
     end
 end)
 
-E:AddToggle({
-    Name = "ESP Island",
+E:AddToggle({Title = "ESP Island",
     Default = false,
     Flag = "ESP Island",
     Save = true,
@@ -4667,8 +4582,7 @@ function UpdateIslandESP()
     end
 end
 
-E:AddToggle({
-    Name = "ESP Flower",
+E:AddToggle({Title = "ESP Flower",
     Default = false,
     Flag = "ESP Flower",
     Save = true,
@@ -4747,22 +4661,19 @@ _G.SelectChip = selectraids or ""
 
 
 
-RA:AddButton({
-    Name = "Buy Chip",
+RA:AddButton({Title = "Buy Chip",
     Callback = function()
           _G.AutoBuyChip = value
       end    
 })
 
-RA:AddButton({
-    Name = "Buy Chips Select",
+RA:AddButton({Title = "Buy Chips Select",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("RaidsNpc","Select",_G.SelectChip)
       end    
 })
 
-RA:AddToggle({
-    Name = "Auto Start Raid",
+RA:AddToggle({Title = "Auto Start Raid",
     Default = false,
     Flag = "Auto Start",
     Save = true,
@@ -4774,8 +4685,7 @@ RA:AddToggle({
 
 local Section = RA:AddSection("Raid Menu")
 
-RA:AddToggle({
-    Name = "KillAura",
+RA:AddToggle({Title = "KillAura",
     Default = false,
     Flag = "Auto KillAura",
     Save = true,
@@ -4784,8 +4694,7 @@ RA:AddToggle({
     end    
 })
 
-    RA:AddToggle({
-        Name = "Next Island",
+    RA:AddToggle({Title = "Next Island",
         Default = false,
         Flag = "Auto NextIsland",
         Save = true,
@@ -4795,8 +4704,7 @@ RA:AddToggle({
         end    
     })
 
-RA:AddToggle({
-    Name = "Auto Awakener",
+RA:AddToggle({Title = "Auto Awakener",
     Default = false,
     Flag = "Auto Awakener",
     Save = true,
@@ -4807,8 +4715,7 @@ RA:AddToggle({
 
 local Section = RA:AddSection("Raid Law Menu")
 
-RA:AddToggle({
-    Name = "Auto Buy Chips Law[Raid]",
+RA:AddToggle({Title = "Auto Buy Chips Law[Raid]",
     Default = false,
     Flag = "Auto Chips Law",
     Save = true,
@@ -4817,8 +4724,7 @@ RA:AddToggle({
     end    
 })
 
-RA:AddToggle({
-    Name = "Start Raid Law",
+RA:AddToggle({Title = "Start Raid Law",
     Default = false,
     Flag = "Auto Start Raid Law",
     Save = true,
@@ -4827,8 +4733,7 @@ RA:AddToggle({
     end    
 })
 
-RA:AddToggle({
-    Name = "Auto Kill Law",
+RA:AddToggle({Title = "Auto Kill Law",
     Default = false,
     Flag = "Auto Kill Law",
     Save = true,
@@ -4925,8 +4830,7 @@ LC:AddDropdown({
 })
 end
 
-LC:AddToggle({
-    Name = "Teleport To Island",
+LC:AddToggle({Title = "Teleport To Island",
     Default = false,
     Callback = function(Value)
         _G.TeleportIsland = Value
@@ -5125,8 +5029,7 @@ end
         })
     end
 
-        LC:AddToggle({
-            Name = "Teleport To NPC",
+        LC:AddToggle({Title = "Teleport To NPC",
             Default = false,
             Callback = function(Value)
                 _G.TeleportNPC = Value
@@ -5221,8 +5124,7 @@ end
 
         local Section = LC:AddSection("Teleport SeSeabeast")
 
-LC:AddToggle({
-    Name = "Teleport to Seabeast",
+LC:AddToggle({Title = "Teleport to Seabeast",
     Default = false,
     Flag = "Teleport to Seabeast",
     Save = true,
@@ -5237,16 +5139,14 @@ LC:AddToggle({
 
 local Section = LC:AddSection("Teleport Mirrage")
 
-LC:AddButton({
-    Name = "Revome Frog",
+LC:AddButton({Title = "Revome Frog",
     Callback = function()
         game:GetService("Lighting").LightingLayers:Destroy()
         game:GetService("Lighting").Sky:Destroy()
       end    
 })
 
-LC:AddToggle({
-    Name = "Teleport To Mirage Island",
+LC:AddToggle({Title = "Teleport To Mirage Island",
     Default = false,
     Flag = "Teleport to Mirage",
     Save = true,
@@ -5289,8 +5189,7 @@ local SelectedPly = LC:AddDropdown({
     end    
 })
 
-LC:AddButton({
-    Name = "Refresh Players",
+LC:AddButton({Title = "Refresh Players",
     Callback = function()
         NewPlayerList = {}
     for i,v in pairs(game.Players:GetChildren()) do  
@@ -5300,8 +5199,7 @@ LC:AddButton({
       end     
 })
 
-LC:AddToggle({
-    Name = "Teleport To Players",
+LC:AddToggle({Title = "Teleport To Players",
     Default = false,
     Callback = function(Value)
         _G.TeleportPly = Value
@@ -5315,8 +5213,7 @@ LC:AddToggle({
 })
 
 
-LC:AddToggle({
-    Name = "Auto Kill Players",
+LC:AddToggle({Title = "Auto Kill Players",
     Default = false,
     Callback = function(Value)
         _G.Auto_Kill_Ply = Value
@@ -5326,8 +5223,7 @@ LC:AddToggle({
 
 local Section = LC:AddSection("AimBot")
 
-LC:AddToggle({
-    Name = "AimBot",
+LC:AddToggle({Title = "AimBot",
     Default = false,
     Callback = function(Value)
         _G.Aimbot_Gun = Value
@@ -5338,8 +5234,7 @@ LC:AddToggle({
 
 
 
-LC:AddToggle({
-    Name = "Aimbot Skill Nearest",
+LC:AddToggle({Title = "Aimbot Skill Nearest",
     Default = false,
     Flag = "Aimbot Skill Nearest",
     Save = true,
@@ -5350,22 +5245,19 @@ LC:AddToggle({
 
 local Section = Wld:AddSection("World Menu")
 
-Wld:AddButton({
-    Name = "Old World",
+Wld:AddButton({Title = "Old World",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
       end    
 })
 
-Wld:AddButton({
-    Name = "Second World",
+Wld:AddButton({Title = "Second World",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
       end    
 })
 
-Wld:AddButton({
-    Name = "Third World",
+Wld:AddButton({Title = "Third World",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
       end    
@@ -5453,8 +5345,7 @@ end)
 
 local Section = SV:AddSection("Hop Find")
 
-SV:AddToggle({
-	Name = "Hop Find Moon 3/4 or 4/4",
+SV:AddToggle({Title = "Hop Find Moon 3/4 or 4/4",
 	Default = false,
     Flag = "FindFM",
     Save = true,
@@ -5463,8 +5354,7 @@ SV:AddToggle({
 	end    
 })
 
-SV:AddToggle({
-	Name = "Hop Find Mirrage",
+SV:AddToggle({Title = "Hop Find Mirrage",
 	Default = false,
     Flag = "FindMrg",
     Save = true,
@@ -5476,8 +5366,7 @@ SV:AddToggle({
 
 local Section = SV:AddSection("Misc Sever")
 
-        SV:AddTextbox({
-            Name = "Job Id Placed",
+        SV:AddInput({Title = "Job Id Placed",
             Default = "",
             TextDisappear = true,
             Callback = function(Value)
@@ -5485,38 +5374,33 @@ local Section = SV:AddSection("Misc Sever")
             end	  
         })
 
-        SV:AddButton({
-            Name = "Join Id",
+        SV:AddButton({Title = "Join Id",
             Callback = function()
                 _G.AutoRejoin = false
                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
               end    
         })
 
-        SV:AddButton({
-            Name = "Copy Job Id",
+        SV:AddButton({Title = "Copy Job Id",
             Callback = function()
                 setclipboard(tostring(game.JobId))
               end    
             })
 
-        SV:AddButton({
-            Name = "Hop Sever",
+        SV:AddButton({Title = "Hop Sever",
             Callback = function()
                 _G.AutoRejoin = false
                 Hop()
               end    
         })
 
-        SV:AddButton({
-            Name = "Rejoin Sever",
+        SV:AddButton({Title = "Rejoin Sever",
             Callback = function()
                 game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
               end    
         })
 
-        SV:AddButton({
-            Name = "Hop Sever Low Players",
+        SV:AddButton({Title = "Hop Sever Low Players",
             Callback = function()
                 _G.AutoRejoin = false
                 getgenv().AutoTeleport = true
@@ -5566,15 +5450,13 @@ local Section = SV:AddSection("Misc Sever")
               end    
         })
 
-D:AddButton({
-    Name = "Random Fruits",
+D:AddButton({Title = "Random Fruits",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
       end    
 })
 
-D:AddToggle({
-    Name = "Auto Random Fruits",
+D:AddToggle({Title = "Auto Random Fruits",
     Default = false,
     Flag = "Auto Random Fruits",
     Save = true,
@@ -5631,8 +5513,7 @@ FruitList = {
     "Leopard-Leopard"
 }
 
-D:AddToggle({
-    Name = "Auto Store Fruits",
+D:AddToggle({Title = "Auto Store Fruits",
     Default = false,
     Flag = "Auto Store Fruits",
     Save = true,
@@ -5670,8 +5551,7 @@ function DropFruit()
         end
     end)
 end
-D:AddToggle({
-    Name = "Teleport To Fruit Spawn",
+D:AddToggle({Title = "Teleport To Fruit Spawn",
     Default = false,
     Flag = "Teleport To Fruit Spawn",
     Save = true,
@@ -5692,8 +5572,7 @@ spawn(function()
 	end
 end)
 
-D:AddToggle({
-    Name = "Auto Drop Fruit",
+D:AddToggle({Title = "Auto Drop Fruit",
     Default = false,
     Flag = "Auto Drop Fruit",
     Save = true,
@@ -5732,8 +5611,7 @@ spawn(function()
     end
 end)
 
-D:AddToggle({
-    Name = "Bring All Fruit[75% Kick]",
+D:AddToggle({Title = "Bring All Fruit[75% Kick]",
     Default = false,
     Flag = "Bring All Fruit[75% Kick]",
     Save = true,
@@ -5757,8 +5635,7 @@ end)
 
 local Section = R:AddSection("Race v2")
 
-R:AddToggle({
-	Name = "Auto Race(V1 - V2 - V3)",
+R:AddToggle({Title = "Auto Race(V1 - V2 - V3)",
 	Default = false,
     Flag = "Auto Race",
     Save = true,
@@ -5769,8 +5646,7 @@ R:AddToggle({
 
 local Section = R:AddSection("Pull Lever")
 
-AutoPullLever = R:AddToggle({
-    Name = "Auto Pull Lever",
+AutoPullLever = R:AddToggle({Title = "Auto Pull Lever",
     Default = false,
     Flag = "Auto Pull Lever",
     Save = true,
@@ -5780,8 +5656,7 @@ AutoPullLever = R:AddToggle({
     end    
 })
 
-R:AddToggle({
-    Name = "Auto Turn On Race v3",
+R:AddToggle({Title = "Auto Turn On Race v3",
     Default = false,
     Flag = "Auto Turn On Race v3",
     Save = true,
@@ -5800,8 +5675,7 @@ spawn(function()
         end)
     end
 end)
-R:AddToggle({
-    Name = "Auto Turn On Race v4",
+R:AddToggle({Title = "Auto Turn On Race v4",
     Default = false,
     Flag = "Auto Turn On Race v4",
     Save = true,
@@ -5821,8 +5695,7 @@ spawn(function()
     end
 end)
 
-MoveCamTooMoonToggle = R:AddToggle({
-    Name = "Move Cam to Moon",
+MoveCamTooMoonToggle = R:AddToggle({Title = "Move Cam to Moon",
     Default = false,
     Flag = "Move Cam to Moon",
     Save = true,
@@ -5842,8 +5715,7 @@ spawn(function()
     end
 end)
 
-R:AddButton({
-    Name = "Teleport to Gear",
+R:AddButton({Title = "Teleport to Gear",
     Callback = function()
         _G.TweenMGear = Value
         StopTween(_G.TweenMGear)	
@@ -5852,8 +5724,7 @@ R:AddButton({
 
 local Section = R:AddSection("Race v4")
 
-R:AddToggle({
-    Name = "Auto Buy Gear",
+R:AddToggle({Title = "Auto Buy Gear",
     Default = false,
     Flag = "Auto Buy Gear",
     Save = true,
@@ -5881,8 +5752,7 @@ end
 end)  
 end)
 
-R:AddToggle({
-    Name = "Auto Train Race",
+R:AddToggle({Title = "Auto Train Race",
     Default = false,
     Flag = "Auto Train Race",
     Save = true,
@@ -5896,29 +5766,25 @@ R:AddToggle({
 
 local Section = R:AddSection("Temple Of Time")
 
-R:AddButton({
-    Name = "Teleport to Top On Great Tree",
+R:AddButton({Title = "Teleport to Top On Great Tree",
     Callback = function()
         TweenTempleLegit()
       end    
 })
 
-R:AddButton({
-    Name = "Teleport to Temple of Time",
+R:AddButton({Title = "Teleport to Temple of Time",
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
       end    
 })
 
-R:AddButton({
-    Name = "Teleport to Lever Pull",
+R:AddButton({Title = "Teleport to Lever Pull",
     Callback = function()
         PullLever()
       end    
 })
 
-R:AddButton({
-    Name = "Teleport to Anclient One",
+R:AddButton({Title = "Teleport to Anclient One",
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
@@ -5927,8 +5793,7 @@ R:AddButton({
       end    
 })
 
-R:AddButton({
-    Name = "Teleport to Clock",
+R:AddButton({Title = "Teleport to Clock",
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
@@ -5937,8 +5802,7 @@ R:AddButton({
       end    
 })
 
-R:AddButton({
-    Name = "Teleport to Trials Doors",
+R:AddButton({Title = "Teleport to Trials Doors",
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
   wait(.1)
@@ -5979,8 +5843,7 @@ R:AddButton({
 
 local Section = R:AddSection("Other Trials")
 
-R:AddToggle({
-    Name = "Auto Complete Trials",
+R:AddToggle({Title = "Auto Complete Trials",
     Default = false,
     Flag = "Auto Complete Trials",
     Save = true,
@@ -5990,8 +5853,7 @@ R:AddToggle({
     end    
 })
 
-R:AddToggle({
-    Name = "Auto Kill Players After Trials",
+R:AddToggle({Title = "Auto Kill Players After Trials",
     Default = false,
     Flag = "KillTrials",
     Save = true,
@@ -6004,74 +5866,64 @@ R:AddToggle({
 
 local Section = SH:AddSection("Melee")
 
-SH:AddButton({
-    Name = "Black Leg",
+SH:AddButton({Title = "Black Leg",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
       end    
 })
 
-SH:AddButton({
-    Name = "Electrol",
+SH:AddButton({Title = "Electrol",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
       end    
 })
 
-SH:AddButton({
-    Name = "FishMan Karate",
+SH:AddButton({Title = "FishMan Karate",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
       end    
 })
 
-SH:AddButton({
-    Name = "Dragon Claw",
+SH:AddButton({Title = "Dragon Claw",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
       end    
 })
 
-SH:AddButton({
-    Name = "SuperHuman",
+SH:AddButton({Title = "SuperHuman",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
       end    
 })
 
 
-SH:AddButton({
-    Name = "Death Step",
+SH:AddButton({Title = "Death Step",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
       end    
 })
 
-SH:AddButton({
-    Name = "Electric Claw",
+SH:AddButton({Title = "Electric Claw",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
       end    
 })
 
-SH:AddButton({
-    Name = "SharkMan Karate",
+SH:AddButton({Title = "SharkMan Karate",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
       end    
 })
 
-SH:AddButton({
-    Name = "Dragon Talon",
+SH:AddButton({Title = "Dragon Talon",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
       end    
 })
 
-SH:AddButton({
-    Name = "Godhuman",
+SH:AddButton({Title = "Godhuman",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
       end    
@@ -6079,29 +5931,25 @@ SH:AddButton({
 
 local Section = SH:AddSection("Haki :")
 
-SH:AddButton({
-    Name = "Buy Buso Haki",
+SH:AddButton({Title = "Buy Buso Haki",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
       end    
 })
 
-SH:AddButton({
-    Name = "Buy Geppo Haki",
+SH:AddButton({Title = "Buy Geppo Haki",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
       end    
 })
 
-SH:AddButton({
-    Name = "Buy Flash Step(Soru)",
+SH:AddButton({Title = "Buy Flash Step(Soru)",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
       end    
 })
 
-SH:AddButton({
-    Name = "Buy Observation(Ken) Haki",
+SH:AddButton({Title = "Buy Observation(Ken) Haki",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
       end    
@@ -6111,8 +5959,7 @@ SH:AddButton({
 
 local Section = SH:AddSection("Race :")
 
-SH:AddButton({
-    Name = "Buy Ghoul Race :",
+SH:AddButton({Title = "Buy Ghoul Race :",
     Callback = function()
         local a = {
             [1] = "Ectoplasm",
@@ -6129,8 +5976,7 @@ SH:AddButton({
       end    
 })
 
-SH:AddButton({
-    Name = "Buy Ghoul Race :",
+SH:AddButton({Title = "Buy Ghoul Race :",
     Callback = function()
         local a = {
             [1] = "CyborgTrainer",
@@ -6142,71 +5988,61 @@ SH:AddButton({
 
 local Section = SH:AddSection("Other")
 
-SH:AddButton({
-    Name = "Cutlass Katana",
+SH:AddButton({Title = "Cutlass Katana",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cutlass")
       end    
 })
 
-SH:AddButton({
-    Name = "Katana",
+SH:AddButton({Title = "Katana",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Katana")
       end    
 })
 
-SH:AddButton({
-    Name = "Iron Mace",
+SH:AddButton({Title = "Iron Mace",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Iron Mace")
       end    
 })
 
-SH:AddButton({
-    Name = "Dual Katana",
+SH:AddButton({Title = "Dual Katana",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Duel Katana")
       end    
 })
 
-SH:AddButton({
-    Name = "Triple Katana",
+SH:AddButton({Title = "Triple Katana",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Triple Katana")
       end    
 })
 
-SH:AddButton({
-    Name = "Pipe",
+SH:AddButton({Title = "Pipe",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Pipe")
       end    
 })
 
-SH:AddButton({
-    Name = "Dual-Headed Blade ",
+SH:AddButton({Title = "Dual-Headed Blade ",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Dual-Headed Blade")
       end    
 })
 
-SH:AddButton({
-    Name = "Bisento",
+SH:AddButton({Title = "Bisento",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Bisento")
       end    
 })
 
-SH:AddButton({
-    Name = "Soul Cane",
+SH:AddButton({Title = "Soul Cane",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Soul Cane")
       end    
 })
 
-SH:AddButton({
-    Name = "Pole v.2 [ 5,000 Fragments ]",
+SH:AddButton({Title = "Pole v.2 [ 5,000 Fragments ]",
     Callback = function()
         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ThunderGodTalk")
       end    
@@ -6214,36 +6050,31 @@ SH:AddButton({
 
 local Section = SH:AddSection("Gun")
 
-SH:AddButton({
-    Name = "Slingshot",
+SH:AddButton({Title = "Slingshot",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Slingshot")
       end    
 })
 
-SH:AddButton({
-    Name = "Musket",
+SH:AddButton({Title = "Musket",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Musket")
       end    
 })
 
-SH:AddButton({
-    Name = "Flintlock",
+SH:AddButton({Title = "Flintlock",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Flintlock")
       end    
 })
 
-SH:AddButton({
-    Name = "Refined Slingshot",
+SH:AddButton({Title = "Refined Slingshot",
     Callback = function()
           game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Refined Flintlock")
       end    
 })
 
-SH:AddButton({
-    Name = "Refined Flintlock",
+SH:AddButton({Title = "Refined Flintlock",
     Callback = function()
         local args = {
             [1] = "BuyItem",
@@ -6253,23 +6084,20 @@ SH:AddButton({
       end    
 })
 
-SH:AddButton({
-    Name = "Cannon",
+SH:AddButton({Title = "Cannon",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyItem","Cannon")
       end    
 })
 
-SH:AddButton({
-    Name = "Kabucha [ 1,500 Fragments]",
+SH:AddButton({Title = "Kabucha [ 1,500 Fragments]",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Slingshot","1")
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Slingshot","2")
       end    
 })
 
-SH:AddButton({
-    Name = "Bizarre Rifle [ 250 Ectoplasm ]",
+SH:AddButton({Title = "Bizarre Rifle [ 250 Ectoplasm ]",
     Callback = function()
         local A_1 = "Ectoplasm"
         local A_2 = "Buy"
@@ -6284,16 +6112,14 @@ SH:AddButton({
       end    
 })
 
-SH:AddButton({
-    Name = "Refund Stats[2,500 fragment]",
+SH:AddButton({Title = "Refund Stats[2,500 fragment]",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
       end    
 })
 
-SH:AddButton({
-    Name = "Race Random[3,000 fragment]",
+SH:AddButton({Title = "Race Random[3,000 fragment]",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
@@ -6302,16 +6128,14 @@ SH:AddButton({
 
 local Section = C:AddSection("Open Tab")
 
-C:AddButton({
-    Name = "Open Devil Fruit Shop",
+C:AddButton({Title = "Open Devil Fruit Shop",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
         game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true	
       end    
 })
 
-C:AddButton({
-    Name = "Open Inventory[Old]",
+C:AddButton({Title = "Open Inventory[Old]",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
         wait(1)
@@ -6319,8 +6143,7 @@ C:AddButton({
       end    
 })
 
-C:AddButton({
-    Name = "Title Tab",
+C:AddButton({Title = "Title Tab",
     Callback = function()
         local args = {
             [1] = "getTitles"
@@ -6332,15 +6155,13 @@ C:AddButton({
 
 local Section = C:AddSection("Color Haki")
 
-C:AddButton({
-    Name = "Color Haki",
+C:AddButton({Title = "Color Haki",
     Callback = function()
         game.Players.localPlayer.PlayerGui.Main.Colors.Visible = true
       end    
 })
 
-C:AddToggle({
-    Name = "Buy Haki Color(Random)",
+C:AddToggle({Title = "Buy Haki Color(Random)",
     Default = false,
     Callback = function(Value)
         _G.AutoBuyEnchancementColour = Value
@@ -6364,8 +6185,7 @@ end)
 
 local Section = C:AddSection("Level Lock")
 
-C:AddToggle({
-	Name = "Lock Level",
+C:AddToggle({Title = "Lock Level",
 	Default = false,
     Flag = "Lock Level",
     Save = true,
@@ -6376,8 +6196,7 @@ C:AddToggle({
 
 LockLevelValue = 2450
 OldLevel = game.Players.localPlayer.Data.Level.Value
-C:AddSlider({
-	Name = "Level To Lock",
+C:AddSlider({Title = "Level To Lock",
 	Min = 1,
 	Max = 2550,
 	Default = 2550,
@@ -6417,8 +6236,7 @@ spawn(function()
 
     local Section = C:AddSection("Rejoin")
 
-C:AddToggle({
-    Name = "Auto Rejoin",
+C:AddToggle({Title = "Auto Rejoin",
     Default = false,
     Callback = function(Value)
         _G.AutoRejoin = Value
@@ -6438,8 +6256,7 @@ spawn(function()
 
     local Section = C:AddSection("Players")
 
-    C:AddToggle({
-        Name = "Walk On Water",
+    C:AddToggle({Title = "Walk On Water",
         Default = true,
         Callback = function(Value)
             _G.WalkWater = Value
@@ -6459,8 +6276,7 @@ spawn(function()
 
     local Section = C:AddSection("Misc Players")
 
-    C:AddToggle({
-        Name = "Infinity Soru",
+    C:AddToggle({Title = "Infinity Soru",
         Default = false,
         Callback = function(Value)
             getgenv().InfSoru = Value
@@ -6488,8 +6304,7 @@ spawn(function()
         end
     end)
 
-    C:AddToggle({
-        Name = "No Clip",
+    C:AddToggle({Title = "No Clip",
         Default = false,
         Callback = function(Value)
             _G.NOCLIP = Value
@@ -6508,8 +6323,7 @@ spawn(function()
     end)
 
 
-C:AddButton({
-    Name = "Remove Lava",
+C:AddButton({Title = "Remove Lava",
     Callback = function()
         for i,v in pairs(game.Workspace:GetDescendants()) do
             if v.Name == "Lava" then   
@@ -6524,8 +6338,7 @@ C:AddButton({
       end    
 })
 
-C:AddToggle({
-    Name = "Infinity Geppo",
+C:AddToggle({Title = "Infinity Geppo",
     Default = false,
     Callback = function(Value)
         getgenv().InfGeppo = Value
