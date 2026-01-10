@@ -2708,20 +2708,117 @@ SafeNotify("AETHER HUB", "Please Wait loading script...")
 -------------Tab-----------------------
 
 -- Safe tab creation function (works with different UI libraries)
+-- Wraps tab methods to be compatible with both OrionLib and Rayfield
 local function SafeTab(name, icon)
-    local tab = nil
+    local originalTab = nil
     pcall(function()
         if Window.MakeTab then
-            tab = Window:MakeTab({
+            originalTab = Window:MakeTab({
                 Name = name,
                 Icon = icon or "rbxassetid://119980140458596",
                 PremiumOnly = false
             })
         elseif Window.CreateTab then
-            tab = Window:CreateTab(name, icon)
+            originalTab = Window:CreateTab(name, icon)
         end
     end)
-    return tab or {}
+    
+    -- Create a wrapper with safe methods
+    local safeTab = {}
+    
+    -- Store original tab for methods that work natively
+    safeTab._original = originalTab or {}
+    
+    -- Safe AddLabel
+    function safeTab:AddLabel(text)
+        local label = nil
+        pcall(function()
+            if originalTab and originalTab.AddLabel then
+                label = originalTab:AddLabel(text)
+            elseif originalTab and originalTab.AddParagraph then
+                label = originalTab:AddParagraph({Title = "", Content = text})
+            end
+        end)
+        return label or {Set = function() end}
+    end
+    
+    -- Safe AddSection
+    function safeTab:AddSection(config)
+        pcall(function()
+            if originalTab and originalTab.AddSection then
+                originalTab:AddSection(config)
+            elseif originalTab and originalTab.Section then
+                originalTab:Section({Title = config.Name or config.Title or ""})
+            end
+        end)
+    end
+    
+    -- Safe AddToggle
+    function safeTab:AddToggle(config)
+        local toggle = nil
+        pcall(function()
+            if originalTab and originalTab.AddToggle then
+                toggle = originalTab:AddToggle(config)
+            elseif originalTab and originalTab.CreateToggle then
+                toggle = originalTab:CreateToggle({Name = config.Name, CurrentValue = config.Default or false, Callback = config.Callback})
+            end
+        end)
+        return toggle or {Set = function() end}
+    end
+    
+    -- Safe AddButton
+    function safeTab:AddButton(config)
+        local button = nil
+        pcall(function()
+            if originalTab and originalTab.AddButton then
+                button = originalTab:AddButton(config)
+            elseif originalTab and originalTab.CreateButton then
+                button = originalTab:CreateButton({Name = config.Name, Callback = config.Callback})
+            end
+        end)
+        return button or {}
+    end
+    
+    -- Safe AddDropdown
+    function safeTab:AddDropdown(config)
+        local dropdown = nil
+        pcall(function()
+            if originalTab and originalTab.AddDropdown then
+                dropdown = originalTab:AddDropdown(config)
+            elseif originalTab and originalTab.CreateDropdown then
+                dropdown = originalTab:CreateDropdown({Name = config.Name, Options = config.Options, CurrentOption = config.Default, Callback = config.Callback})
+            end
+        end)
+        return dropdown or {Set = function() end, Refresh = function() end}
+    end
+    
+    -- Safe AddSlider
+    function safeTab:AddSlider(config)
+        local slider = nil
+        pcall(function()
+            if originalTab and originalTab.AddSlider then
+                slider = originalTab:AddSlider(config)
+            elseif originalTab and originalTab.CreateSlider then
+                slider = originalTab:CreateSlider({Name = config.Name, Range = {config.Min or 0, config.Max or 100}, Increment = config.Increment or 1, CurrentValue = config.Default or 0, Callback = config.Callback})
+            end
+        end)
+        return slider or {Set = function() end}
+    end
+    
+    -- Safe AddTextbox
+    function safeTab:AddTextbox(config)
+        local textbox = nil
+        pcall(function()
+            if originalTab and originalTab.AddTextbox then
+                textbox = originalTab:AddTextbox(config)
+            elseif originalTab and originalTab.CreateInput then
+                textbox = originalTab:CreateInput({Name = config.Name, PlaceholderText = config.Default or "", Callback = config.Callback})
+            end
+        end)
+        return textbox or {}
+    end
+    
+    return safeTab
 end
 
 local W = SafeTab("Welcome")
