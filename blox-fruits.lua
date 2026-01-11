@@ -13,7 +13,7 @@
 local AETHER = {
     _VERSION = "1.0.0",
     _NAME = "AETHER HUB",
-    _EXECUTOR = "Unknown"
+    _EXECUTOR = detectExecutor
 }
 
 -- Detect current executor
@@ -2743,7 +2743,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                locallv:Set("Level :".." "..game:GetService("Players").LocalPlayer.Data.Level.Value)
+                locallv:Set({Content = "Level :".." "..game:GetService("Players"}).LocalPlayer.Data.Level.Value)
             end)
         end
     end)
@@ -2753,7 +2753,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localrace:Set("Race :".." "..game:GetService("Players").LocalPlayer.Data.Race.Value)
+                localrace:Set({Content = "Race :".." "..game:GetService("Players"}).LocalPlayer.Data.Race.Value)
             end)
         end
     end)
@@ -2763,7 +2763,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localbeli:Set("Beli :".." "..game:GetService("Players").LocalPlayer.Data.Beli.Value)
+                localbeli:Set({Content = "Beli :".." "..game:GetService("Players"}).LocalPlayer.Data.Beli.Value)
             end)
         end
     end)
@@ -2772,7 +2772,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localfrag:Set("Fragments :".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value)
+                localfrag:Set({Content = "Fragments :".." "..game:GetService("Players"}).LocalPlayer.Data.Fragments.Value)
             end)
         end
     end)
@@ -2783,7 +2783,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localexp:Set("ExP Points :".." "..game:GetService("Players").LocalPlayer.Data.Exp.Value)
+                localexp:Set({Content = "ExP Points :".." "..game:GetService("Players"}).LocalPlayer.Data.Exp.Value)
             end)
         end
     end)
@@ -2793,7 +2793,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localstat:Set("Stats Points :".." "..game:GetService("Players").LocalPlayer.Data.Points.Value)
+                localstat:Set({Content = "Stats Points :".." "..game:GetService("Players"}).LocalPlayer.Data.Points.Value)
             end)
         end
     end)
@@ -2803,7 +2803,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localbountyhornor:Set("Bounty / Honor :".." "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value)
+                localbountyhornor:Set({Content = "Bounty / Honor :".." "..game:GetService("Players"}).LocalPlayer.leaderstats["Bounty/Honor"].Value)
             end)
         end
     end)
@@ -2814,9 +2814,9 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
         while wait() do
             pcall(function()
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) then
-                    localDevil:Set("Devil Fruit :".." "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                    localDevil:Set({Content = "Devil Fruit :".." "..game:GetService("Players"}).LocalPlayer.Data.DevilFruit.Value)
                 else
-                    localDevil:Set("Not Have Devil Fruit")
+                    localDevil:Set({Content = "Not Have Devil Fruit"})
                 end
             end)
         end
@@ -2890,19 +2890,19 @@ spawn(function()
         pcall(function()
             for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")) do
                 if v.Name == "Saber" then
-                    Dark_Coat:Set("✅: Dark Coat")
+                    Dark_Coat:Set({Content = "✅: Dark Coat"})
                 end
                 if v.Name == "Ghoul Mask" then
-                    Ghoul_Mask:Set("✅: Ghoul Mask")
+                    Ghoul_Mask:Set({Content = "✅: Ghoul Mask"})
                 end
                 if v.Name == "Swan Glasses" then
-                    Swan_Glass:Set("✅: Swan Glass")
+                    Swan_Glass:Set({Content = "✅: Swan Glass"})
                 end
                 if v.Name == "Pale Scarf" then
-                    Pale_Scarf:Set("✅: Pale Scarf")
+                    Pale_Scarf:Set({Content = "✅: Pale Scarf"})
                 end
                 if v.Name == "Valkyrie Helmet" then
-                    Valkyrie_Helm:Set("✅: Valkyrie Helmet")
+                    Valkyrie_Helm:Set({Content = "✅: Valkyrie Helmet"})
                 end
             end
         end)
@@ -3508,7 +3508,7 @@ spawn(function()
         if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
             AutoFarmChest = false
             StopTween(AutoFarmChest)
-            TweenChest:Set(false)
+            TweenChest:Set({Content = false})
         end
     end
 end
@@ -3521,7 +3521,7 @@ local Bone = M:AddParagraph({Title = " ", Content = "Bone : "})
 spawn(function()
     while wait() do
         pcall(function()
-            Bone:Set("Bone You Have : "..(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check")))
+            Bone:Set({Content = "Bone You Have : "..(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("Bones","Check")))
         end)
     end
 end)
@@ -3561,7 +3561,7 @@ local EliteProgress = M:AddParagraph({Title = " ", Content = ""})
     spawn(function()
         pcall(function()
             while wait() do
-                EliteProgress:Set("Elite Progress : "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+                EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
             end
         end)
     end)
@@ -3790,9 +3790,9 @@ spawn(function()
     while wait() do
         pcall(function()
             if game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") or game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") or game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") or game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") or game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") or game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") then
-                SaberBoss:Set("Boss Saber : ✅ Spawn")
+                SaberBoss:Set({Content = "Boss Saber : ✅ Spawn"})
             else
-                SaberBoss:Set("Boss Saber : ❌ Not Spawn")
+                SaberBoss:Set({Content = "Boss Saber : ❌ Not Spawn"})
             end
         end)
     end
@@ -3825,9 +3825,9 @@ spawn(function()
     while wait() do
         pcall(function()
             if game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") or game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") or game:GetService("ReplicatedStorage"):FindFirstChild("Thunder God") or game:GetService("Workspace").Enemies:FindFirstChild("Thunder God") or game:GetService("Workspace").Enemies:FindFirstChild("Thunder God") or game:GetService("Workspace").Enemies:FindFirstChild("Thunder God") then
-                PoleBoss:Set("Boss Thunder : ✅ Spawn")
+                PoleBoss:Set({Content = "Boss Thunder : ✅ Spawn"})
             else
-                PoleBoss:Set("Boss Thunder : ❌ Not Spawn")
+                PoleBoss:Set({Content = "Boss Thunder : ❌ Not Spawn"})
             end
         end)
     end
@@ -4279,8 +4279,8 @@ spawn(function()
                 end
             end
         end
-        Fruit:Set("Fruit : "..count)
-        Chest:Set("Chest : "..count10)
+        Fruit:Set({Content = "Fruit : "..count})
+        Chest:Set({Content = "Chest : "..count10})
         wait(5)
     end
 end)
@@ -4294,7 +4294,7 @@ Fruit = S:AddParagraph({Title = " ", Content = "Fruit"})
     spawn(function()
         while wait() do
             pcall(function()
-                Pointstat:Set("Stat Points : "..tostring(game:GetService("Players")["LocalPlayer"].Data.Points.Value))
+                Pointstat:Set({Content = "Stat Points : "..tostring(game:GetService("Players"})["LocalPlayer"].Data.Points.Value))
             end)
         end
     end)
@@ -4308,7 +4308,7 @@ local Fruit = S:AddParagraph({Title = " ", Content = "Fruit : "})
     spawn(function()
         while wait() do
             pcall(function()
-                Melee:Set("Melee : "..game.Players.localPlayer.Data.Stats.Melee.Level.Value)
+                Melee:Set({Content = "Melee : "..game.Players.localPlayer.Data.Stats.Melee.Level.Value})
             end)
         end
     end)
@@ -4316,7 +4316,7 @@ local Fruit = S:AddParagraph({Title = " ", Content = "Fruit : "})
     spawn(function()
         while wait() do
             pcall(function()
-                Defense:Set("Defense : "..game.Players.localPlayer.Data.Stats.Defense.Level.Value)
+                Defense:Set({Content = "Defense : "..game.Players.localPlayer.Data.Stats.Defense.Level.Value})
             end)
         end
     end)
@@ -4324,7 +4324,7 @@ local Fruit = S:AddParagraph({Title = " ", Content = "Fruit : "})
     spawn(function()
         while wait() do
             pcall(function()
-                Sword:Set("Sword : "..game.Players.localPlayer.Data.Stats.Sword.Level.Value)
+                Sword:Set({Content = "Sword : "..game.Players.localPlayer.Data.Stats.Sword.Level.Value})
             end)
         end
     end)
@@ -4332,7 +4332,7 @@ local Fruit = S:AddParagraph({Title = " ", Content = "Fruit : "})
     spawn(function()
         while wait() do
             pcall(function()
-                Gun:Set("Gun : "..game.Players.localPlayer.Data.Stats.Gun.Level.Value)
+                Gun:Set({Content = "Gun : "..game.Players.localPlayer.Data.Stats.Gun.Level.Value})
             end)
         end
     end)
@@ -4340,7 +4340,7 @@ local Fruit = S:AddParagraph({Title = " ", Content = "Fruit : "})
     spawn(function()
         while wait() do
             pcall(function()
-                Fruit:Set("Fruit : "..game.Players.localPlayer.Data.Stats["Demon Fruit"].Level.Value)
+                Fruit:Set({Content = "Fruit : "..game.Players.localPlayer.Data.Stats["Demon Fruit"].Level.Value})
             end)
         end
     end)
@@ -5163,11 +5163,11 @@ spawn(function()
         pcall(function()
             for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                 if i == 12 then
-                    plyserv:Set("Players :".." "..i.." ".."/".." ".."12".." ".."(Max)")
+                    plyserv:Set({Content = "Players :".." "..i.." ".."/".." ".."12".." ".."(Max})")
                 elseif i == 1 then
-                    plyserv:Set("Player :".." "..i.." ".."/".." ".."12")
+                    plyserv:Set({Content = "Player :".." "..i.." ".."/".." ".."12"})
                 else
-                    plyserv:Set("Players :".." "..i.." ".."/".." ".."12")
+                    plyserv:Set({Content = "Players :".." "..i.." ".."/".." ".."12"})
                 end
             end
         end)
@@ -5269,7 +5269,7 @@ local FM = SV:AddParagraph({Title = " ", Content = "Server Time : " .. function8
 
 spawn(function()
         while wait() do
-            SV:Set("Server Time : " .. function8() .. " | ".. CheckMoon() .. " | " .. function7())
+            SV:Set({Content = "Server Time : " .. function8(}) .. " | ".. CheckMoon() .. " | " .. function7())
                 end
             end)
 
@@ -5286,9 +5286,9 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = " ", Content = "Only Third 
             while wait() do
                 pcall(function()
                     if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-                        Elite_Hunter_Status:Set("Elite : ✅ Spawn")	
+                        Elite_Hunter_Status:Set({Content = "Elite : ✅ Spawn"})	
                     else
-                        Elite_Hunter_Status:Set("Elite : ❌ not Spawn")	
+                        Elite_Hunter_Status:Set({Content = "Elite : ❌ not Spawn"})	
                     end
                 end)
             end
@@ -5301,7 +5301,7 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = " ", Content = "Only Third 
         spawn(function()
             pcall(function()
                 while wait() do
-                    EliteProgress:Set("Elite Progress : "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+                    EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
                 end
             end)
         end)
@@ -5313,9 +5313,9 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = " ", Content = "Only Third 
             pcall(function()
                 while wait() do
         if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-        Mirragecheck:Set('Mirrage: ✅')
+        Mirragecheck:Set({Content = 'Mirrage: ✅'})
         else
-          Mirragecheck:Set('Mirrage: ❌ ' )end
+          Mirragecheck:Set({Content = 'Mirrage: ❌ ' })end
                 end
             end)
     end)
@@ -5331,13 +5331,13 @@ spawn(function()
     while wait() do
         pcall(function()
             if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                MobKilled:Set("Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41))
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                MobKilled:Set("Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40))
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                MobKilled:Set("Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39))
             else
-                MobKilled:Set("Dough King V1 : ✅")
+                MobKilled:Set({Content = "Dough King V1 : ✅"})
             end
         end)
     end
@@ -7324,7 +7324,7 @@ spawn(function()
         while wait() do
             if _G.Farmfast and World1 then
                 if game.Players.LocalPlayer.Data.Level.Value >= 10 then
-                    ToggleFarm:Set(false)
+                    ToggleFarm:Set({Content = false})
                     _G.Farmfast = true
                 end
             end
@@ -7373,7 +7373,7 @@ spawn(function()
         while wait() do
             if _G.Farmfast and World1 then
                 if game.Players.LocalPlayer.Data.Level.Value >= 50 then
-                    Farmfasttoggle:Set(false)
+                    Farmfasttoggle:Set({Content = false})
                     _G.AutoPlayerHunter = true
                 end
             end
@@ -7689,7 +7689,7 @@ spawn(function()
                     pcall(function()
                         while wait() do
                 if game.Workspace._WorldOrigin.Locations:FindFirstChild('Island 1') then
-                checkisland:Set(' Island : 1')
+                checkisland:Set({Content = ' Island : 1'})
                         end
                     end
                     end)
@@ -7699,7 +7699,7 @@ spawn(function()
                     pcall(function()
                         while wait() do
                 if game.Workspace._WorldOrigin.Locations:FindFirstChild('Island 2') then
-                checkisland:Set('Island : 2')
+                checkisland:Set({Content = 'Island : 2'})
                         end
                     end
                     end)
@@ -7709,7 +7709,7 @@ spawn(function()
                     pcall(function()
                         while wait() do
                 if game.Workspace._WorldOrigin.Locations:FindFirstChild('Island 3') then
-                checkisland:Set('Island : 3')
+                checkisland:Set({Content = 'Island : 3'})
                         end
                     end
                     end)
@@ -7719,7 +7719,7 @@ spawn(function()
                     pcall(function()
                         while wait() do
                 if game.Workspace._WorldOrigin.Locations:FindFirstChild('Island 4') then
-                checkisland:Set('Island : 4')
+                checkisland:Set({Content = 'Island : 4'})
                 end
                 end
                     end)
@@ -7729,7 +7729,7 @@ spawn(function()
                     pcall(function()
                         while wait() do
                 if game.Workspace._WorldOrigin.Locations:FindFirstChild('Island 5') then
-                checkisland:Set('Island : 5')
+                checkisland:Set({Content = 'Island : 5'})
                         end
                     end
                     end)
@@ -7739,9 +7739,9 @@ spawn(function()
                     pcall(function()
                         while wait() do
                             if game:GetService("Players").LocalPlayer.PlayerGui.Main.Timer.Visible == true then
-                                TimeRaid:Set(game:GetService("Players").LocalPlayer.PlayerGui.Main.Timer.Text)
+                                TimeRaid:Set({Content = game:GetService("Players"}).LocalPlayer.PlayerGui.Main.Timer.Text)
                             else
-                                TimeRaid:Set("Wait For Dungeon")
+                                TimeRaid:Set({Content = "Wait For Dungeon"})
                             end
                         end
                     end)
@@ -8653,7 +8653,7 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if _G.Auto_Saber and game.Players.LocalPlayer.Data.Level.Value >= 200 and not Check_Sword("Saber") and World1 then
-                ToggleFarm:Set(false)
+                ToggleFarm:Set({Content = false})
                 _G.Auto_Saber = true
             end
         end)
@@ -8664,7 +8664,7 @@ spawn(function()
     while task.wait() do
         if _G.Auto_Saber and game.Players.LocalPlayer.Data.Level.Value >= 200 and not Check_Sword("Saber") and World1 then
             pcall(function()
-                ToggleFarm:Set(false)
+                ToggleFarm:Set({Content = false})
                 if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
                     if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
                         if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
@@ -8837,7 +8837,7 @@ spawn(function()
             if _G.AutoBartilo then
                 if game.Players.LocalPlayer.Data.Level.Value >= 800 then
                     _G.AutoBartilo = true
-                    ToggleFarm:Set(false)
+                    ToggleFarm:Set({Content = false})
                 end
             end
         end
@@ -8939,8 +8939,8 @@ spawn(function()
         while wait() do
             if _G.AutoBartilo then
                 if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BartiloQuestProgress","Bartilo") == 3 then
-                    BartiloToggle:Set(false)
-                    ToggleFarm:Set(true)
+                    BartiloToggle:Set({Content = false})
+                    ToggleFarm:Set({Content = true})
                 end
             end
         end
@@ -10298,7 +10298,7 @@ local TushitaPos = CFrame.new(-10238.875976563, 389.7912902832, -9549.7939453125
                             topos(game:GetService("ReplicatedStorage"):FindFirstChild("Soul Reaper").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                         else
                             if CheckItem("Hallow Scythe") then
-                                ToggleHallow:Set(false)
+                                ToggleHallow:Set({Content = false})
                                 _G.Auto_Bone2 = false
                                 StopTween(_G.Auto_Bone)
                                 _G.Auto_Random_Bone2 = false
@@ -10686,8 +10686,8 @@ spawn(function()
 						until not getBlueGear() or getBlueGear().Transparency == 1
 						if game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CheckTempleDoor") then
 							DaGatCan = true
-							MoveCamTooMoonToggle:Set(false)
-							AutoPullLever:Set(false)
+							MoveCamTooMoonToggle:Set({Content = false})
+							AutoPullLever:Set({Content = false})
 						end
 					elseif BlueGear and BlueGear.Transparency == 1 then
 						if
@@ -10701,7 +10701,7 @@ spawn(function()
 								(game.Players.LocalPlayer.Character.HumanoidRootPart.Position -
 									HighestPointRealCFrame.Position).Magnitude <= 10
 						 then
-							MoveCamTooMoonToggle:Set(true)
+							MoveCamTooMoonToggle:Set({Content = true})
 							wait(.1)
 							game:service("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
 							task.wait()
