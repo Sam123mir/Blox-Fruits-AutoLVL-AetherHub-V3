@@ -2743,7 +2743,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                locallv:Set({Content = "Level :".." "..game:GetService("Players").LocalPlayer.Data.Level.Value)})
+                locallv:Set({Content = "Level :".." "..game:GetService("Players").LocalPlayer.Data.Level.Value})
             end)
         end
     end)
@@ -2753,7 +2753,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localrace:Set({Content = "Race :".." "..game:GetService("Players").LocalPlayer.Data.Race.Value)})
+                localrace:Set({Content = "Race :".." "..game:GetService("Players").LocalPlayer.Data.Race.Value})
             end)
         end
     end)
@@ -2763,7 +2763,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localbeli:Set({Content = "Beli :".." "..game:GetService("Players").LocalPlayer.Data.Beli.Value)})
+                localbeli:Set({Content = "Beli :".." "..game:GetService("Players").LocalPlayer.Data.Beli.Value})
             end)
         end
     end)
@@ -2772,7 +2772,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localfrag:Set({Content = "Fragments :".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value)})
+                localfrag:Set({Content = "Fragments :".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value})
             end)
         end
     end)
@@ -2783,7 +2783,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localexp:Set({Content = "ExP Points :".." "..game:GetService("Players").LocalPlayer.Data.Exp.Value)})
+                localexp:Set({Content = "ExP Points :".." "..game:GetService("Players").LocalPlayer.Data.Exp.Value})
             end)
         end
     end)
@@ -2793,7 +2793,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localstat:Set({Content = "Stats Points :".." "..game:GetService("Players").LocalPlayer.Data.Points.Value)})
+                localstat:Set({Content = "Stats Points :".." "..game:GetService("Players").LocalPlayer.Data.Points.Value})
             end)
         end
     end)
@@ -2803,7 +2803,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
     spawn(function()
         while wait() do
             pcall(function()
-                localbountyhornor:Set({Content = "Bounty / Honor :".." "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value)})
+                localbountyhornor:Set({Content = "Bounty / Honor :".." "..game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].Value})
             end)
         end
     end)
@@ -2814,7 +2814,7 @@ local locallv = W:AddParagraph({Title = " ", Content = "Level: Loading..."})
         while wait() do
             pcall(function()
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) then
-                    localDevil:Set({Content = "Devil Fruit :".." "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)})
+                    localDevil:Set({Content = "Devil Fruit :".." "..game:GetService("Players").LocalPlayer.Data.DevilFruit.Value})
                 else
                     localDevil:Set({Content = "Not Have Devil Fruit"})
                 end
