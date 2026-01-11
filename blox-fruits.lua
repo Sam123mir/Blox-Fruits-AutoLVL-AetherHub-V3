@@ -2681,20 +2681,20 @@ SafeNotify("AETHER HUB", "Please wait while we initialize...")
 
 -- Tabs creation for Fluent UI
 local Tabs = {
-    Welcome = Window:AddTab({ Title = "Welcome", Icon = "" }),
-    General = Window:AddTab({ Title = "General", Icon = "" }),
-    Setting = Window:AddTab({ Title = "Setting", Icon = "" }),
-    ItemQuest = Window:AddTab({ Title = "Item & Quest", Icon = "" }),
-    Stats = Window:AddTab({ Title = "Stats", Icon = "" }),
-    ESP = Window:AddTab({ Title = "ESP", Icon = "" }),
-    Raid = Window:AddTab({ Title = "Raid", Icon = "" }),
-    LocalPlayers = Window:AddTab({ Title = "Local Players", Icon = "" }),
-    WorldTeleport = Window:AddTab({ Title = "World Teleport", Icon = "" }),
-    StatusSever = Window:AddTab({ Title = "Status Sever", Icon = "" }),
-    DevilFruit = Window:AddTab({ Title = "Devil Fruit", Icon = "" }),
-    RaceV4 = Window:AddTab({ Title = "Race V4", Icon = "" }),
-    Shop = Window:AddTab({ Title = "Shop", Icon = "" }),
-    Misc = Window:AddTab({ Title = "Misc", Icon = "" })
+    Welcome = Window:AddTab({ Title = "Welcome", Icon = "home" }),
+    General = Window:AddTab({ Title = "General", Icon = "settings" }),
+    Setting = Window:AddTab({ Title = "Setting", Icon = "sliders" }),
+    ItemQuest = Window:AddTab({ Title = "Item & Quest", Icon = "package" }),
+    Stats = Window:AddTab({ Title = "Stats", Icon = "bar-chart-2" }),
+    ESP = Window:AddTab({ Title = "ESP", Icon = "eye" }),
+    Raid = Window:AddTab({ Title = "Raid", Icon = "swords" }),
+    LocalPlayers = Window:AddTab({ Title = "Local Players", Icon = "users" }),
+    WorldTeleport = Window:AddTab({ Title = "World Teleport", Icon = "globe" }),
+    StatusSever = Window:AddTab({ Title = "Status Sever", Icon = "server" }),
+    DevilFruit = Window:AddTab({ Title = "Devil Fruit", Icon = "cherry" }),
+    RaceV4 = Window:AddTab({ Title = "Race V4", Icon = "zap" }),
+    Shop = Window:AddTab({ Title = "Shop", Icon = "shopping-cart" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "more-horizontal" })
 }
 
 local W = Tabs.Welcome
@@ -3521,7 +3521,7 @@ local Bone = M:AddParagraph({Title = " ", Content = "Bone : "})
 spawn(function()
     while wait() do
         pcall(function()
-            Bone:Set({Content = "Bone You Have : "..(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("Bones","Check")))
+            Bone:Set({Content = "Bone You Have : "..(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check")))
         end)
     end
 end)
@@ -3561,7 +3561,7 @@ local EliteProgress = M:AddParagraph({Title = " ", Content = ""})
     spawn(function()
         pcall(function()
             while wait() do
-                EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+                EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
             end
         end)
     end)
@@ -4294,7 +4294,7 @@ Fruit = S:AddParagraph({Title = " ", Content = "Fruit"})
     spawn(function()
         while wait() do
             pcall(function()
-                Pointstat:Set({Content = "Stat Points : "..tostring(game:GetService("Players"})["LocalPlayer"].Data.Points.Value))
+                Pointstat:Set({Content = "Stat Points : "..tostring(game:GetService("Players").LocalPlayer.Data.Points.Value))
             end)
         end
     end)
@@ -5301,7 +5301,7 @@ local Elite_Hunter_Status = SV:AddParagraph({Title = " ", Content = "Only Third 
         spawn(function()
             pcall(function()
                 while wait() do
-                    EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
+                    EliteProgress:Set({Content = "Elite Progress : "..game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress"))
                 end
             end)
         end)
@@ -5331,11 +5331,11 @@ spawn(function()
     while wait() do
         pcall(function()
             if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41))
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40))
             elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage"}).Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39))
+                MobKilled:Set({Content = "Defeat : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39))
             else
                 MobKilled:Set({Content = "Dough King V1 : ✅"})
             end
@@ -8086,17 +8086,17 @@ pcall(function()
     while wait() do
         if _G.AutoEliteHunter then
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub(Noitification)",
+                Fluent:Notify({
+                    Title = "Sla Hub(Noitification)",
                     Content = "[EN] : Please cancel the farrm level quest (if any)",
                     Image = "rbxassetid://119980140458596",
-                    Time = 9
+                    Duration = 9
                 })
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub(Noitification)",
+                Fluent:Notify({
+                    Title = "Sla Hub(Noitification)",
                     Content = "[VN] : Làm ơn hủy nhiệm vụ farrm level(nếu có)",
                     Image = "rbxassetid://119980140458596",
-                    Time = 9
+                    Duration = 9
                 })
             end
         end
@@ -8261,11 +8261,11 @@ spawn(function()
         while wait() do
             if _G.AutoObservation then
                 if game:GetService("Players").LocalPlayer.VisionRadius.Value >= 3000 then
-                    OrionLib:MakeNotification({
-                        Name = "Sla Hub BOT",
+                    Fluent:Notify({
+                        Title = "Sla Hub BOT",
                         Content = "!!You Are Max Point!!",
                         Image = "rbxassetid://14919714384",
-                        Time = 5
+                        Duration = 5
                     })
                     
                     wait(2)
@@ -8410,11 +8410,11 @@ spawn(function()
     if _G.AutoSharkman then
         if Mybeli <= 2500000 or MyFragment <= 5000 then
             wait(2.0)
-            OrionLib:MakeNotification({
-                Name = "Sla Hub",
+            Fluent:Notify({
+                Title = "Sla Hub",
                 Content = "You not have beli or fragment!",
                 Image = "rbxassetid://119980140458596",
-                Time = 5
+                Duration = 5
             })
             end
         end
@@ -8571,11 +8571,11 @@ spawn(function()
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
                         end
                     else
-                        OrionLib:MakeNotification({
-                            Name = "Sla Hub BOT",
+                        Fluent:Notify({
+                            Title = "Sla Hub BOT",
                             Content = "Not Have Superhuman",
                             Image = "rbxassetid://14919714384",
-                            Time = 5
+                            Duration = 5
                         })
                         
                     end
@@ -8584,11 +8584,11 @@ spawn(function()
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
                         end
                     else
-                        OrionLib:MakeNotification({
-                            Name = "Sla Hub BOT",
+                        Fluent:Notify({
+                            Title = "Sla Hub BOT",
                             Content = "Not Have Death Step",
                             Image = "rbxassetid://14919714384",
-                            Time = 5
+                            Duration = 5
                         })
                         
                     end
@@ -8597,11 +8597,11 @@ spawn(function()
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
                         end
                     else
-                        OrionLib:MakeNotification({
-                            Name = "Sla Hub BOT",
+                        Fluent:Notify({
+                            Title = "Sla Hub BOT",
                             Content = "Not Have SharkMan Karate",
                             Image = "rbxassetid://14919714384",
-                            Time = 5
+                            Duration = 5
                         })
                         
                     end
@@ -8610,22 +8610,22 @@ spawn(function()
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
                         end
                     else
-                        gOrionLib:MakeNotification({
-                            Name = "Sla Hub BOT",
+                        Fluent:Notify({
+                            Title = "Sla Hub BOT",
                             Content = "Not Have Electric Claw",
                             Image = "rbxassetid://14919714384",
-                            Time = 5
+                            Duration = 5
                         })
                         
                     end
                     if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon",true) == 1 then
                         if game.Players.LocalPlayer.Backpack:FindFirstChild("Dragon Talon") and game.Players.LocalPlayer.Backpack:FindFirstChild("Dragon Talon").Level.Value >= 400 or game.Players.LocalPlayer.Character:FindFirstChild("Dragon Talon") and game.Players.LocalPlayer.Character:FindFirstChild("Dragon Talon").Level.Value >= 400 then
                             if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman",true), "Bring") then
-                                OrionLib:MakeNotification({
-                                    Name = "Sla Hub BOT",
+                                Fluent:Notify({
+                                    Title = "Sla Hub BOT",
                                     Content = "Not Have Enough Material",
                                     Image = "rbxassetid://14919714384",
-                                    Time = 5
+                                    Duration = 5
                                 })
                                 
                             else
@@ -8633,11 +8633,11 @@ spawn(function()
                             end
                         end
                     else
-                        OrionLib:MakeNotification({
-                            Name = "Sla Hub BOT",
+                        Fluent:Notify({
+                            Title = "Sla Hub BOT",
                             Content = "You Not Have Dragon Talon! ",
                             Image = "rbxassetid://14919714384",
-                            Time = 5
+                            Duration = 5
                         })
                         
                     end
@@ -11034,35 +11034,35 @@ spawn(function()
             if _G.Hopfindmoon then
             if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" or game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
                 wait(2.0)
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub",
+                Fluent:Notify({
+                    Title = "Sla Hub",
                     Content = "Turn Off Hop Find Moon Please",
                     Image = "rbxassetid://119980140458596",
-                    Time = 5
+                    Duration = 5
                 })
             elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
                 Hop()
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub",
+                Fluent:Notify({
+                    Title = "Sla Hub",
                     Content = "Hop Server",
                     Image = "rbxassetid://119980140458596",
-                    Time = 5
+                    Duration = 5
                 })
             elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
                 Hop()
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub",
+                Fluent:Notify({
+                    Title = "Sla Hub",
                     Content = "Hop Server",
                     Image = "rbxassetid://119980140458596",
-                    Time = 5
+                    Duration = 5
                 })
             elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
                 Hop()
-                OrionLib:MakeNotification({
-                    Name = "Sla Hub",
+                Fluent:Notify({
+                    Title = "Sla Hub",
                     Content = "Hop Server",
                     Image = "rbxassetid://119980140458596",
-                    Time = 5
+                    Duration = 5
                 })
             else
                 Hop()
@@ -11071,11 +11071,11 @@ spawn(function()
         end
     end)
 
-OrionLib:MakeNotification({
-        Name = "Sla Hub",
+Fluent:Notify({
+        Title = "Sla Hub",
         Content = "Loading script complete!, You can now enable the function!",
         Image = "rbxassetid://119980140458596",
-        Time = 5
+        Duration = 5
     })
 
 _G.Remove_Effect = true
@@ -11114,9 +11114,9 @@ end)
 
 OrionLib:Init()
 
-OrionLib:MakeNotification({
-    Name = "Sla Hub",
+Fluent:Notify({
+    Title = "Sla Hub",
     Content = "Loading Config Complete!!",
     Image = "rbxassetid://119980140458596",
-    Time = 5
+    Duration = 5
 })
