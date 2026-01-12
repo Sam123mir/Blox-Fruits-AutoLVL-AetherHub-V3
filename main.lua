@@ -38,7 +38,7 @@ local Window = Starlight:CreateWindow({
 -- ============================================
 local HomeTab = Window:CreateTab({
     Name = "Home",
-    Icon = NebulaIcons:GetIcon("home", "lucide")
+    Icon = NebulaIcons:GetIcon("home", "Lucide")
 })
 
 local HomeSection = HomeTab:CreateSection("Welcome")
@@ -58,7 +58,7 @@ HomeTab:CreateParagraph({
 -- ============================================
 local CombatTab = Window:CreateTab({
     Name = "Combat",
-    Icon = NebulaIcons:GetIcon("swords", "lucide")
+    Icon = NebulaIcons:GetIcon("swords", "Lucide")
 })
 
 local FarmSection = CombatTab:CreateSection("Auto Farm")
@@ -91,7 +91,7 @@ CombatTab:CreateSlider({
 -- ============================================
 local FruitTab = Window:CreateTab({
     Name = "Fruit",
-    Icon = NebulaIcons:GetIcon("cherry", "lucide")
+    Icon = NebulaIcons:GetIcon("cherry", "Lucide")
 })
 
 local FruitSection = FruitTab:CreateSection("Devil Fruit Features")
@@ -162,7 +162,7 @@ FruitTab:CreateButton({
 -- ============================================
 local TeleportTab = Window:CreateTab({
     Name = "Teleport",
-    Icon = NebulaIcons:GetIcon("map-pin", "lucide")
+    Icon = NebulaIcons:GetIcon("map-pin", "Lucide")
 })
 
 local TPSection = TeleportTab:CreateSection("World Teleport")
@@ -177,7 +177,7 @@ TeleportTab:CreateParagraph({
 -- ============================================
 local SettingsTab = Window:CreateTab({
     Name = "Settings",
-    Icon = NebulaIcons:GetIcon("settings", "lucide")
+    Icon = NebulaIcons:GetIcon("settings", "Lucide")
 })
 
 SettingsTab:BuildConfigSection()
