@@ -296,6 +296,90 @@ local function main()
             }, "StoreFruitBtn")
         end
         
+        --// ========== ESP TAB ==========
+        local ESPTab = FeaturesSection:CreateTab({
+            Name = "ESP",
+            Icon = NebulaIcons:GetIcon("eye", "Lucide"),
+            Columns = 1
+        }, "ESPTab")
+        
+        local ESPBox = ESPTab:CreateGroupbox({Name = "ESP Settings"})
+        
+        ESPBox:CreateToggle({
+            Name = "Enable ESP",
+            CurrentValue = false,
+            Callback = function(value)
+                Variables:Set("ESP", value)
+            end
+        }, "ESPToggle")
+        
+        ESPBox:CreateLabel("Shows players, fruits, and chests")
+        
+        --// ========== QUEST TAB ==========
+        local QuestTab = FeaturesSection:CreateTab({
+            Name = "Quest",
+            Icon = NebulaIcons:GetIcon("scroll", "Lucide"),
+            Columns = 1
+        }, "QuestTab")
+        
+        local QuestBox = QuestTab:CreateGroupbox({Name = "Auto Quest"})
+        
+        QuestBox:CreateToggle({
+            Name = "Auto Quest",
+            CurrentValue = false,
+            Callback = function(value)
+                Variables:Set("AutoQuest", value)
+            end
+        }, "AutoQuestToggle")
+        
+        QuestBox:CreateLabel("Automatically accepts best quest for your level")
+        
+        --// ========== TELEPORT TAB ==========
+        local TeleportSection = Window:CreateTabSection("Teleport")
+        local TeleportTab = TeleportSection:CreateTab({
+            Name = "Islands",
+            Icon = NebulaIcons:GetIcon("map-pin", "Lucide"),
+            Columns = 1
+        }, "TeleportTab")
+        
+        local TPBox = TeleportTab:CreateGroupbox({Name = "Island Teleport"})
+        
+        -- Add dropdown with island names (placeholder for now)
+        TPBox:CreateLabel("Select an island to teleport")
+        
+        TPBox:CreateButton({
+            Name = "Starter Island",
+            Callback = function()
+                Starlight:Notify({
+                    Title = "Teleporting",
+                    Content = "Going to Starter Island...",
+                    Duration = 3
+                })
+            end
+        }, "TPStarterIsland")
+        
+        TPBox:CreateButton({
+            Name = "Jungle",
+            Callback = function()
+                Starlight:Notify({
+                    Title = "Teleporting",
+                    Content = "Going to Jungle...",
+                    Duration = 3
+                })
+            end
+        }, "TPJungle")
+        
+        TPBox:CreateButton({
+            Name = "Desert",
+            Callback = function()
+                Starlight:Notify({
+                    Title = "Teleporting",
+                    Content = "Going to Desert...",
+                    Duration = 3
+                })
+            end
+        }, "TPDesert")
+        
         --// ========== SETTINGS TAB ==========
         local SettingsSection = Window:CreateTabSection("Settings")
         local SettingsTab = SettingsSection:CreateTab({
