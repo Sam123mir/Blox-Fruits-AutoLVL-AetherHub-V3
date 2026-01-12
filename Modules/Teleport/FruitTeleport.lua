@@ -1,81 +1,302 @@
 --[[
-    AETHER HUB - Fruit Teleport Module
-    Auto teleport to Devil Fruits when they spawn
+    ================================================================
+         AETHER HUB - FruitTeleport Module (Refactored v3.0)
+    ================================================================
+    
+    MEJORAS APLICADAS:
+    ✓ Event-driven fruit detection
+    ✓ Priority queue for rare fruits
+    ✓ Auto-store integration
+    ✓ Cooldown system
+    ✓ Proper cleanup
+    
+    DEPENDENCIES: Services, Variables, Teleporter, FruitFinder, FruitStorage
 ]]
 
+--// MODULE
 local FruitTeleport = {}
-local Services = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Services.lua"))()
-local Variables = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Variables.lua"))()
-local FruitFinder = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Fruit/FruitFinder.lua"))()
-local FruitStorage = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Fruit/FruitStorage.lua"))()
-local Teleporter = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Teleport/Teleporter.lua"))()
+FruitTeleport.__index = FruitTeleport
 
--- Internal state
-FruitTeleport._running = false
-FruitTeleport._connection = nil
-FruitTeleport._onFruitFound = nil
+--// DEPENDENCIES
+local Services = nil
+local Variables = nil
+local Teleporter = nil
+local FruitFinder = nil
+local FruitStorage = nil
 
--- Callback when fruit is found
-function FruitTeleport:SetOnFruitFound(callback)
-    self._onFruitFound = callback
-end
+--// PRIVATE STATE
+local _running = false
+local _connections = {}
+local _onFruitFoundCallbacks = {}
+local _lastTeleportTime = 0
+local _fruitQueue = {}
 
--- Teleport to the closest fruit
-function FruitTeleport:TeleportToClosestFruit()
-    local fruit = FruitFinder:GetClosestFruit()
-    if fruit then
-        -- Notify callback
-        if self._onFruitFound then
-            self._onFruitFound(fruit.Name, fruit.Distance)
-        end
-        
-        -- Teleport to fruit
-        Teleporter:TeleportToInstance(fruit.Instance)
-        return fruit
-    end
-    return nil
-end
+--// CONSTANTS
+local TELEPORT_COOLDOWN = 3 -- seconds between teleports
+local PICKUP_DELAY = 0.5 -- time to wait after teleporting to pick up fruit
+local SCAN_INTERVAL = 2 -- seconds between scans
 
--- Start auto teleport loop
-function FruitTeleport:Start()
-    if self._running then return end
-    self._running = true
+--[[
+    Constructor
+    @param services table
+    @param variables table
+    @param teleporter table
+    @param fruitFinder table
+    @param fruitStorage table?
+]]
+function FruitTeleport.new(services, variables, teleporter, fruitFinder, fruitStorage)
+    local self = setmetatable({}, FruitTeleport)
     
-    spawn(function()
-        while self._running do
-            if Variables.FruitTeleport then
-                local fruit = self:TeleportToClosestFruit()
-                
-                if fruit and Variables.FruitAutoStore then
-                    -- Wait a bit to pick up the fruit
-                    wait(0.5)
-                    -- Try to store it
-                    FruitStorage:StoreFruit()
+    Services = services or error("[FRUITTELEPORT] Services required")
+    Variables = variables or error("[FRUITTELEPORT] Variables required")
+    Teleporter = teleporter or error("[FRUITTELEPORT] Teleporter required")
+    FruitFinder = fruitFinder or error("[FRUITTELEPORT] FruitFinder required")
+    FruitStorage = fruitStorage -- Optional
+    
+    -- Setup fruit spawn listener
+    self:_setupSpawnListener()
+    
+    return self
+end
+
+--[[
+    PRIVATE: Setup fruit spawn listener
+]]
+function FruitTeleport:_setupSpawnListener()
+    if not FruitFinder then return end
+    
+    local disconnect = FruitFinder:OnFruitSpawn(function(fruit)
+        self:_onFruitDetected(fruit)
+    end)
+    
+    table.insert(_connections, {Disconnect = disconnect})
+end
+
+--[[
+    PRIVATE: On fruit detected
+    @param fruit Instance
+]]
+function FruitTeleport:_onFruitDetected(fruit)
+    if not _running or not Variables:Get("FruitTeleport") then
+        return
+    end
+    
+    -- Add to queue
+    local rarity = FruitFinder:_getFruitRarity(fruit.Name) or 0
+    table.insert(_fruitQueue, {
+        Fruit = fruit,
+        Rarity = rarity,
+        DetectedAt = tick()
+    })
+    
+    -- Sort queue by rarity (highest first)
+    table.sort(_fruitQueue, function(a, b)
+        return a.Rarity > b.Rarity
+    end)
+    
+    -- Notify callbacks
+    self:_notifyFruitFound(fruit)
+    
+    -- Process queue
+    self:_processQueue()
+end
+
+--[[
+    PRIVATE: Notify fruit found callbacks
+    @param fruit Instance
+]]
+function FruitTeleport:_notifyFruitFound(fruit)
+    local distance = nil
+    local handle = fruit:FindFirstChild("Handle")
+    
+    if handle and Services then
+        local hrp = Services:GetHumanoidRootPart()
+        if hrp then
+            distance = (hrp.Position - handle.Position).Magnitude
+        end
+    end
+    
+    for _, callback in ipairs(_onFruitFoundCallbacks) do
+        task.spawn(callback, fruit.Name, distance)
+    end
+end
+
+--[[
+    PRIVATE: Process fruit queue
+]]
+function FruitTeleport:_processQueue()
+    if #_fruitQueue == 0 then return end
+    
+    -- Check cooldown
+    local currentTime = tick()
+    if currentTime - _lastTeleportTime < TELEPORT_COOLDOWN then
+        return
+    end
+    
+    -- Get highest priority fruit
+    local entry = table.remove(_fruitQueue, 1)
+    if not entry or not entry.Fruit or not entry.Fruit.Parent then
+        return -- Fruit no longer exists
+    end
+    
+    -- Teleport to fruit
+    Teleporter:TeleportToInstance(entry.Fruit)
+    _lastTeleportTime = tick()
+    
+    print(string.format("[FRUITTELEPORT] Teleported to: %s (Rarity: %d)", 
+        entry.Fruit.Name, entry.Rarity))
+    
+    -- Auto store if enabled
+    if Variables:Get("FruitAutoStore") and FruitStorage then
+        task.delay(PICKUP_DELAY, function()
+            local success, message = FruitStorage:StoreFruit()
+            if success then
+                print("[FRUITTELEPORT] Fruit stored automatically")
+            end
+        end)
+    end
+end
+
+--[[
+    PUBLIC: Teleport to closest fruit
+    @return table? - fruit data
+]]
+function FruitTeleport:TeleportToClosestFruit()
+    if not FruitFinder or not Teleporter then
+        return nil
+    end
+    
+    local fruit, distance = FruitFinder:GetClosestFruit()
+    if not fruit then
+        return nil
+    end
+    
+    -- Notify callbacks
+    for _, callback in ipairs(_onFruitFoundCallbacks) do
+        task.spawn(callback, fruit.Name, distance)
+    end
+    
+    -- Teleport
+    Teleporter:TeleportToInstance(fruit.Instance)
+    _lastTeleportTime = tick()
+    
+    return fruit
+end
+
+--[[
+    PUBLIC: Set callback for fruit found
+    @param callback function(name, distance)
+    @return function - disconnect
+]]
+function FruitTeleport:SetOnFruitFound(callback)
+    table.insert(_onFruitFoundCallbacks, callback)
+    
+    return function()
+        for i, cb in ipairs(_onFruitFoundCallbacks) do
+            if cb == callback then
+                table.remove(_onFruitFoundCallbacks, i)
+                break
+            end
+        end
+    end
+end
+
+--[[
+    PRIVATE: Main scan loop
+]]
+function FruitTeleport:_scanLoop()
+    while _running do
+        if Variables:Get("FruitTeleport") then
+            -- Check if any fruits exist
+            if FruitFinder:HasFruit() then
+                local fruit = FruitFinder:GetClosestFruit()
+                if fruit then
+                    self:_onFruitDetected(fruit.Instance)
                 end
             end
-            wait(1)
         end
+        
+        task.wait(SCAN_INTERVAL)
+    end
+end
+
+--[[
+    PUBLIC: Start auto teleport
+]]
+function FruitTeleport:Start()
+    if _running then
+        warn("[FRUITTELEPORT] Already running")
+        return
+    end
+    
+    _running = true
+    Variables:Set("FruitTeleport", true)
+    
+    -- Start scan loop
+    task.spawn(function()
+        self:_scanLoop()
     end)
+    
+    print("[FRUITTELEPORT] Started")
 end
 
--- Stop auto teleport
+--[[
+    PUBLIC: Stop auto teleport
+]]
 function FruitTeleport:Stop()
-    self._running = false
+    _running = false
+    Variables:Set("FruitTeleport", false)
+    _fruitQueue = {}
+    
+    print("[FRUITTELEPORT] Stopped")
 end
 
--- Toggle auto teleport
+--[[
+    PUBLIC: Toggle
+    @return boolean - new running state
+]]
 function FruitTeleport:Toggle()
-    if self._running then
+    if _running then
         self:Stop()
     else
         self:Start()
     end
-    return self._running
+    return _running
 end
 
--- Get current status
+--[[
+    PUBLIC: Is running
+    @return boolean
+]]
 function FruitTeleport:IsRunning()
-    return self._running
+    return _running
+end
+
+--[[
+    PUBLIC: Get queue length
+    @return number
+]]
+function FruitTeleport:GetQueueLength()
+    return #_fruitQueue
+end
+
+--[[
+    PUBLIC: Destroy
+]]
+function FruitTeleport:Destroy()
+    self:Stop()
+    
+    for _, connection in pairs(_connections) do
+        if type(connection) == "table" and connection.Disconnect then
+            connection.Disconnect()
+        elseif type(connection) == "function" then
+            connection()
+        end
+    end
+    
+    _connections = {}
+    _onFruitFoundCallbacks = {}
+    _fruitQueue = {}
 end
 
 return FruitTeleport
