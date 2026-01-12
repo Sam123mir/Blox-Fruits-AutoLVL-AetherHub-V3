@@ -1,6 +1,7 @@
 --[[
     AETHER HUB - Services Module
     Centralizes all Roblox service references
+    This module is standalone - no dependencies
 ]]
 
 local Services = {}
@@ -9,19 +10,12 @@ local Services = {}
 Services.Players = game:GetService("Players")
 Services.ReplicatedStorage = game:GetService("ReplicatedStorage")
 Services.Workspace = game:GetService("Workspace")
-Services.Lighting = game:GetService("Lighting")
 Services.TweenService = game:GetService("TweenService")
 Services.UserInputService = game:GetService("UserInputService")
 Services.RunService = game:GetService("RunService")
-Services.HttpService = game:GetService("HttpService")
-Services.VirtualUser = game:GetService("VirtualUser")
 
 -- Player References
 Services.LocalPlayer = Services.Players.LocalPlayer
-
--- Remote References
-Services.Remotes = Services.ReplicatedStorage:WaitForChild("Remotes", 10)
-Services.CommF_ = Services.Remotes and Services.Remotes:FindFirstChild("CommF_")
 
 -- Helper Functions
 function Services:GetCharacter()
@@ -36,6 +30,17 @@ end
 function Services:GetHumanoid()
     local char = self:GetCharacter()
     return char and char:FindFirstChildOfClass("Humanoid")
+end
+
+-- Remote References (with error handling)
+function Services:GetRemotes()
+    local remotes = self.ReplicatedStorage:FindFirstChild("Remotes")
+    return remotes
+end
+
+function Services:GetCommF()
+    local remotes = self:GetRemotes()
+    return remotes and remotes:FindFirstChild("CommF_")
 end
 
 return Services

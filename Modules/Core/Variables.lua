@@ -1,6 +1,7 @@
 --[[
     AETHER HUB - Variables Module
-    Global variables and settings
+    Global settings and state
+    This module is standalone - no dependencies
 ]]
 
 local Variables = {}
@@ -19,24 +20,18 @@ Variables.AttackDelay = 0.1
 Variables.TeleportDelay = 0.5
 
 -- World Detection
-Variables.World = nil
 Variables.Sea1 = game.PlaceId == 2753915549
 Variables.Sea2 = game.PlaceId == 4442272183
 Variables.Sea3 = game.PlaceId == 7449423635
 
 if Variables.Sea1 then
-    Variables.World = "World1"
+    Variables.World = "Sea 1"
 elseif Variables.Sea2 then
-    Variables.World = "World2"
+    Variables.World = "Sea 2"
 elseif Variables.Sea3 then
-    Variables.World = "World3"
+    Variables.World = "Sea 3"
+else
+    Variables.World = "Unknown"
 end
-
--- Player Data Cache
-Variables.PlayerLevel = 0
-Variables.PlayerRace = ""
-Variables.PlayerBeli = 0
-Variables.PlayerFragments = 0
-Variables.CurrentFruit = nil
 
 return Variables

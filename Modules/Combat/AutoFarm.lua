@@ -1,21 +1,27 @@
 --[[
     AETHER HUB - AutoFarm Module
-    Automatic level farming based on player level
+    Automatic enemy farming
+    Requires: Services, Variables, Teleporter (passed via init)
 ]]
 
 local AutoFarm = {}
-local Services = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Services.lua"))()
-local Variables = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Variables.lua"))()
-local Teleporter = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Teleport/Teleporter.lua"))()
-
--- Internal state
+AutoFarm.Services = nil
+AutoFarm.Variables = nil
+AutoFarm.Teleporter = nil
 AutoFarm._running = false
-AutoFarm._currentMob = nil
-AutoFarm._currentQuest = nil
+
+function AutoFarm:Init(services, variables, teleporter)
+    self.Services = services
+    self.Variables = variables
+    self.Teleporter = teleporter
+    return self
+end
 
 -- Get player level
 function AutoFarm:GetLevel()
-    local data = Services.LocalPlayer:FindFirstChild("Data")
+    if not self.Services then return 0 end
+    
+    local data = self.Services.LocalPlayer:FindFirstChild("Data")
     if data and data:FindFirstChild("Level") then
         return data.Level.Value
     end
@@ -24,10 +30,12 @@ end
 
 -- Find nearest enemy
 function AutoFarm:FindNearestEnemy()
-    local enemies = Services.Workspace:FindFirstChild("Enemies")
+    if not self.Services then return nil end
+    
+    local enemies = self.Services.Workspace:FindFirstChild("Enemies")
     if not enemies then return nil end
     
-    local hrp = Services:GetHumanoidRootPart()
+    local hrp = self.Services:GetHumanoidRootPart()
     if not hrp then return nil end
     
     local nearest = nil
@@ -48,18 +56,16 @@ function AutoFarm:FindNearestEnemy()
     return nearest, nearestDist
 end
 
--- Attack nearest enemy
+-- Attack enemy
 function AutoFarm:AttackEnemy(enemy)
-    if not enemy then return false end
+    if not enemy or not self.Teleporter then return false end
     
     local enemyHRP = enemy:FindFirstChild("HumanoidRootPart")
     if not enemyHRP then return false end
     
-    -- Teleport behind enemy
-    Teleporter:TeleportBehind(enemyHRP)
+    self.Teleporter:TeleportBehind(enemyHRP)
     
-    -- Click to attack
-    local tool = Services.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    local tool = self.Services.LocalPlayer.Character:FindFirstChildOfClass("Tool")
     if tool then
         tool:Activate()
     end
@@ -67,18 +73,18 @@ function AutoFarm:AttackEnemy(enemy)
     return true
 end
 
--- Start auto farm loop
+-- Start auto farm
 function AutoFarm:Start()
     if self._running then return end
     self._running = true
     
     spawn(function()
-        while self._running and Variables.AutoFarm do
+        while self._running and self.Variables and self.Variables.AutoFarm do
             local enemy, dist = self:FindNearestEnemy()
-            if enemy and dist < Variables.FarmDistance then
+            if enemy and dist < (self.Variables.FarmDistance or 200) then
                 self:AttackEnemy(enemy)
             end
-            wait(Variables.AttackDelay)
+            wait(self.Variables.AttackDelay or 0.1)
         end
         self._running = false
     end)
@@ -87,18 +93,9 @@ end
 -- Stop auto farm
 function AutoFarm:Stop()
     self._running = false
-    Variables.AutoFarm = false
-end
-
--- Toggle auto farm
-function AutoFarm:Toggle()
-    Variables.AutoFarm = not Variables.AutoFarm
-    if Variables.AutoFarm then
-        self:Start()
-    else
-        self:Stop()
+    if self.Variables then
+        self.Variables.AutoFarm = false
     end
-    return Variables.AutoFarm
 end
 
 return AutoFarm
