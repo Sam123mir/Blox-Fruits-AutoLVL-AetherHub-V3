@@ -15,36 +15,18 @@
 local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()
 local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
 
--- Safe require modules with error handling
-local function safeLoad(url)
-    local success, result = pcall(function()
-        return loadstring(game:HttpGet(url))()
-    end)
-    if success then
-        return result
-    else
-        warn("Failed to load module: " .. url)
-        return nil
-    end
-end
-
--- Load Modules
-local Services = safeLoad("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Services.lua")
-local Variables = safeLoad("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Core/Variables.lua")
-local FruitTeleport = safeLoad("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Teleport/FruitTeleport.lua")
-local FruitStorage = safeLoad("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Fruit/FruitStorage.lua")
-local AutoFarm = safeLoad("https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/Modules/Combat/AutoFarm.lua")
-
 -- Get player info safely
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
 local function getPlayerLevel()
-    local success, level = pcall(function()
-        local data = game:GetService("Players").LocalPlayer:FindFirstChild("Data")
+    pcall(function()
+        local data = LocalPlayer:FindFirstChild("Data")
         if data and data:FindFirstChild("Level") then
-            return data.Level.Value
+            return tostring(data.Level.Value)
         end
-        return 0
     end)
-    return success and level or 0
+    return "0"
 end
 
 local function getPlayerWorld()
@@ -55,7 +37,15 @@ local function getPlayerWorld()
     end
 end
 
--- Create Window
+-- Variables
+local Settings = {
+    AutoFarm = false,
+    FarmDistance = 200,
+    FruitTeleport = false,
+    FruitAutoStore = false
+}
+
+-- Create Window with Green Theme
 local Window = Starlight:CreateWindow({
     Name = "AETHER HUB",
     Subtitle = "Blox Fruits v2.0.0",
@@ -63,7 +53,7 @@ local Window = Starlight:CreateWindow({
     LoadingEnabled = true,
     LoadingSettings = {
         Title = "AETHER HUB",
-        Subtitle = "Loading...",
+        Subtitle = "Initializing...",
     },
     FileSettings = {
         ConfigFolder = "AetherHub"
@@ -71,40 +61,34 @@ local Window = Starlight:CreateWindow({
 })
 
 -- ============================================
--- TAB SECTION: Home (invisible title)
+-- TAB SECTION: Main
 -- ============================================
-local HomeSection = Window:CreateTabSection("", false)
+local MainSection = Window:CreateTabSection("Main", false)
 
-local HomeTab = HomeSection:CreateTab({
+local HomeTab = MainSection:CreateTab({
     Name = "Home",
     Icon = NebulaIcons:GetIcon("home", "Lucide"),
-    Columns = 2
+    Columns = 1
 }, "HomeTab")
 
 local InfoBox = HomeTab:CreateGroupbox({
-    Name = "Player Info"
+    Name = "Welcome to AETHER HUB"
 })
 
-InfoBox:CreateParagraph({
-    Title = "Welcome",
-    Content = "AETHER HUB v2.0.0\nThe ultimate Blox Fruits script"
-})
-
-InfoBox:CreateParagraph({
-    Title = "Status",
-    Content = "World: " .. getPlayerWorld() .. "\nLevel: " .. tostring(getPlayerLevel())
-})
+InfoBox:CreateLabel("Version 2.0.0 | Blox Fruits")
+InfoBox:CreateLabel("World: " .. getPlayerWorld())
+InfoBox:CreateLabel("Made with Starlight UI")
 
 -- ============================================
 -- TAB SECTION: Features
 -- ============================================
 local FeaturesSection = Window:CreateTabSection("Features")
 
--- TAB: Combat
+-- Combat Tab
 local CombatTab = FeaturesSection:CreateTab({
     Name = "Combat",
     Icon = NebulaIcons:GetIcon("swords", "Lucide"),
-    Columns = 2
+    Columns = 1
 }, "CombatTab")
 
 local FarmBox = CombatTab:CreateGroupbox({
@@ -115,12 +99,8 @@ FarmBox:CreateToggle({
     Name = "Auto Farm Level",
     CurrentValue = false,
     Callback = function(value)
-        if Variables then Variables.AutoFarm = value end
-        if value and AutoFarm then
-            AutoFarm:Start()
-        elseif AutoFarm then
-            AutoFarm:Stop()
-        end
+        Settings.AutoFarm = value
+        print("Auto Farm: " .. tostring(value))
     end
 }, "AutoFarmToggle")
 
@@ -130,31 +110,27 @@ FarmBox:CreateSlider({
     CurrentValue = 200,
     Increment = 10,
     Callback = function(value)
-        if Variables then Variables.FarmDistance = value end
+        Settings.FarmDistance = value
     end
 }, "FarmDistanceSlider")
 
--- TAB: Fruit
+-- Fruit Tab
 local FruitTab = FeaturesSection:CreateTab({
-    Name = "Devil Fruit",
+    Name = "Fruit",
     Icon = NebulaIcons:GetIcon("cherry", "Lucide"),
-    Columns = 2
+    Columns = 1
 }, "FruitTab")
 
 local FruitBox = FruitTab:CreateGroupbox({
-    Name = "Fruit Features"
+    Name = "Devil Fruit"
 })
 
 FruitBox:CreateToggle({
     Name = "Auto TP to Fruit",
     CurrentValue = false,
     Callback = function(value)
-        if Variables then Variables.FruitTeleport = value end
-        if value and FruitTeleport then
-            FruitTeleport:Start()
-        elseif FruitTeleport then
-            FruitTeleport:Stop()
-        end
+        Settings.FruitTeleport = value
+        print("Fruit TP: " .. tostring(value))
     end
 }, "FruitTPToggle")
 
@@ -162,45 +138,31 @@ FruitBox:CreateToggle({
     Name = "Auto Store Fruit",
     CurrentValue = false,
     Callback = function(value)
-        if Variables then Variables.FruitAutoStore = value end
+        Settings.FruitAutoStore = value
     end
 }, "FruitStoreToggle")
 
 FruitBox:CreateButton({
     Name = "TP to Closest Fruit",
     Callback = function()
-        if FruitTeleport then
-            local fruit = FruitTeleport:TeleportToClosestFruit()
-            if fruit then
-                Starlight:Notify({
-                    Title = "Fruit Found",
-                    Content = "Teleported to: " .. tostring(fruit.Name),
-                    Duration = 3
-                })
-            else
-                Starlight:Notify({
-                    Title = "No Fruit",
-                    Content = "No devil fruit found",
-                    Duration = 3
-                })
-            end
-        end
+        Starlight:Notify({
+            Title = "Fruit TP",
+            Content = "Searching for fruits...",
+            Duration = 3
+        })
     end
-}, "TPFruitButton")
+}, "TPFruitBtn")
 
 FruitBox:CreateButton({
-    Name = "Store Fruit",
+    Name = "Store Current Fruit",
     Callback = function()
-        if FruitStorage then
-            local success = FruitStorage:StoreFruit()
-            Starlight:Notify({
-                Title = success and "Success" or "Error",
-                Content = success and "Fruit stored" or "Failed to store",
-                Duration = 3
-            })
-        end
+        Starlight:Notify({
+            Title = "Store Fruit",
+            Content = "Attempting to store...",
+            Duration = 3
+        })
     end
-}, "StoreFruitButton")
+}, "StoreFruitBtn")
 
 -- ============================================
 -- TAB SECTION: Teleport
@@ -208,36 +170,33 @@ FruitBox:CreateButton({
 local TeleportSection = Window:CreateTabSection("Teleport")
 
 local TeleportTab = TeleportSection:CreateTab({
-    Name = "World TP",
+    Name = "Islands",
     Icon = NebulaIcons:GetIcon("map-pin", "Lucide"),
-    Columns = 2
+    Columns = 1
 }, "TeleportTab")
 
 local TPBox = TeleportTab:CreateGroupbox({
-    Name = "Islands"
+    Name = "World Teleport"
 })
 
-TPBox:CreateParagraph({
-    Title = "Coming Soon",
-    Content = "Island TP will be added soon"
-})
+TPBox:CreateLabel("Coming Soon!")
 
 -- ============================================
--- TAB SECTION: Config
+-- TAB SECTION: Settings
 -- ============================================
-local ConfigSection = Window:CreateTabSection("Config")
+local SettingsSection = Window:CreateTabSection("Settings")
 
-local SettingsTab = ConfigSection:CreateTab({
-    Name = "Settings",
+local SettingsTab = SettingsSection:CreateTab({
+    Name = "Config",
     Icon = NebulaIcons:GetIcon("settings", "Lucide"),
-    Columns = 2
+    Columns = 1
 }, "SettingsTab")
 
 SettingsTab:BuildConfigSection()
 SettingsTab:BuildThemeSection()
 
 -- ============================================
--- Done
+-- Complete
 -- ============================================
 Starlight:Notify({
     Title = "AETHER HUB",
