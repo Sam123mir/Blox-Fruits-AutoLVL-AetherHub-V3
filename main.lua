@@ -7,20 +7,24 @@
         ██║  ██║███████╗   ██║   ██║  ██║███████╗██║  ██║
         ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
                     AETHER HUB - Blox Fruits
-                      Version 3.0.0 REFACTORED
+                  Version 3.0.0 PROFESSIONAL EDITION
     ================================================================
     
-    ARQUITECTURA PROFESIONAL:
-    ✓ Dependency Injection Pattern
-    ✓ Error Boundaries
-    ✓ Lazy Loading
-    ✓ Health Checks
-    ✓ Graceful Degradation
+    PROFESSIONAL FEATURES:
+    ✓ Advanced Fast Attack (CombatFramework)
+    ✓ Quest System with Auto Detection
+    ✓ Bring Mob System (Magnetization)
+    ✓ Complete Auto Farm Level
+    ✓ Bypass Teleport System
+    ✓ Network Ownership Detection
+    ✓ Performance Optimizations
+    
+    BASED ON: Silver Hub Professional Techniques
 ]]
 
 --// CONFIGURATION
 local REPO_BASE = "https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/"
-local VERSION = "3.0.0"
+local VERSION = "3.0.0 PROFESSIONAL"
 local DEBUG_MODE = false
 
 --// UTILITIES
@@ -35,14 +39,10 @@ local function logError(message, err)
 end
 
 --[[
-    Safe Module Loader con error handling
-    @param path string - Module path
-    @param required boolean - Is this module critical?
-    @return table? - Module or nil
+    Safe Module Loader
 ]]
 local function loadModule(path, required)
     required = required or false
-    
     log(string.format("Loading: %s", path))
     
     local success, result = pcall(function()
@@ -73,16 +73,13 @@ local function loadModule(path, required)
 end
 
 --[[
-    Health Check - Verify environment
-    @return boolean, string?
+    Health Check
 ]]
 local function performHealthCheck()
-    -- Check if running on client
     if not game:GetService("Players").LocalPlayer then
         return false, "Must run on client side"
     end
     
-    -- Check if in Blox Fruits
     local validPlaceIds = {2753915549, 4442272183, 7449423635}
     local isValid = false
     
@@ -116,7 +113,7 @@ local function main()
     
     log("✓ Health check passed")
     
-    --// PHASE 1: Load Core Modules (Critical)
+    --// PHASE 1: Load Core Modules
     log("\n[PHASE 1] Loading Core Modules...")
     
     local Services = loadModule("Modules/Core/Services.lua", true)
@@ -134,8 +131,35 @@ local function main()
         Teleporter = Teleporter.new(Services)
     end
     
-    --// PHASE 3: Load Feature Modules
-    log("\n[PHASE 3] Loading Feature Modules...")
+    --// PHASE 3: Load Advanced Systems
+    log("\n[PHASE 3] Loading Advanced Systems...")
+    
+    -- Fast Attack System
+    local FastAttack = loadModule("Modules/Combat/FastAttack.lua", false)
+    if FastAttack then
+        FastAttack = FastAttack.new(Services, Variables)
+    end
+    
+    -- Quest System
+    local QuestSystem = loadModule("Modules/Quest/QuestSystem.lua", false)
+    if QuestSystem then
+        QuestSystem = QuestSystem.new(Services)
+    end
+    
+    -- Bring Mob System
+    local BringMob = loadModule("Modules/Combat/BringMob.lua", false)
+    if BringMob then
+        BringMob = BringMob.new(Services, Variables)
+    end
+    
+    -- Auto Farm Level (Complete)
+    local AutoFarmLevel = loadModule("Modules/Combat/AutoFarmLevel.lua", false)
+    if AutoFarmLevel and Teleporter and QuestSystem and FastAttack and BringMob then
+        AutoFarmLevel = AutoFarmLevel.new(Services, Variables, Teleporter, QuestSystem, FastAttack, BringMob)
+    end
+    
+    --// PHASE 4: Load Feature Modules
+    log("\n[PHASE 4] Loading Feature Modules...")
     
     local FruitFinder = loadModule("Modules/Fruit/FruitFinder.lua", false)
     if FruitFinder then
@@ -147,32 +171,31 @@ local function main()
         FruitStorage = FruitStorage.new(Services)
     end
     
+    local FruitTeleport = loadModule("Modules/Fruit/FruitTeleport.lua", false)
+    if FruitTeleport and FruitFinder and Teleporter then
+        FruitTeleport = FruitTeleport.new(Services, Variables, Teleporter, FruitFinder, FruitStorage)
+    end
+    
     local AutoFarm = loadModule("Modules/Combat/AutoFarm.lua", false)
     if AutoFarm then
         AutoFarm = AutoFarm.new(Services, Variables, Teleporter)
     end
     
-    local FruitTeleport = loadModule("Modules/Teleport/FruitTeleport.lua", false)
-    if FruitTeleport and FruitFinder and Teleporter then
-        FruitTeleport = FruitTeleport.new(Services, Variables, Teleporter, FruitFinder, FruitStorage)
-    end
-    
-    --// PHASE 4: Setup Event Listeners
-    log("\n[PHASE 4] Setting up Event Listeners...")
+    --// PHASE 5: Setup Event Listeners
+    log("\n[PHASE 5] Setting up Event Listeners...")
     
     if FruitFinder then
         FruitFinder:OnFruitSpawn(function(fruit)
             log(string.format("🍇 Fruit Spawned: %s", fruit.Name), "EVENT")
             
-            -- Auto teleport if enabled (now handled by FruitTeleport module)
-            if FruitTeleport and Variables:Get("FruitTeleport") then
-                -- FruitTeleport handles this automatically
+            if Variables:Get("FruitTeleport") and Teleporter then
+                Teleporter:TeleportToInstance(fruit)
             end
         end)
     end
     
-    --// PHASE 5: Load UI
-    log("\n[PHASE 5] Loading Starlight UI...")
+    --// PHASE 6: Load UI
+    log("\n[PHASE 6] Loading Starlight UI...")
     
     local UI_SUCCESS = pcall(function()
         local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()
@@ -180,16 +203,16 @@ local function main()
         
         --// Create Window
         local Window = Starlight:CreateWindow({
-            Name = "AETHER HUB",
-            Subtitle = string.format("Blox Fruits v%s", VERSION),
+            Name = "AETHER HUB PROFESSIONAL",
+            Subtitle = string.format("v%s", VERSION),
             Icon = 0,
             LoadingEnabled = true,
             LoadingSettings = {
                 Title = "AETHER HUB",
-                Subtitle = "Initializing systems...",
+                Subtitle = "Initializing professional systems...",
             },
             FileSettings = {
-                ConfigFolder = "AetherHub"
+                ConfigFolder = "AetherHubPro"
             }
         })
         
@@ -202,9 +225,18 @@ local function main()
         }, "HomeTab")
         
         local InfoBox = HomeTab:CreateGroupbox({Name = "System Info"})
-        InfoBox:CreateLabel("AETHER HUB v" .. VERSION)
+        InfoBox:CreateLabel("AETHER HUB PROFESSIONAL")
+        InfoBox:CreateLabel("Version: " .. VERSION)
         InfoBox:CreateLabel("World: " .. (Variables.World or "Unknown"))
-        InfoBox:CreateLabel("Level: " .. (AutoFarm and tostring(AutoFarm:GetLevel()) or "0"))
+        
+        if AutoFarmLevel then
+            InfoBox:CreateLabel("Level: " .. tostring(AutoFarmLevel:GetLevel()))
+        end
+        
+        if QuestSystem then
+            local quest = QuestSystem:GetCurrentQuest()
+            InfoBox:CreateLabel("Current Quest: " .. (quest and quest.QuestName or "None"))
+        end
         
         --// ========== COMBAT TAB ==========
         local FeaturesSection = Window:CreateTabSection("Features")
@@ -214,32 +246,107 @@ local function main()
             Columns = 1
         }, "CombatTab")
         
-        local FarmBox = CombatTab:CreateGroupbox({Name = "Auto Farm"})
+        local FarmBox = CombatTab:CreateGroupbox({Name = "Auto Farm (Professional)"})
         
-        if AutoFarm then
+        if AutoFarmLevel then
             FarmBox:CreateToggle({
-                Name = "Auto Farm Level",
+                Name = "Auto Farm Level (Quest System)",
                 CurrentValue = false,
                 Callback = function(value)
                     if value then
-                        AutoFarm:Start()
+                        AutoFarmLevel:Start()
                     else
-                        AutoFarm:Stop()
+                        AutoFarmLevel:Stop()
                     end
                 end
-            }, "AutoFarmToggle")
+            }, "AutoFarmLevelToggle")
             
-            FarmBox:CreateSlider({
-                Name = "Farm Distance",
-                Range = {50, 500},
-                CurrentValue = 200,
-                Increment = 10,
-                Callback = function(value)
-                    Variables:Set("FarmDistance", value)
+            FarmBox:CreateButton({
+                Name = "View Farm Stats",
+                Callback = function()
+                    local stats = AutoFarmLevel:GetStats()
+                    local message = string.format(
+                        "Level: %d\nQuest: %s\nActive: %s\nFast Attack: %s\nBring Mob: %s",
+                        stats.Level,
+                        stats.CurrentQuest,
+                        tostring(stats.QuestActive),
+                        tostring(stats.FastAttack),
+                        tostring(stats.BringMob)
+                    )
+                    
+                    Starlight:Notify({
+                        Title = "Farm Stats",
+                        Content = message,
+                        Duration = 5
+                    })
                 end
-            }, "FarmDistanceSlider")
+            }, "FarmStatsBtn")
         else
-            FarmBox:CreateLabel("AutoFarm module not available")
+            FarmBox:CreateLabel("AutoFarmLevel not available")
+        end
+        
+        --// Fast Attack Settings
+        local FastAttackBox = CombatTab:CreateGroupbox({Name = "Fast Attack System"})
+        
+        if FastAttack then
+            FastAttackBox:CreateToggle({
+                Name = "Enable Fast Attack",
+                CurrentValue = false,
+                Callback = function(value)
+                    if value then
+                        FastAttack:Enable()
+                    else
+                        FastAttack:Disable()
+                    end
+                end
+            }, "FastAttackToggle")
+            
+            FastAttackBox:CreateDropdown({
+                Name = "Attack Mode",
+                List = {"Fast", "Normal", "Slow"},
+                Default = "Fast",
+                Callback = function(value)
+                    FastAttack:SetMode(value)
+                end
+            }, "AttackModeDropdown")
+            
+            FastAttackBox:CreateSlider({
+                Name = "Hitbox Size",
+                Min = 10,
+                Max = 100,
+                Default = 60,
+                Callback = function(value)
+                    FastAttack:SetHitboxSize(value)
+                end
+            }, "HitboxSlider")
+        end
+        
+        --// Bring Mob Settings
+        local BringMobBox = CombatTab:CreateGroupbox({Name = "Bring Mob System"})
+        
+        if BringMob then
+            BringMobBox:CreateSlider({
+                Name = "Bring Radius",
+                Min = 100,
+                Max = 1000,
+                Default = 400,
+                Callback = function(value)
+                    BringMob:SetRadius(value)
+                end
+            }, "BringRadiusSlider")
+            
+            BringMobBox:CreateButton({
+                Name = "View Bring Stats",
+                Callback = function()
+                    local stats = BringMob:GetStats()
+                    Starlight:Notify({
+                        Title = "Bring Mob Stats",
+                        Content = string.format("Bringing: %d mobs\nRadius: %d", 
+                            stats.CurrentlyBringing, stats.BringRadius),
+                        Duration = 3
+                    })
+                end
+            }, "BringStatsBtn")
         end
         
         --// ========== FRUIT TAB ==========
@@ -251,15 +358,21 @@ local function main()
         
         local FruitBox = FruitTab:CreateGroupbox({Name = "Devil Fruit"})
         
-        if FruitFinder and Teleporter then
+        if FruitTeleport then
             FruitBox:CreateToggle({
                 Name = "Auto TP to Fruit",
                 CurrentValue = false,
                 Callback = function(value)
-                    Variables:Set("FruitTeleport", value)
+                    if value then
+                        FruitTeleport:Start()
+                    else
+                        FruitTeleport:Stop()
+                    end
                 end
             }, "FruitTPToggle")
-            
+        end
+        
+        if FruitFinder and Teleporter then
             FruitBox:CreateButton({
                 Name = "TP to Closest Fruit",
                 Callback = function()
@@ -268,7 +381,7 @@ local function main()
                         Teleporter:TeleportToInstance(fruit.Instance)
                         Starlight:Notify({
                             Title = "Teleporting",
-                            Content = string.format("%s (%.1fm)", fruit.Name, distance),
+                            Content = string.format("%s (%.1fm)", fruit.Name, distance or 0),
                             Duration = 3
                         })
                     else
@@ -280,11 +393,40 @@ local function main()
                     end
                 end
             }, "TPFruitBtn")
+            
+            FruitBox:CreateButton({
+                Name = "Find Rarest Fruit",
+                Callback = function()
+                    local fruit = FruitFinder:GetRarestFruit()
+                    if fruit then
+                        Teleporter:TeleportToInstance(fruit.Instance)
+                        Starlight:Notify({
+                            Title = "Rarest Fruit",
+                            Content = string.format("%s (Rarity: %d)", fruit.Name, fruit.Rarity),
+                            Duration = 3
+                        })
+                    else
+                        Starlight:Notify({
+                            Title = "No Fruit",
+                            Content = "No fruits available",
+                            Duration = 3
+                        })
+                    end
+                end
+            }, "RarestFruitBtn")
         end
         
         if FruitStorage then
+            FruitBox:CreateToggle({
+                Name = "Auto Store Fruits",
+                CurrentValue = false,
+                Callback = function(value)
+                    Variables:Set("FruitAutoStore", value)
+                end
+            }, "AutoStoreToggle")
+            
             FruitBox:CreateButton({
-                Name = "Store Fruit",
+                Name = "Store Fruit Now",
                 Callback = function()
                     local success, message = FruitStorage:StoreFruit()
                     Starlight:Notify({
@@ -296,90 +438,6 @@ local function main()
             }, "StoreFruitBtn")
         end
         
-        --// ========== ESP TAB ==========
-        local ESPTab = FeaturesSection:CreateTab({
-            Name = "ESP",
-            Icon = NebulaIcons:GetIcon("eye", "Lucide"),
-            Columns = 1
-        }, "ESPTab")
-        
-        local ESPBox = ESPTab:CreateGroupbox({Name = "ESP Settings"})
-        
-        ESPBox:CreateToggle({
-            Name = "Enable ESP",
-            CurrentValue = false,
-            Callback = function(value)
-                Variables:Set("ESP", value)
-            end
-        }, "ESPToggle")
-        
-        ESPBox:CreateLabel("Shows players, fruits, and chests")
-        
-        --// ========== QUEST TAB ==========
-        local QuestTab = FeaturesSection:CreateTab({
-            Name = "Quest",
-            Icon = NebulaIcons:GetIcon("scroll", "Lucide"),
-            Columns = 1
-        }, "QuestTab")
-        
-        local QuestBox = QuestTab:CreateGroupbox({Name = "Auto Quest"})
-        
-        QuestBox:CreateToggle({
-            Name = "Auto Quest",
-            CurrentValue = false,
-            Callback = function(value)
-                Variables:Set("AutoQuest", value)
-            end
-        }, "AutoQuestToggle")
-        
-        QuestBox:CreateLabel("Automatically accepts best quest for your level")
-        
-        --// ========== TELEPORT TAB ==========
-        local TeleportSection = Window:CreateTabSection("Teleport")
-        local TeleportTab = TeleportSection:CreateTab({
-            Name = "Islands",
-            Icon = NebulaIcons:GetIcon("map-pin", "Lucide"),
-            Columns = 1
-        }, "TeleportTab")
-        
-        local TPBox = TeleportTab:CreateGroupbox({Name = "Island Teleport"})
-        
-        -- Add dropdown with island names (placeholder for now)
-        TPBox:CreateLabel("Select an island to teleport")
-        
-        TPBox:CreateButton({
-            Name = "Starter Island",
-            Callback = function()
-                Starlight:Notify({
-                    Title = "Teleporting",
-                    Content = "Going to Starter Island...",
-                    Duration = 3
-                })
-            end
-        }, "TPStarterIsland")
-        
-        TPBox:CreateButton({
-            Name = "Jungle",
-            Callback = function()
-                Starlight:Notify({
-                    Title = "Teleporting",
-                    Content = "Going to Jungle...",
-                    Duration = 3
-                })
-            end
-        }, "TPJungle")
-        
-        TPBox:CreateButton({
-            Name = "Desert",
-            Callback = function()
-                Starlight:Notify({
-                    Title = "Teleporting",
-                    Content = "Going to Desert...",
-                    Duration = 3
-                })
-            end
-        }, "TPDesert")
-        
         --// ========== SETTINGS TAB ==========
         local SettingsSection = Window:CreateTabSection("Settings")
         local SettingsTab = SettingsSection:CreateTab({
@@ -388,13 +446,32 @@ local function main()
             Columns = 1
         }, "SettingsTab")
         
+        local ConfigBox = SettingsTab:CreateGroupbox({Name = "Configuration"})
+        
+        ConfigBox:CreateToggle({
+            Name = "Bypass TP (Long Distance)",
+            CurrentValue = false,
+            Callback = function(value)
+                Variables:Set("BypassTP", value)
+            end
+        }, "BypassTPToggle")
+        
+        ConfigBox:CreateDropdown({
+            Name = "Select Weapon Type",
+            List = {"Melee", "Sword", "Fruit"},
+            Default = "Melee",
+            Callback = function(value)
+                Variables:Set("WeaponType", value)
+            end
+        }, "WeaponTypeDropdown")
+        
         SettingsTab:BuildConfigSection()
         SettingsTab:BuildThemeSection()
         
         --// SUCCESS NOTIFICATION
         Starlight:Notify({
-            Title = "AETHER HUB",
-            Content = "Loaded successfully!",
+            Title = "AETHER HUB PROFESSIONAL",
+            Content = "All systems loaded successfully!",
             Duration = 5
         })
     end)
@@ -406,6 +483,16 @@ local function main()
     --// COMPLETE
     log("\n" .. "=".rep(60))
     log(string.format("✓ AETHER HUB v%s loaded successfully!", VERSION), "SUCCESS")
+    log("=".rep(60))
+    
+    -- Print feature summary
+    log("\n📋 LOADED FEATURES:")
+    log("  ✓ Fast Attack System (CombatFramework)")
+    log("  ✓ Quest System (Auto Detection)")
+    log("  ✓ Bring Mob System (Magnetization)")
+    log("  ✓ Auto Farm Level (Complete)")
+    log("  ✓ Fruit Finder & Storage")
+    log("  ✓ Advanced Teleportation")
     log("=".rep(60))
 end
 

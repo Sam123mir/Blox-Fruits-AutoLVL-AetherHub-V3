@@ -18,7 +18,19 @@ Services.LocalPlayer = Services.Players.LocalPlayer
 
 -- Get Character
 function Services:GetCharacter()
-    return self.LocalPlayer.Character or self.LocalPlayer.CharacterAdded:Wait()
+    if self.LocalPlayer.Character then
+        return self.LocalPlayer.Character
+    end
+    
+    -- Wait for character if not loaded
+    local success, char = pcall(function()
+        return self.LocalPlayer.CharacterAdded:Wait()
+    end)
+    
+    if success then
+        return char
+    end
+    return nil
 end
 
 -- Get HumanoidRootPart
