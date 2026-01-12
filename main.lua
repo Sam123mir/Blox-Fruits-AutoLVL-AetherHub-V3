@@ -152,6 +152,11 @@ local function main()
         AutoFarm = AutoFarm.new(Services, Variables, Teleporter)
     end
     
+    local FruitTeleport = loadModule("Modules/Teleport/FruitTeleport.lua", false)
+    if FruitTeleport and FruitFinder and Teleporter then
+        FruitTeleport = FruitTeleport.new(Services, Variables, Teleporter, FruitFinder, FruitStorage)
+    end
+    
     --// PHASE 4: Setup Event Listeners
     log("\n[PHASE 4] Setting up Event Listeners...")
     
@@ -159,9 +164,9 @@ local function main()
         FruitFinder:OnFruitSpawn(function(fruit)
             log(string.format("🍇 Fruit Spawned: %s", fruit.Name), "EVENT")
             
-            -- Auto teleport if enabled
-            if Variables:Get("FruitTeleport") and Teleporter then
-                Teleporter:TeleportToInstance(fruit)
+            -- Auto teleport if enabled (now handled by FruitTeleport module)
+            if FruitTeleport and Variables:Get("FruitTeleport") then
+                -- FruitTeleport handles this automatically
             end
         end)
     end
