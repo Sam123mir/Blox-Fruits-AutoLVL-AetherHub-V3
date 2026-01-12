@@ -9,6 +9,7 @@
     ✓ Auto-store integration
     ✓ Cooldown system
     ✓ Proper cleanup
+    ✓ Distance-based filtering
     
     DEPENDENCIES: Services, Variables, Teleporter, FruitFinder, FruitStorage
 ]]
@@ -17,7 +18,7 @@
 local FruitTeleport = {}
 FruitTeleport.__index = FruitTeleport
 
---// DEPENDENCIES
+--// DEPENDENCIES (will be injected)
 local Services = nil
 local Variables = nil
 local Teleporter = nil
@@ -30,11 +31,14 @@ local _connections = {}
 local _onFruitFoundCallbacks = {}
 local _lastTeleportTime = 0
 local _fruitQueue = {}
+local _processedFruits = {} -- Prevent duplicate teleports
 
 --// CONSTANTS
 local TELEPORT_COOLDOWN = 3 -- seconds between teleports
 local PICKUP_DELAY = 0.5 -- time to wait after teleporting to pick up fruit
 local SCAN_INTERVAL = 2 -- seconds between scans
+local MAX_QUEUE_SIZE = 10 -- Prevent queue overflow
+local FRUIT_MEMORY_TIME = 60 -- Remember fruits for 60 seconds
 
 --[[
     Constructor
@@ -56,6 +60,9 @@ function FruitTeleport.new(services, variables, teleporter, fruitFinder, fruitSt
     -- Setup fruit spawn listener
     self:_setupSpawnListener()
     
+    -- Cleanup old processed fruits periodically
+    self:_startMemoryCleaner()
+    
     return self
 end
 
@@ -73,6 +80,61 @@ function FruitTeleport:_setupSpawnListener()
 end
 
 --[[
+    PRIVATE: Start memory cleaner (prevents memory buildup)
+]]
+function FruitTeleport:_startMemoryCleaner()
+    task.spawn(function()
+        while _running do
+            local currentTime = tick()
+            
+            -- Clean old processed fruits
+            for fruitId, timestamp in pairs(_processedFruits) do
+                if currentTime - timestamp > FRUIT_MEMORY_TIME then
+                    _processedFruits[fruitId] = nil
+                end
+            end
+            
+            task.wait(30) -- Clean every 30 seconds
+        end
+    end)
+end
+
+--[[
+    PRIVATE: Get unique fruit ID
+    @param fruit Instance
+    @return string
+]]
+function FruitTeleport:_getFruitId(fruit)
+    if not fruit then return "" end
+    
+    local handle = fruit:FindFirstChild("Handle")
+    if handle then
+        return string.format("%s_%s", fruit.Name, tostring(handle.Position))
+    end
+    
+    return fruit.Name
+end
+
+--[[
+    PRIVATE: Check if fruit was already processed
+    @param fruit Instance
+    @return boolean
+]]
+function FruitTeleport:_wasProcessed(fruit)
+    local fruitId = self:_getFruitId(fruit)
+    return _processedFruits[fruitId] ~= nil
+end
+
+--[[
+    PRIVATE: Mark fruit as processed
+    @param fruit Instance
+]]
+function FruitTeleport:_markAsProcessed(fruit)
+    local fruitId = self:_getFruitId(fruit)
+    _processedFruits[fruitId] = tick()
+end
+
+--[[
     PRIVATE: On fruit detected
     @param fruit Instance
 ]]
@@ -81,8 +143,23 @@ function FruitTeleport:_onFruitDetected(fruit)
         return
     end
     
+    -- Skip if already processed
+    if self:_wasProcessed(fruit) then
+        return
+    end
+    
+    -- Prevent queue overflow
+    if #_fruitQueue >= MAX_QUEUE_SIZE then
+        warn("[FRUITTELEPORT] Queue full, skipping fruit")
+        return
+    end
+    
     -- Add to queue
-    local rarity = FruitFinder:_getFruitRarity(fruit.Name) or 0
+    local rarity = 0
+    if FruitFinder._getFruitRarity then
+        rarity = FruitFinder:_getFruitRarity(fruit.Name) or 0
+    end
+    
     table.insert(_fruitQueue, {
         Fruit = fruit,
         Rarity = rarity,
@@ -91,13 +168,17 @@ function FruitTeleport:_onFruitDetected(fruit)
     
     -- Sort queue by rarity (highest first)
     table.sort(_fruitQueue, function(a, b)
+        if a.Rarity == b.Rarity then
+            -- If same rarity, prioritize by detection time (newest first)
+            return a.DetectedAt > b.DetectedAt
+        end
         return a.Rarity > b.Rarity
     end)
     
     -- Notify callbacks
     self:_notifyFruitFound(fruit)
     
-    -- Process queue
+    -- Process queue immediately
     self:_processQueue()
 end
 
@@ -130,30 +211,52 @@ function FruitTeleport:_processQueue()
     -- Check cooldown
     local currentTime = tick()
     if currentTime - _lastTeleportTime < TELEPORT_COOLDOWN then
+        -- Schedule retry
+        task.delay(TELEPORT_COOLDOWN - (currentTime - _lastTeleportTime), function()
+            self:_processQueue()
+        end)
         return
     end
     
     -- Get highest priority fruit
     local entry = table.remove(_fruitQueue, 1)
     if not entry or not entry.Fruit or not entry.Fruit.Parent then
-        return -- Fruit no longer exists
+        -- Fruit no longer exists, try next
+        self:_processQueue()
+        return
     end
     
+    -- Mark as processed
+    self:_markAsProcessed(entry.Fruit)
+    
     -- Teleport to fruit
-    Teleporter:TeleportToInstance(entry.Fruit)
-    _lastTeleportTime = tick()
+    local teleportSuccess = Teleporter:TeleportToInstance(entry.Fruit, {
+        useTween = false,
+        offset = Vector3.new(0, 2, 0) -- Slight Y offset
+    })
     
-    print(string.format("[FRUITTELEPORT] Teleported to: %s (Rarity: %d)", 
-        entry.Fruit.Name, entry.Rarity))
-    
-    -- Auto store if enabled
-    if Variables:Get("FruitAutoStore") and FruitStorage then
-        task.delay(PICKUP_DELAY, function()
-            local success, message = FruitStorage:StoreFruit()
-            if success then
-                print("[FRUITTELEPORT] Fruit stored automatically")
-            end
-        end)
+    if teleportSuccess then
+        _lastTeleportTime = tick()
+        
+        print(string.format("[FRUITTELEPORT] Teleported to: %s (Rarity: %d)", 
+            entry.Fruit.Name, entry.Rarity))
+        
+        -- Auto store if enabled
+        if Variables:Get("FruitAutoStore") and FruitStorage then
+            task.delay(PICKUP_DELAY, function()
+                -- Wait for fruit to be picked up
+                task.wait(0.3)
+                
+                local success, message = FruitStorage:StoreFruit()
+                if success then
+                    print("[FRUITTELEPORT] Fruit stored automatically")
+                else
+                    warn("[FRUITTELEPORT] Auto-store failed: " .. tostring(message))
+                end
+            end)
+        end
+    else
+        warn("[FRUITTELEPORT] Teleport failed for: " .. entry.Fruit.Name)
     end
 end
 
@@ -171,14 +274,27 @@ function FruitTeleport:TeleportToClosestFruit()
         return nil
     end
     
+    -- Check if already processed
+    if self:_wasProcessed(fruit.Instance) then
+        print("[FRUITTELEPORT] Fruit already processed, skipping")
+        return nil
+    end
+    
     -- Notify callbacks
     for _, callback in ipairs(_onFruitFoundCallbacks) do
         task.spawn(callback, fruit.Name, distance)
     end
     
     -- Teleport
-    Teleporter:TeleportToInstance(fruit.Instance)
-    _lastTeleportTime = tick()
+    local success = Teleporter:TeleportToInstance(fruit.Instance)
+    
+    if success then
+        _lastTeleportTime = tick()
+        self:_markAsProcessed(fruit.Instance)
+        
+        print(string.format("[FRUITTELEPORT] Manual teleport to: %s (%.1fm)", 
+            fruit.Name, distance or 0))
+    end
     
     return fruit
 end
@@ -209,9 +325,12 @@ function FruitTeleport:_scanLoop()
         if Variables:Get("FruitTeleport") then
             -- Check if any fruits exist
             if FruitFinder:HasFruit() then
-                local fruit = FruitFinder:GetClosestFruit()
-                if fruit then
-                    self:_onFruitDetected(fruit.Instance)
+                local allFruits = FruitFinder:GetAllFruits()
+                
+                for _, fruitData in ipairs(allFruits) do
+                    if not self:_wasProcessed(fruitData.Instance) then
+                        self:_onFruitDetected(fruitData.Instance)
+                    end
                 end
             end
         end
@@ -281,6 +400,27 @@ function FruitTeleport:GetQueueLength()
 end
 
 --[[
+    PUBLIC: Get stats
+    @return table
+]]
+function FruitTeleport:GetStats()
+    return {
+        QueueLength = #_fruitQueue,
+        ProcessedCount = table.count(_processedFruits),
+        LastTeleport = _lastTeleportTime,
+        IsRunning = _running
+    }
+end
+
+--[[
+    PUBLIC: Clear processed memory
+]]
+function FruitTeleport:ClearMemory()
+    _processedFruits = {}
+    print("[FRUITTELEPORT] Memory cleared")
+end
+
+--[[
     PUBLIC: Destroy
 ]]
 function FruitTeleport:Destroy()
@@ -297,6 +437,7 @@ function FruitTeleport:Destroy()
     _connections = {}
     _onFruitFoundCallbacks = {}
     _fruitQueue = {}
+    _processedFruits = {}
 end
 
 return FruitTeleport
