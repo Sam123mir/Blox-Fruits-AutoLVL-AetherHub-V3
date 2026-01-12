@@ -69,28 +69,41 @@ end
     PRIVATE: Initialize Combat Framework references
 ]]
 function FastAttack:_initializeCombatFramework()
-    local success, error = pcall(function()
-        -- Get CombatFramework module
-        local playerScripts = Services.LocalPlayer.PlayerScripts
-        local combatModule = playerScripts:WaitForChild("CombatFramework")
+    task.spawn(function()
+        local success, err = pcall(function()
+            -- Get CombatFramework module with timeout
+            local playerScripts = Services.LocalPlayer.PlayerScripts
+            local combatModule = playerScripts:WaitForChild("CombatFramework", 2)
+            
+            if not combatModule then
+                warn("[FASTATTACK] CombatFramework not found")
+                return
+            end
+            
+            CombatFramework = require(combatModule)
+            CombatFrameworkR = debug.getupvalues(CombatFramework)[2]
+            
+            -- Get RigController
+            local rigModule = combatModule:FindFirstChild("RigController")
+            if rigModule then
+                RigController = require(rigModule)
+                RigControllerR = debug.getupvalues(RigController)[2]
+            end
+            
+            -- Get RigLib
+            local rigLib = game.ReplicatedStorage:FindFirstChild("CombatFramework")
+            if rigLib then
+                local rl = rigLib:FindFirstChild("RigLib")
+                if rl then RealBHit = require(rl) end
+            end
+            
+            print("[FASTATTACK] Combat Framework initialized successfully")
+        end)
         
-        CombatFramework = require(combatModule)
-        CombatFrameworkR = debug.getupvalues(CombatFramework)[2]
-        
-        -- Get RigController
-        local rigModule = combatModule.RigController
-        RigController = require(rigModule)
-        RigControllerR = debug.getupvalues(RigController)[2]
-        
-        -- Get RigLib
-        RealBHit = require(game.ReplicatedStorage.CombatFramework.RigLib)
-        
-        print("[FASTATTACK] Combat Framework initialized successfully")
+        if not success then
+            warn("[FASTATTACK] Failed to initialize Combat Framework:", err)
+        end
     end)
-    
-    if not success then
-        warn("[FASTATTACK] Failed to initialize Combat Framework:", error)
-    end
 end
 
 --[[
