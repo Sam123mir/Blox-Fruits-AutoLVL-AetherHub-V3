@@ -25,45 +25,62 @@ local AutoFarm = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sam1
 
 -- Create Window
 local Window = Starlight:CreateWindow({
-    Title = "AETHER HUB",
-    SubTitle = "Blox Fruits v2.0.0",
-    LogoId = "",
+    Name = "AETHER HUB",
+    Subtitle = "Blox Fruits v2.0.0",
+    Icon = 0,
     LoadingEnabled = true,
-    LoadingTitle = "AETHER HUB",
-    LoadingSubTitle = "Loading modules...",
+    LoadingSettings = {
+        Title = "AETHER HUB",
+        Subtitle = "Loading modules...",
+    },
+    FileSettings = {
+        ConfigFolder = "AetherHub"
+    }
 })
 
 -- ============================================
--- TAB: Home
+-- TAB SECTION: Profile (invisible section)
 -- ============================================
-local HomeTab = Window:CreateTab({
+local ProfileSection = Window:CreateTabSection("Profile", false)
+
+local HomeTab = ProfileSection:CreateTab({
     Name = "Home",
-    Icon = NebulaIcons:GetIcon("home", "Lucide")
+    Icon = NebulaIcons:GetIcon("home", "Lucide"),
+    Columns = 2
+}, "HomeTab")
+
+-- Create Groupbox for welcome info
+local WelcomeBox = HomeTab:CreateGroupbox({
+    Name = "Welcome"
 })
 
-local HomeSection = HomeTab:CreateSection("Welcome")
-
-HomeTab:CreateParagraph({
+WelcomeBox:CreateParagraph({
     Title = "AETHER HUB",
     Content = "Welcome to AETHER HUB v2.0.0\nThe ultimate Blox Fruits script."
 })
 
-HomeTab:CreateParagraph({
+WelcomeBox:CreateParagraph({
     Title = "Player Info",
     Content = "World: " .. (Variables.World or "Unknown") .. "\nLevel: " .. AutoFarm:GetLevel()
 })
 
 -- ============================================
--- TAB: Combat
+-- TAB SECTION: Main Features
 -- ============================================
-local CombatTab = Window:CreateTab({
+local MainSection = Window:CreateTabSection("Main")
+
+-- TAB: Combat
+local CombatTab = MainSection:CreateTab({
     Name = "Combat",
-    Icon = NebulaIcons:GetIcon("swords", "Lucide")
+    Icon = NebulaIcons:GetIcon("swords", "Lucide"),
+    Columns = 2
+}, "CombatTab")
+
+local FarmBox = CombatTab:CreateGroupbox({
+    Name = "Auto Farm"
 })
 
-local FarmSection = CombatTab:CreateSection("Auto Farm")
-
-CombatTab:CreateToggle({
+FarmBox:CreateToggle({
     Name = "Auto Farm Level",
     CurrentValue = false,
     Callback = function(value)
@@ -74,9 +91,9 @@ CombatTab:CreateToggle({
             AutoFarm:Stop()
         end
     end
-})
+}, "AutoFarmToggle")
 
-CombatTab:CreateSlider({
+FarmBox:CreateSlider({
     Name = "Farm Distance",
     Range = {50, 500},
     CurrentValue = 200,
@@ -84,19 +101,20 @@ CombatTab:CreateSlider({
     Callback = function(value)
         Variables.FarmDistance = value
     end
-})
+}, "FarmDistanceSlider")
 
--- ============================================
 -- TAB: Fruit
--- ============================================
-local FruitTab = Window:CreateTab({
+local FruitTab = MainSection:CreateTab({
     Name = "Fruit",
-    Icon = NebulaIcons:GetIcon("cherry", "Lucide")
+    Icon = NebulaIcons:GetIcon("cherry", "Lucide"),
+    Columns = 2
+}, "FruitTab")
+
+local FruitBox = FruitTab:CreateGroupbox({
+    Name = "Devil Fruit"
 })
 
-local FruitSection = FruitTab:CreateSection("Devil Fruit Features")
-
-CombatTab:CreateToggle({
+FruitBox:CreateToggle({
     Name = "Auto TP to Fruit",
     CurrentValue = false,
     Callback = function(value)
@@ -107,17 +125,17 @@ CombatTab:CreateToggle({
             FruitTeleport:Stop()
         end
     end
-})
+}, "FruitTPToggle")
 
-FruitTab:CreateToggle({
+FruitBox:CreateToggle({
     Name = "Auto Store Fruit",
     CurrentValue = false,
     Callback = function(value)
         Variables.FruitAutoStore = value
     end
-})
+}, "FruitStoreToggle")
 
-FruitTab:CreateButton({
+FruitBox:CreateButton({
     Name = "Teleport to Closest Fruit",
     Callback = function()
         local fruit = FruitTeleport:TeleportToClosestFruit()
@@ -135,9 +153,9 @@ FruitTab:CreateButton({
             })
         end
     end
-})
+}, "TPFruitButton")
 
-FruitTab:CreateButton({
+FruitBox:CreateButton({
     Name = "Store Current Fruit",
     Callback = function()
         local success, result = FruitStorage:StoreFruit()
@@ -155,30 +173,38 @@ FruitTab:CreateButton({
             })
         end
     end
-})
+}, "StoreFruitButton")
 
 -- ============================================
--- TAB: Teleport
+-- TAB SECTION: Teleport
 -- ============================================
-local TeleportTab = Window:CreateTab({
-    Name = "Teleport",
-    Icon = NebulaIcons:GetIcon("map-pin", "Lucide")
+local TeleportSection = Window:CreateTabSection("Teleport")
+
+local TeleportTab = TeleportSection:CreateTab({
+    Name = "World TP",
+    Icon = NebulaIcons:GetIcon("map-pin", "Lucide"),
+    Columns = 2
+}, "TeleportTab")
+
+local TPBox = TeleportTab:CreateGroupbox({
+    Name = "Teleport"
 })
 
-local TPSection = TeleportTab:CreateSection("World Teleport")
-
-TeleportTab:CreateParagraph({
+TPBox:CreateParagraph({
     Title = "Coming Soon",
     Content = "Island teleport features will be added in the next update."
 })
 
 -- ============================================
--- TAB: Settings
+-- TAB SECTION: Settings
 -- ============================================
-local SettingsTab = Window:CreateTab({
+local SettingsSection = Window:CreateTabSection("Settings")
+
+local SettingsTab = SettingsSection:CreateTab({
     Name = "Settings",
-    Icon = NebulaIcons:GetIcon("settings", "Lucide")
-})
+    Icon = NebulaIcons:GetIcon("settings", "Lucide"),
+    Columns = 2
+}, "SettingsTab")
 
 SettingsTab:BuildConfigSection()
 SettingsTab:BuildThemeSection()
