@@ -7,227 +7,322 @@
         ██║  ██║███████╗   ██║   ██║  ██║███████╗██║  ██║
         ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
                     AETHER HUB - Blox Fruits
-                         Version 2.0.0
+                      Version 3.0.0 REFACTORED
     ================================================================
+    
+    ARQUITECTURA PROFESIONAL:
+    ✓ Dependency Injection Pattern
+    ✓ Error Boundaries
+    ✓ Lazy Loading
+    ✓ Health Checks
+    ✓ Graceful Degradation
 ]]
 
+--// CONFIGURATION
 local REPO_BASE = "https://raw.githubusercontent.com/Sam123mir/Blox-Fruits-AutoLVL-AetherHub-V3/main/"
+local VERSION = "3.0.0"
+local DEBUG_MODE = false
 
--- Safe module loader
-local function loadModule(path)
+--// UTILITIES
+local function log(message, level)
+    level = level or "INFO"
+    local prefix = string.format("[AETHER HUB - %s]", level)
+    print(prefix, message)
+end
+
+local function logError(message, err)
+    warn(string.format("[AETHER HUB - ERROR] %s: %s", message, tostring(err)))
+end
+
+--[[
+    Safe Module Loader con error handling
+    @param path string - Module path
+    @param required boolean - Is this module critical?
+    @return table? - Module or nil
+]]
+local function loadModule(path, required)
+    required = required or false
+    
+    log(string.format("Loading: %s", path))
+    
     local success, result = pcall(function()
-        return loadstring(game:HttpGet(REPO_BASE .. path))()
+        local code = game:HttpGet(REPO_BASE .. path, true)
+        local moduleFunc = loadstring(code)
+        
+        if not moduleFunc then
+            error("Failed to compile module")
+        end
+        
+        return moduleFunc()
     end)
+    
     if success then
+        log(string.format("✓ Loaded: %s", path), "SUCCESS")
         return result
     else
-        warn("[AETHER HUB] Failed to load: " .. path)
+        local errorMsg = string.format("Failed to load: %s", path)
+        
+        if required then
+            error(errorMsg .. " (CRITICAL MODULE)")
+        else
+            logError(errorMsg, result)
+        end
+        
         return nil
     end
 end
 
-print("[AETHER HUB] Loading modules...")
-
--- Load Core Modules
-local Services = loadModule("Modules/Core/Services.lua")
-local Variables = loadModule("Modules/Core/Variables.lua")
-
--- Load Feature Modules
-local FruitFinder = loadModule("Modules/Fruit/FruitFinder.lua")
-local FruitStorage = loadModule("Modules/Fruit/FruitStorage.lua")
-local Teleporter = loadModule("Modules/Teleport/Teleporter.lua")
-local AutoFarm = loadModule("Modules/Combat/AutoFarm.lua")
-
--- Initialize modules with dependencies
-if FruitFinder and Services then FruitFinder:Init(Services) end
-if FruitStorage and Services then FruitStorage:Init(Services) end
-if Teleporter and Services then Teleporter:Init(Services) end
-if AutoFarm and Services and Variables and Teleporter then 
-    AutoFarm:Init(Services, Variables, Teleporter) 
+--[[
+    Health Check - Verify environment
+    @return boolean, string?
+]]
+local function performHealthCheck()
+    -- Check if running on client
+    if not game:GetService("Players").LocalPlayer then
+        return false, "Must run on client side"
+    end
+    
+    -- Check if in Blox Fruits
+    local validPlaceIds = {2753915549, 4442272183, 7449423635}
+    local isValid = false
+    
+    for _, id in ipairs(validPlaceIds) do
+        if game.PlaceId == id then
+            isValid = true
+            break
+        end
+    end
+    
+    if not isValid then
+        return false, "Not in Blox Fruits game"
+    end
+    
+    return true
 end
 
-print("[AETHER HUB] Modules loaded!")
-
--- Boot Starlight UI
-print("[AETHER HUB] Loading Starlight UI...")
-local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()
-local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
-
--- Create Window
-local Window = Starlight:CreateWindow({
-    Name = "AETHER HUB",
-    Subtitle = "Blox Fruits v2.0.0",
-    Icon = 0,
-    LoadingEnabled = true,
-    LoadingSettings = {
-        Title = "AETHER HUB",
-        Subtitle = "Initializing...",
-    },
-    FileSettings = {
-        ConfigFolder = "AetherHub"
-    }
-})
-
--- ============================================
--- TAB SECTION: Main (invisible title)
--- ============================================
-local MainSection = Window:CreateTabSection("", false)
-
-local HomeTab = MainSection:CreateTab({
-    Name = "Home",
-    Icon = NebulaIcons:GetIcon("home", "Lucide"),
-    Columns = 1
-}, "HomeTab")
-
-local InfoBox = HomeTab:CreateGroupbox({
-    Name = "Welcome"
-})
-
-InfoBox:CreateLabel("AETHER HUB v2.0.0")
-InfoBox:CreateLabel("World: " .. (Variables and Variables.World or "Unknown"))
-InfoBox:CreateLabel("Level: " .. (AutoFarm and tostring(AutoFarm:GetLevel()) or "0"))
-
--- ============================================
--- TAB SECTION: Features
--- ============================================
-local FeaturesSection = Window:CreateTabSection("Features")
-
--- Combat Tab
-local CombatTab = FeaturesSection:CreateTab({
-    Name = "Combat",
-    Icon = NebulaIcons:GetIcon("swords", "Lucide"),
-    Columns = 1
-}, "CombatTab")
-
-local FarmBox = CombatTab:CreateGroupbox({
-    Name = "Auto Farm"
-})
-
-FarmBox:CreateToggle({
-    Name = "Auto Farm Level",
-    CurrentValue = false,
-    Callback = function(value)
-        if Variables then Variables.AutoFarm = value end
-        if value and AutoFarm then
-            AutoFarm:Start()
-        elseif AutoFarm then
-            AutoFarm:Stop()
-        end
+--[[
+    Main Initialization
+]]
+local function main()
+    log("=".rep(60))
+    log(string.format("AETHER HUB v%s - Starting...", VERSION))
+    log("=".rep(60))
+    
+    -- Health check
+    local healthy, healthError = performHealthCheck()
+    if not healthy then
+        error(string.format("[HEALTH CHECK FAILED] %s", healthError))
     end
-}, "AutoFarmToggle")
-
-FarmBox:CreateSlider({
-    Name = "Farm Distance",
-    Range = {50, 500},
-    CurrentValue = 200,
-    Increment = 10,
-    Callback = function(value)
-        if Variables then Variables.FarmDistance = value end
+    
+    log("✓ Health check passed")
+    
+    --// PHASE 1: Load Core Modules (Critical)
+    log("\n[PHASE 1] Loading Core Modules...")
+    
+    local Services = loadModule("Modules/Core/Services.lua", true)
+    local Variables = loadModule("Modules/Core/Variables.lua", true)
+    
+    if not Services or not Variables then
+        error("Failed to load core modules")
     end
-}, "FarmDistanceSlider")
-
--- Fruit Tab
-local FruitTab = FeaturesSection:CreateTab({
-    Name = "Fruit",
-    Icon = NebulaIcons:GetIcon("cherry", "Lucide"),
-    Columns = 1
-}, "FruitTab")
-
-local FruitBox = FruitTab:CreateGroupbox({
-    Name = "Devil Fruit"
-})
-
-FruitBox:CreateToggle({
-    Name = "Auto TP to Fruit",
-    CurrentValue = false,
-    Callback = function(value)
-        if Variables then Variables.FruitTeleport = value end
+    
+    --// PHASE 2: Load Utility Modules
+    log("\n[PHASE 2] Loading Utility Modules...")
+    
+    local Teleporter = loadModule("Modules/Teleport/Teleporter.lua", true)
+    if Teleporter then
+        Teleporter = Teleporter.new(Services)
     end
-}, "FruitTPToggle")
-
-FruitBox:CreateToggle({
-    Name = "Auto Store Fruit",
-    CurrentValue = false,
-    Callback = function(value)
-        if Variables then Variables.FruitAutoStore = value end
+    
+    --// PHASE 3: Load Feature Modules
+    log("\n[PHASE 3] Loading Feature Modules...")
+    
+    local FruitFinder = loadModule("Modules/Fruit/FruitFinder.lua", false)
+    if FruitFinder then
+        FruitFinder = FruitFinder.new(Services)
     end
-}, "FruitStoreToggle")
-
-FruitBox:CreateButton({
-    Name = "TP to Closest Fruit",
-    Callback = function()
-        if FruitFinder and Teleporter then
-            local fruit = FruitFinder:GetClosestFruit()
-            if fruit then
-                Teleporter:TeleportToInstance(fruit.Instance)
-                Starlight:Notify({
-                    Title = "Fruit Found!",
-                    Content = "Teleported to: " .. fruit.Name,
-                    Duration = 3
-                })
-            else
-                Starlight:Notify({
-                    Title = "No Fruit",
-                    Content = "No fruit found in map",
-                    Duration = 3
-                })
+    
+    local FruitStorage = loadModule("Modules/Fruit/FruitStorage.lua", false)
+    if FruitStorage then
+        FruitStorage = FruitStorage.new(Services)
+    end
+    
+    local AutoFarm = loadModule("Modules/Combat/AutoFarm.lua", false)
+    if AutoFarm then
+        AutoFarm = AutoFarm.new(Services, Variables, Teleporter)
+    end
+    
+    --// PHASE 4: Setup Event Listeners
+    log("\n[PHASE 4] Setting up Event Listeners...")
+    
+    if FruitFinder then
+        FruitFinder:OnFruitSpawn(function(fruit)
+            log(string.format("🍇 Fruit Spawned: %s", fruit.Name), "EVENT")
+            
+            -- Auto teleport if enabled
+            if Variables:Get("FruitTeleport") and Teleporter then
+                Teleporter:TeleportToInstance(fruit)
             end
-        end
+        end)
     end
-}, "TPFruitBtn")
-
-FruitBox:CreateButton({
-    Name = "Store Fruit",
-    Callback = function()
+    
+    --// PHASE 5: Load UI
+    log("\n[PHASE 5] Loading Starlight UI...")
+    
+    local UI_SUCCESS = pcall(function()
+        local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()
+        local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
+        
+        --// Create Window
+        local Window = Starlight:CreateWindow({
+            Name = "AETHER HUB",
+            Subtitle = string.format("Blox Fruits v%s", VERSION),
+            Icon = 0,
+            LoadingEnabled = true,
+            LoadingSettings = {
+                Title = "AETHER HUB",
+                Subtitle = "Initializing systems...",
+            },
+            FileSettings = {
+                ConfigFolder = "AetherHub"
+            }
+        })
+        
+        --// ========== HOME TAB ==========
+        local MainSection = Window:CreateTabSection("", false)
+        local HomeTab = MainSection:CreateTab({
+            Name = "Home",
+            Icon = NebulaIcons:GetIcon("home", "Lucide"),
+            Columns = 1
+        }, "HomeTab")
+        
+        local InfoBox = HomeTab:CreateGroupbox({Name = "System Info"})
+        InfoBox:CreateLabel("AETHER HUB v" .. VERSION)
+        InfoBox:CreateLabel("World: " .. (Variables.World or "Unknown"))
+        InfoBox:CreateLabel("Level: " .. (AutoFarm and tostring(AutoFarm:GetLevel()) or "0"))
+        
+        --// ========== COMBAT TAB ==========
+        local FeaturesSection = Window:CreateTabSection("Features")
+        local CombatTab = FeaturesSection:CreateTab({
+            Name = "Combat",
+            Icon = NebulaIcons:GetIcon("swords", "Lucide"),
+            Columns = 1
+        }, "CombatTab")
+        
+        local FarmBox = CombatTab:CreateGroupbox({Name = "Auto Farm"})
+        
+        if AutoFarm then
+            FarmBox:CreateToggle({
+                Name = "Auto Farm Level",
+                CurrentValue = false,
+                Callback = function(value)
+                    if value then
+                        AutoFarm:Start()
+                    else
+                        AutoFarm:Stop()
+                    end
+                end
+            }, "AutoFarmToggle")
+            
+            FarmBox:CreateSlider({
+                Name = "Farm Distance",
+                Range = {50, 500},
+                CurrentValue = 200,
+                Increment = 10,
+                Callback = function(value)
+                    Variables:Set("FarmDistance", value)
+                end
+            }, "FarmDistanceSlider")
+        else
+            FarmBox:CreateLabel("AutoFarm module not available")
+        end
+        
+        --// ========== FRUIT TAB ==========
+        local FruitTab = FeaturesSection:CreateTab({
+            Name = "Fruit",
+            Icon = NebulaIcons:GetIcon("cherry", "Lucide"),
+            Columns = 1
+        }, "FruitTab")
+        
+        local FruitBox = FruitTab:CreateGroupbox({Name = "Devil Fruit"})
+        
+        if FruitFinder and Teleporter then
+            FruitBox:CreateToggle({
+                Name = "Auto TP to Fruit",
+                CurrentValue = false,
+                Callback = function(value)
+                    Variables:Set("FruitTeleport", value)
+                end
+            }, "FruitTPToggle")
+            
+            FruitBox:CreateButton({
+                Name = "TP to Closest Fruit",
+                Callback = function()
+                    local fruit, distance = FruitFinder:GetClosestFruit()
+                    if fruit then
+                        Teleporter:TeleportToInstance(fruit.Instance)
+                        Starlight:Notify({
+                            Title = "Teleporting",
+                            Content = string.format("%s (%.1fm)", fruit.Name, distance),
+                            Duration = 3
+                        })
+                    else
+                        Starlight:Notify({
+                            Title = "No Fruit",
+                            Content = "No fruits found in map",
+                            Duration = 3
+                        })
+                    end
+                end
+            }, "TPFruitBtn")
+        end
+        
         if FruitStorage then
-            local success = FruitStorage:StoreFruit()
-            Starlight:Notify({
-                Title = success and "Success" or "Error",
-                Content = success and "Fruit stored!" or "Failed to store",
-                Duration = 3
-            })
+            FruitBox:CreateButton({
+                Name = "Store Fruit",
+                Callback = function()
+                    local success, message = FruitStorage:StoreFruit()
+                    Starlight:Notify({
+                        Title = success and "Success" or "Error",
+                        Content = message,
+                        Duration = 3
+                    })
+                end
+            }, "StoreFruitBtn")
         end
+        
+        --// ========== SETTINGS TAB ==========
+        local SettingsSection = Window:CreateTabSection("Settings")
+        local SettingsTab = SettingsSection:CreateTab({
+            Name = "Config",
+            Icon = NebulaIcons:GetIcon("settings", "Lucide"),
+            Columns = 1
+        }, "SettingsTab")
+        
+        SettingsTab:BuildConfigSection()
+        SettingsTab:BuildThemeSection()
+        
+        --// SUCCESS NOTIFICATION
+        Starlight:Notify({
+            Title = "AETHER HUB",
+            Content = "Loaded successfully!",
+            Duration = 5
+        })
+    end)
+    
+    if not UI_SUCCESS then
+        warn("[AETHER HUB] UI failed to load, running in headless mode")
     end
-}, "StoreFruitBtn")
+    
+    --// COMPLETE
+    log("\n" .. "=".rep(60))
+    log(string.format("✓ AETHER HUB v%s loaded successfully!", VERSION), "SUCCESS")
+    log("=".rep(60))
+end
 
--- ============================================
--- TAB SECTION: Teleport
--- ============================================
-local TeleportSection = Window:CreateTabSection("Teleport")
+--// EXECUTE WITH GLOBAL ERROR HANDLER
+local success, error = pcall(main)
 
-local TeleportTab = TeleportSection:CreateTab({
-    Name = "Islands",
-    Icon = NebulaIcons:GetIcon("map-pin", "Lucide"),
-    Columns = 1
-}, "TeleportTab")
-
-local TPBox = TeleportTab:CreateGroupbox({
-    Name = "World Teleport"
-})
-
-TPBox:CreateLabel("Coming Soon!")
-
--- ============================================
--- TAB SECTION: Settings
--- ============================================
-local SettingsSection = Window:CreateTabSection("Settings")
-
-local SettingsTab = SettingsSection:CreateTab({
-    Name = "Config",
-    Icon = NebulaIcons:GetIcon("settings", "Lucide"),
-    Columns = 1
-}, "SettingsTab")
-
-SettingsTab:BuildConfigSection()
-SettingsTab:BuildThemeSection()
-
--- ============================================
--- Complete
--- ============================================
-Starlight:Notify({
-    Title = "AETHER HUB",
-    Content = "Loaded successfully!",
-    Duration = 5
-})
-
-print("[AETHER HUB] v2.0.0 loaded successfully!")
+if not success then
+    logError("Fatal error during initialization", error)
+end
