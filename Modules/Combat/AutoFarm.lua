@@ -1,311 +1,135 @@
 --[[
-    ================================================================
-         AETHER HUB - AutoFarm Module (Refactored v3.0)
-    ================================================================
-    
-    MEJORAS APLICADAS:
-    ✓ State machine pattern
-    ✓ Enemy tracking system
-    ✓ Smart targeting (health, distance, threat)
-    ✓ Performance optimizations
-    ✓ Proper cleanup
-    
-    DEPENDENCIES: Services, Variables, Teleporter
+    AETHER HUB - AutoFarm Module (v3.1 - Simplified)
+    Automatic enemy farming
 ]]
 
---// MODULE
 local AutoFarm = {}
-AutoFarm.__index = AutoFarm
 
---// DEPENDENCIES
+-- Dependencies
 local Services = nil
 local Variables = nil
 local Teleporter = nil
 
---// PRIVATE STATE
+-- State
 local _running = false
 local _currentTarget = nil
-local _enemyCache = {}
-local _lastCacheUpdate = 0
-local _connections = {}
 
---// CONSTANTS
-local CACHE_LIFETIME = 1 -- seconds
-local ATTACK_RANGE = 5
-local ENEMY_CONTAINER_NAMES = {"Enemies", "Monster"}
-local MIN_ENEMY_HEALTH = 10
-
---// STATES
-local States = {
-    IDLE = "Idle",
-    SEARCHING = "Searching",
-    APPROACHING = "Approaching",
-    ATTACKING = "Attacking"
-}
-
-local _currentState = States.IDLE
-
---[[
-    Constructor
-    @param services table
-    @param variables table
-    @param teleporter table
-]]
+-- Initialize
 function AutoFarm.new(services, variables, teleporter)
-    local self = setmetatable({}, AutoFarm)
-    
-    Services = services or error("[AUTOFARM] Services required")
-    Variables = variables or error("[AUTOFARM] Variables required")
-    Teleporter = teleporter or error("[AUTOFARM] Teleporter required")
-    
-    return self
+    Services = services
+    Variables = variables
+    Teleporter = teleporter
+    return AutoFarm
 end
 
---[[
-    PUBLIC: Get Player Level
-    @return number
-]]
+-- Get Level
 function AutoFarm:GetLevel()
-    if not Services or not Services.LocalPlayer then
-        return 0
-    end
+    if not Services or not Services.LocalPlayer then return 0 end
     
     local data = Services.LocalPlayer:FindFirstChild("Data")
-    if not data then return 0 end
-    
-    local levelValue = data:FindFirstChild("Level")
-    if not levelValue then return 0 end
-    
-    return levelValue.Value or 0
+    if data and data:FindFirstChild("Level") then
+        return data.Level.Value
+    end
+    return 0
 end
 
---[[
-    PRIVATE: Update enemy cache
-]]
-function AutoFarm:_updateEnemyCache()
-    local currentTime = tick()
+-- Find nearest enemy
+function AutoFarm:FindNearestEnemy()
+    if not Services then return nil end
     
-    -- Check if cache is still valid
-    if currentTime - _lastCacheUpdate < CACHE_LIFETIME then
-        return
-    end
+    local enemies = Services.Workspace:FindFirstChild("Enemies")
+    if not enemies then return nil end
     
-    _enemyCache = {}
+    local hrp = Services:GetHumanoidRootPart()
+    if not hrp then return nil end
     
-    -- Find enemy containers
-    for _, containerName in ipairs(ENEMY_CONTAINER_NAMES) do
-        local container = Services.Workspace:FindFirstChild(containerName)
-        if container then
-            for _, enemy in ipairs(container:GetChildren()) do
-                if self:_isValidEnemy(enemy) then
-                    table.insert(_enemyCache, enemy)
-                end
-            end
-        end
-    end
+    local maxDistance = Variables and Variables:Get("FarmDistance") or 200
+    local nearest = nil
+    local nearestDist = math.huge
     
-    _lastCacheUpdate = currentTime
-end
-
---[[
-    PRIVATE: Validate enemy
-    @param enemy Model
-    @return boolean
-]]
-function AutoFarm:_isValidEnemy(enemy)
-    if not enemy or not enemy:IsA("Model") then
-        return false
-    end
-    
-    local humanoid = enemy:FindFirstChildOfClass("Humanoid")
-    if not humanoid or humanoid.Health <= MIN_ENEMY_HEALTH then
-        return false
-    end
-    
-    local hrp = enemy:FindFirstChild("HumanoidRootPart")
-    if not hrp or not hrp:IsA("BasePart") then
-        return false
-    end
-    
-    return true
-end
-
---[[
-    PRIVATE: Find best target
-    @return Model?, number? - enemy, distance
-]]
-function AutoFarm:_findBestTarget()
-    self:_updateEnemyCache()
-    
-    local playerHRP = Services:GetHumanoidRootPart()
-    if not playerHRP then return nil end
-    
-    local maxDistance = Variables:Get("FarmDistance") or 200
-    
-    local bestEnemy = nil
-    local bestScore = -math.huge
-    
-    for _, enemy in ipairs(_enemyCache) do
-        local enemyHRP = enemy:FindFirstChild("HumanoidRootPart")
+    for _, enemy in pairs(enemies:GetChildren()) do
         local humanoid = enemy:FindFirstChildOfClass("Humanoid")
+        local enemyHRP = enemy:FindFirstChild("HumanoidRootPart")
         
-        if enemyHRP and humanoid then
-            local distance = (playerHRP.Position - enemyHRP.Position).Magnitude
-            
-            -- Skip if too far
-            if distance > maxDistance then
-                continue
-            end
-            
-            -- Calculate score (closer + lower health = higher priority)
-            local healthPercent = humanoid.Health / humanoid.MaxHealth
-            local distanceScore = (maxDistance - distance) / maxDistance
-            local score = distanceScore * 0.7 + (1 - healthPercent) * 0.3
-            
-            if score > bestScore then
-                bestScore = score
-                bestEnemy = enemy
+        if humanoid and humanoid.Health > 0 and enemyHRP then
+            local dist = (hrp.Position - enemyHRP.Position).Magnitude
+            if dist < nearestDist and dist <= maxDistance then
+                nearest = enemy
+                nearestDist = dist
             end
         end
     end
     
-    if bestEnemy then
-        local enemyHRP = bestEnemy:FindFirstChild("HumanoidRootPart")
-        if enemyHRP then
-            local distance = (playerHRP.Position - enemyHRP.Position).Magnitude
-            return bestEnemy, distance
-        end
-    end
-    
-    return nil
+    return nearest, nearestDist
 end
 
---[[
-    PRIVATE: Attack current target
-]]
-function AutoFarm:_attackTarget()
-    if not _currentTarget then return false end
+-- Attack enemy
+function AutoFarm:AttackEnemy(enemy)
+    if not enemy or not Teleporter then return false end
     
-    local enemyHRP = _currentTarget:FindFirstChild("HumanoidRootPart")
-    if not enemyHRP then
-        _currentTarget = nil
-        return false
-    end
+    local enemyHRP = enemy:FindFirstChild("HumanoidRootPart")
+    if not enemyHRP then return false end
     
-    -- Teleport behind enemy
-    Teleporter:TeleportBehind(enemyHRP, ATTACK_RANGE)
+    Teleporter:TeleportBehind(enemyHRP)
     
-    -- Activate weapon
-    local character = Services:GetCharacter()
-    if character then
-        local tool = character:FindFirstChildOfClass("Tool")
-        if tool and tool:FindFirstChild("Activate") then
-            pcall(function()
-                tool:Activate()
-            end)
+    local char = Services:GetCharacter()
+    if char then
+        local tool = char:FindFirstChildOfClass("Tool")
+        if tool then
+            pcall(function() tool:Activate() end)
         end
     end
     
     return true
 end
 
---[[
-    PRIVATE: Main farm loop
-]]
-function AutoFarm:_farmLoop()
+-- Farm loop
+function AutoFarm:_loop()
     while _running do
-        -- Check if feature is enabled
-        if not Variables:Get("AutoFarm") then
-            task.wait(1)
-            continue
-        end
-        
-        -- State machine
-        if _currentState == States.IDLE then
-            _currentState = States.SEARCHING
-            
-        elseif _currentState == States.SEARCHING then
-            local enemy, distance = self:_findBestTarget()
-            
+        if Variables and Variables:Get("AutoFarm") then
+            local enemy = self:FindNearestEnemy()
             if enemy then
                 _currentTarget = enemy
-                _currentState = States.APPROACHING
+                self:AttackEnemy(enemy)
             else
-                -- No enemies found, wait
-                task.wait(2)
-            end
-            
-        elseif _currentState == States.APPROACHING then
-            if not self:_isValidEnemy(_currentTarget) then
                 _currentTarget = nil
-                _currentState = States.SEARCHING
-            else
-                local enemyHRP = _currentTarget:FindFirstChild("HumanoidRootPart")
-                local playerHRP = Services:GetHumanoidRootPart()
-                
-                if enemyHRP and playerHRP then
-                    local distance = (playerHRP.Position - enemyHRP.Position).Magnitude
-                    
-                    if distance <= ATTACK_RANGE * 2 then
-                        _currentState = States.ATTACKING
-                    else
-                        Teleporter:TeleportBehind(enemyHRP, ATTACK_RANGE)
-                    end
-                end
-            end
-            
-        elseif _currentState == States.ATTACKING then
-            if not self:_isValidEnemy(_currentTarget) then
-                _currentTarget = nil
-                _currentState = States.SEARCHING
-            else
-                self:_attackTarget()
             end
         end
         
-        -- Rate limiting
-        local delay = Variables:Get("AttackDelay") or 0.1
+        local delay = Variables and Variables:Get("AttackDelay") or 0.1
         task.wait(delay)
     end
-    
-    _currentState = States.IDLE
 end
 
---[[
-    PUBLIC: Start AutoFarm
-]]
+-- Start
 function AutoFarm:Start()
-    if _running then
-        warn("[AUTOFARM] Already running")
-        return
+    if _running then return end
+    _running = true
+    
+    if Variables then
+        Variables:Set("AutoFarm", true)
     end
     
-    _running = true
-    Variables:Set("AutoFarm", true)
-    
-    -- Start farm loop
     task.spawn(function()
-        self:_farmLoop()
+        self:_loop()
     end)
     
-    print("[AUTOFARM] Started successfully")
+    print("[AUTOFARM] Started")
 end
 
---[[
-    PUBLIC: Stop AutoFarm
-]]
+-- Stop
 function AutoFarm:Stop()
     _running = false
     _currentTarget = nil
-    _currentState = States.IDLE
-    Variables:Set("AutoFarm", false)
+    
+    if Variables then
+        Variables:Set("AutoFarm", false)
+    end
     
     print("[AUTOFARM] Stopped")
 end
 
---[[
-    PUBLIC: Toggle AutoFarm
-]]
+-- Toggle
 function AutoFarm:Toggle()
     if _running then
         self:Stop()
@@ -315,34 +139,9 @@ function AutoFarm:Toggle()
     return _running
 end
 
---[[
-    PUBLIC: Is Running
-]]
+-- Is running
 function AutoFarm:IsRunning()
     return _running
-end
-
---[[
-    PUBLIC: Get Current State
-]]
-function AutoFarm:GetState()
-    return _currentState
-end
-
---[[
-    PUBLIC: Cleanup
-]]
-function AutoFarm:Destroy()
-    self:Stop()
-    
-    for _, connection in pairs(_connections) do
-        if connection then
-            connection:Disconnect()
-        end
-    end
-    
-    _connections = {}
-    _enemyCache = {}
 end
 
 return AutoFarm
