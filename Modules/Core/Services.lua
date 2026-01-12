@@ -219,11 +219,12 @@ function Services:InvokeCommF(methodName, ...)
         end
         
         -- Safe invocation
+        local args = {...}
         local success, result = pcall(function()
             if commF:IsA("RemoteFunction") then
-                return commF:InvokeServer(methodName, ...)
+                return commF:InvokeServer(methodName, unpack(args))
             else
-                commF:FireServer(methodName, ...)
+                commF:FireServer(methodName, unpack(args))
                 return true
             end
         end)
