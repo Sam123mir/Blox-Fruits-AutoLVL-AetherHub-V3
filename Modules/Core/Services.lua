@@ -1,5 +1,5 @@
 --[[
-    AETHER HUB - Services Module (v3.1 - Simplified)
+    AETHER HUB - Services Module (v3.2 - Maximum Compatibility)
     Core services wrapper for Blox Fruits
 ]]
 
@@ -16,39 +16,21 @@ Services.RunService = game:GetService("RunService")
 -- Player Reference
 Services.LocalPlayer = Services.Players.LocalPlayer
 
--- Get Character
+-- Get Character (simple version)
 function Services:GetCharacter()
-    if self.LocalPlayer.Character then
-        return self.LocalPlayer.Character
-    end
-    
-    -- Wait for character if not loaded
-    local success, char = pcall(function()
-        return self.LocalPlayer.CharacterAdded:Wait()
-    end)
-    
-    if success then
-        return char
-    end
-    return nil
+    return self.LocalPlayer and self.LocalPlayer.Character
 end
 
 -- Get HumanoidRootPart
 function Services:GetHumanoidRootPart()
     local char = self:GetCharacter()
-    if char then
-        return char:FindFirstChild("HumanoidRootPart")
-    end
-    return nil
+    return char and char:FindFirstChild("HumanoidRootPart")
 end
 
 -- Get Humanoid
 function Services:GetHumanoid()
     local char = self:GetCharacter()
-    if char then
-        return char:FindFirstChildOfClass("Humanoid")
-    end
-    return nil
+    return char and char:FindFirstChildOfClass("Humanoid")
 end
 
 -- Get Remotes
@@ -59,10 +41,7 @@ end
 -- Get CommF_
 function Services:GetCommF()
     local remotes = self:GetRemotes()
-    if remotes then
-        return remotes:FindFirstChild("CommF_")
-    end
-    return nil
+    return remotes and remotes:FindFirstChild("CommF_")
 end
 
 -- Invoke CommF safely
@@ -72,8 +51,9 @@ function Services:InvokeCommF(...)
         return false, "CommF_ not found"
     end
     
+    local args = {...}
     local success, result = pcall(function()
-        return commF:InvokeServer(...)
+        return commF:InvokeServer(unpack(args))
     end)
     
     return success, result
