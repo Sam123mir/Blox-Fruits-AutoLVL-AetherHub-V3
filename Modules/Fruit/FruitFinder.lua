@@ -1,106 +1,67 @@
 --[[
-    AETHER HUB - FruitFinder Module (v3.1 - Simplified)
-    Detects Devil Fruits in the map
+    AETHER HUB - ENTERPRISE FRUIT FINDER v5.2
+    ============================================================================
+    Detección y gestión de Devil Fruits con alta precisión.
 ]]
 
 local FruitFinder = {}
+FruitFinder.__index = FruitFinder
 
--- Dependencies
-local Services = nil
-
--- State
-local _onSpawnCallbacks = {}
-
--- Fruit containers
+--// Constants
 local CONTAINERS = {"Fruits", "AppleSpawner", "PineappleSpawner"}
 
--- Initialize
-function FruitFinder.new(services)
-    Services = services
-    return FruitFinder
+function FruitFinder.new(services, variables)
+    local self = setmetatable({}, FruitFinder)
+    
+    self._services = services or error("[FRUITFINDER] Services required")
+    self._vars = variables or error("[FRUITFINDER] Variables required")
+    
+    print("[FRUIT] Enterprise Module Initialized")
+    return self
 end
 
--- Check if is fruit
-function FruitFinder:_isFruit(item)
-    if not item:IsA("Tool") then return false end
-    if not item:FindFirstChild("Handle") then return false end
-    if not string.find(item.Name, "Fruit") then return false end
-    return true
+function FruitFinder:_isFruit(item: Instance)
+    return item:IsA("Tool") and item:FindFirstChild("Handle") and item.Name:find("Fruit")
 end
 
--- Get all fruits
 function FruitFinder:GetAllFruits()
     local fruits = {}
-    if not Services then return fruits end
     
-    -- Check containers
-    for _, containerName in ipairs(CONTAINERS) do
-        local container = Services.Workspace:FindFirstChild(containerName)
-        if container then
-            for _, item in pairs(container:GetChildren()) do
-                if self:_isFruit(item) then
-                    table.insert(fruits, {
-                        Name = item.Name,
-                        Instance = item,
-                        Position = item.Handle.Position
-                    })
-                end
+    local function check(parent)
+        if not parent then return end
+        for _, item in ipairs(parent:GetChildren()) do
+            if self:_isFruit(item) then
+                table.insert(fruits, {
+                    Instance = item,
+                    Name = item.Name,
+                    Position = item.Handle.Position
+                })
             end
         end
     end
-    
-    -- Check workspace
-    for _, item in pairs(Services.Workspace:GetChildren()) do
-        if self:_isFruit(item) then
-            table.insert(fruits, {
-                Name = item.Name,
-                Instance = item,
-                Position = item.Handle.Position
-            })
-        end
+
+    for _, name in ipairs(CONTAINERS) do
+        check(workspace:FindFirstChild(name))
     end
+    check(workspace)
     
     return fruits
 end
 
--- Get closest fruit
 function FruitFinder:GetClosestFruit()
     local fruits = self:GetAllFruits()
-    if #fruits == 0 then return nil end
+    local hrp = self._services:GetHumanoidRootPart()
+    if #fruits == 0 or not hrp then return nil end
     
-    local hrp = Services:GetHumanoidRootPart()
-    if not hrp then return fruits[1], nil end
-    
-    local closest = nil
-    local closestDist = math.huge
-    
+    local closest, minCDist = nil, math.huge
     for _, fruit in ipairs(fruits) do
         local dist = (hrp.Position - fruit.Position).Magnitude
-        if dist < closestDist then
+        if dist < minCDist then
             closest = fruit
-            closestDist = dist
+            minCDist = dist
         end
     end
-    
-    return closest, closestDist
-end
-
--- Has fruit
-function FruitFinder:HasFruit()
-    return #self:GetAllFruits() > 0
-end
-
--- On fruit spawn
-function FruitFinder:OnFruitSpawn(callback)
-    table.insert(_onSpawnCallbacks, callback)
-    return function()
-        for i, cb in ipairs(_onSpawnCallbacks) do
-            if cb == callback then
-                table.remove(_onSpawnCallbacks, i)
-                break
-            end
-        end
-    end
+    return closest
 end
 
 return FruitFinder
